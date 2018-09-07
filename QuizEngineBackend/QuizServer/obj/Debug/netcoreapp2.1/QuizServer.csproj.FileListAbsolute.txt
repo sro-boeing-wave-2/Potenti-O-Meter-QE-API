@@ -1,0 +1,98 @@
+F:\Project\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.deps.json
+F:\Project\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.runtimeconfig.json
+F:\Project\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.runtimeconfig.dev.json
+F:\Project\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.dll
+F:\Project\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.csprojAssemblyReference.cache
+F:\Project\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.csproj.CoreCompileInputs.cache
+F:\Project\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorAssemblyInfo.cache
+F:\Project\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorAssemblyInfo.cs
+F:\Project\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.AssemblyInfoInputs.cache
+F:\Project\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.AssemblyInfo.cs
+F:\Project\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorTargetAssemblyInfo.cache
+F:\Project\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.pdb
+F:\Project\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.dll
+F:\Project\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.pdb
+E:\workspace\Quiz\Backend-quizEngine\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.deps.json
+E:\workspace\Quiz\Backend-quizEngine\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.runtimeconfig.json
+E:\workspace\Quiz\Backend-quizEngine\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.runtimeconfig.dev.json
+E:\workspace\Quiz\Backend-quizEngine\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.dll
+E:\workspace\Quiz\Backend-quizEngine\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.pdb
+E:\workspace\Quiz\Backend-quizEngine\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.csprojAssemblyReference.cache
+E:\workspace\Quiz\Backend-quizEngine\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.csproj.CoreCompileInputs.cache
+E:\workspace\Quiz\Backend-quizEngine\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorAssemblyInfo.cache
+E:\workspace\Quiz\Backend-quizEngine\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorAssemblyInfo.cs
+E:\workspace\Quiz\Backend-quizEngine\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.AssemblyInfoInputs.cache
+E:\workspace\Quiz\Backend-quizEngine\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.AssemblyInfo.cs
+E:\workspace\Quiz\Backend-quizEngine\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorTargetAssemblyInfo.cache
+E:\workspace\Quiz\Backend-quizEngine\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.dll
+E:\workspace\Quiz\Backend-quizEngine\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.pdb
+E:\workspace\new-FE-BE\Backend-quizEngine\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.dll
+E:\workspace\new-FE-BE\Backend-quizEngine\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.deps.json
+E:\workspace\new-FE-BE\Backend-quizEngine\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.runtimeconfig.json
+E:\workspace\new-FE-BE\Backend-quizEngine\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.runtimeconfig.dev.json
+E:\workspace\new-FE-BE\Backend-quizEngine\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.csprojAssemblyReference.cache
+E:\workspace\new-FE-BE\Backend-quizEngine\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.csproj.CoreCompileInputs.cache
+E:\workspace\new-FE-BE\Backend-quizEngine\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorAssemblyInfo.cache
+E:\workspace\new-FE-BE\Backend-quizEngine\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorAssemblyInfo.cs
+E:\workspace\new-FE-BE\Backend-quizEngine\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.AssemblyInfoInputs.cache
+E:\workspace\new-FE-BE\Backend-quizEngine\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.AssemblyInfo.cs
+E:\workspace\new-FE-BE\Backend-quizEngine\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorTargetAssemblyInfo.cache
+E:\workspace\new-FE-BE\Backend-quizEngine\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.dll
+E:\workspace\new-FE-BE\Backend-quizEngine\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.pdb
+E:\workspace\new-FE-BE\Backend-quizEngine\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.pdb
+E:\workspace\new-FE-BE\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.deps.json
+E:\workspace\new-FE-BE\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.runtimeconfig.json
+E:\workspace\new-FE-BE\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.runtimeconfig.dev.json
+E:\workspace\new-FE-BE\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.dll
+E:\workspace\new-FE-BE\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.pdb
+E:\workspace\new-FE-BE\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.csprojAssemblyReference.cache
+E:\workspace\new-FE-BE\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.csproj.CoreCompileInputs.cache
+E:\workspace\new-FE-BE\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorAssemblyInfo.cache
+E:\workspace\new-FE-BE\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorAssemblyInfo.cs
+E:\workspace\new-FE-BE\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.AssemblyInfoInputs.cache
+E:\workspace\new-FE-BE\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.AssemblyInfo.cs
+E:\workspace\new-FE-BE\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorTargetAssemblyInfo.cache
+E:\workspace\new-FE-BE\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.dll
+E:\workspace\new-FE-BE\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.pdb
+F:\Project\Week 2\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.deps.json
+F:\Project\Week 2\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.runtimeconfig.json
+F:\Project\Week 2\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.runtimeconfig.dev.json
+F:\Project\Week 2\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.dll
+F:\Project\Week 2\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.pdb
+F:\Project\Week 2\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.csprojAssemblyReference.cache
+F:\Project\Week 2\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.csproj.CoreCompileInputs.cache
+F:\Project\Week 2\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorAssemblyInfo.cache
+F:\Project\Week 2\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorAssemblyInfo.cs
+F:\Project\Week 2\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.AssemblyInfoInputs.cache
+F:\Project\Week 2\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.AssemblyInfo.cs
+F:\Project\Week 2\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorTargetAssemblyInfo.cache
+F:\Project\Week 2\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.dll
+F:\Project\Week 2\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.pdb
+C:\Users\Admin\Documents\PM\Potenti-o-meter\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.deps.json
+C:\Users\Admin\Documents\PM\Potenti-o-meter\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.runtimeconfig.json
+C:\Users\Admin\Documents\PM\Potenti-o-meter\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.runtimeconfig.dev.json
+C:\Users\Admin\Documents\PM\Potenti-o-meter\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.dll
+C:\Users\Admin\Documents\PM\Potenti-o-meter\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.pdb
+C:\Users\Admin\Documents\PM\Potenti-o-meter\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.csprojAssemblyReference.cache
+C:\Users\Admin\Documents\PM\Potenti-o-meter\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Documents\PM\Potenti-o-meter\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorAssemblyInfo.cache
+C:\Users\Admin\Documents\PM\Potenti-o-meter\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorAssemblyInfo.cs
+C:\Users\Admin\Documents\PM\Potenti-o-meter\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.AssemblyInfoInputs.cache
+C:\Users\Admin\Documents\PM\Potenti-o-meter\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.AssemblyInfo.cs
+C:\Users\Admin\Documents\PM\Potenti-o-meter\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorTargetAssemblyInfo.cache
+C:\Users\Admin\Documents\PM\Potenti-o-meter\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.dll
+C:\Users\Admin\Documents\PM\Potenti-o-meter\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.pdb
+C:\Users\Admin\Desktop\Dynamic Components\QuizEngineApi\potentio-QuizEngineAPI\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.deps.json
+C:\Users\Admin\Desktop\Dynamic Components\QuizEngineApi\potentio-QuizEngineAPI\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.runtimeconfig.json
+C:\Users\Admin\Desktop\Dynamic Components\QuizEngineApi\potentio-QuizEngineAPI\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.runtimeconfig.dev.json
+C:\Users\Admin\Desktop\Dynamic Components\QuizEngineApi\potentio-QuizEngineAPI\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.dll
+C:\Users\Admin\Desktop\Dynamic Components\QuizEngineApi\potentio-QuizEngineAPI\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.pdb
+C:\Users\Admin\Desktop\Dynamic Components\QuizEngineApi\potentio-QuizEngineAPI\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.csprojAssemblyReference.cache
+C:\Users\Admin\Desktop\Dynamic Components\QuizEngineApi\potentio-QuizEngineAPI\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\Dynamic Components\QuizEngineApi\potentio-QuizEngineAPI\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorAssemblyInfo.cache
+C:\Users\Admin\Desktop\Dynamic Components\QuizEngineApi\potentio-QuizEngineAPI\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorAssemblyInfo.cs
+C:\Users\Admin\Desktop\Dynamic Components\QuizEngineApi\potentio-QuizEngineAPI\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.AssemblyInfoInputs.cache
+C:\Users\Admin\Desktop\Dynamic Components\QuizEngineApi\potentio-QuizEngineAPI\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.AssemblyInfo.cs
+C:\Users\Admin\Desktop\Dynamic Components\QuizEngineApi\potentio-QuizEngineAPI\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorTargetAssemblyInfo.cache
+C:\Users\Admin\Desktop\Dynamic Components\QuizEngineApi\potentio-QuizEngineAPI\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.dll
+C:\Users\Admin\Desktop\Dynamic Components\QuizEngineApi\potentio-QuizEngineAPI\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.pdb
