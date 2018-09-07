@@ -1,0 +1,12 @@
+language: csharp
+solution: QuizEngineBackend/QuizServer.sln
+notifications:
+ email:
+   on_success: always
+   on_failure: always
+ slack: srboeingdotnet:GhCzs3W4Gj7eaQ2pLNwIWVCa
+mono: none
+dotnet: 2.1
+script:
+ - dotnet restore QuizEngineBackend/
+ - dotnet test QuizEngineBackend/QuizServerXUnit

@@ -96,3 +96,17 @@ C:\Users\Admin\Desktop\Dynamic Components\QuizEngineApi\potentio-QuizEngineAPI\Q
 C:\Users\Admin\Desktop\Dynamic Components\QuizEngineApi\potentio-QuizEngineAPI\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorTargetAssemblyInfo.cache
 C:\Users\Admin\Desktop\Dynamic Components\QuizEngineApi\potentio-QuizEngineAPI\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.dll
 C:\Users\Admin\Desktop\Dynamic Components\QuizEngineApi\potentio-QuizEngineAPI\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.pdb
+C:\Users\Admin\Documents\UpdatedBackendQE\Potenti-O-Meter-QE-API\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.deps.json
+C:\Users\Admin\Documents\UpdatedBackendQE\Potenti-O-Meter-QE-API\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.runtimeconfig.json
+C:\Users\Admin\Documents\UpdatedBackendQE\Potenti-O-Meter-QE-API\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.runtimeconfig.dev.json
+C:\Users\Admin\Documents\UpdatedBackendQE\Potenti-O-Meter-QE-API\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.dll
+C:\Users\Admin\Documents\UpdatedBackendQE\Potenti-O-Meter-QE-API\QuizEngineBackend\QuizServer\bin\Debug\netcoreapp2.1\QuizServer.pdb
+C:\Users\Admin\Documents\UpdatedBackendQE\Potenti-O-Meter-QE-API\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.csprojAssemblyReference.cache
+C:\Users\Admin\Documents\UpdatedBackendQE\Potenti-O-Meter-QE-API\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Documents\UpdatedBackendQE\Potenti-O-Meter-QE-API\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorAssemblyInfo.cache
+C:\Users\Admin\Documents\UpdatedBackendQE\Potenti-O-Meter-QE-API\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorAssemblyInfo.cs
+C:\Users\Admin\Documents\UpdatedBackendQE\Potenti-O-Meter-QE-API\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.AssemblyInfoInputs.cache
+C:\Users\Admin\Documents\UpdatedBackendQE\Potenti-O-Meter-QE-API\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.AssemblyInfo.cs
+C:\Users\Admin\Documents\UpdatedBackendQE\Potenti-O-Meter-QE-API\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.RazorTargetAssemblyInfo.cache
+C:\Users\Admin\Documents\UpdatedBackendQE\Potenti-O-Meter-QE-API\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.dll
+C:\Users\Admin\Documents\UpdatedBackendQE\Potenti-O-Meter-QE-API\QuizEngineBackend\QuizServer\obj\Debug\netcoreapp2.1\QuizServer.pdb

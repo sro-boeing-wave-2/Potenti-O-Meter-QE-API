@@ -12225,11 +12225,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Admin\\Desktop\\Dynamic Components\\QuizEngineApi\\potentio-QuizEngineAPI\\QuizEngineBackend\\QuizServer\\QuizServer.csproj",
+      "projectUniqueName": "C:\\Users\\Admin\\Documents\\UpdatedBackendQE\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServer\\QuizServer.csproj",
       "projectName": "QuizServer",
-      "projectPath": "C:\\Users\\Admin\\Desktop\\Dynamic Components\\QuizEngineApi\\potentio-QuizEngineAPI\\QuizEngineBackend\\QuizServer\\QuizServer.csproj",
+      "projectPath": "C:\\Users\\Admin\\Documents\\UpdatedBackendQE\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServer\\QuizServer.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Admin\\Desktop\\Dynamic Components\\QuizEngineApi\\potentio-QuizEngineAPI\\QuizEngineBackend\\QuizServer\\obj\\",
+      "outputPath": "C:\\Users\\Admin\\Documents\\UpdatedBackendQE\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
