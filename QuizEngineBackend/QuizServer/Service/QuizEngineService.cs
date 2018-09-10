@@ -19,16 +19,19 @@ namespace QuizServer.Service
             Console.WriteLine("thiis is inside getQuestionBy Domain");
             var response = await _client.GetAsync("http://localhost:44334/api/questions/domain/maths");
             Console.WriteLine(response);
+
+            //response.options.toString()=>
+
             var result = await response.Content.ReadAsAsync<List<Question>>();
-            Console.WriteLine("Questions     " + result);
-            foreach (Question q in result)
-            {
-                Console.WriteLine("Questions     " + JsonConvert.SerializeObject(q.QuestionText));
-                foreach(var x in q.Options)
-                {
-                    Console.WriteLine(x.option);
-                }
-            }
+            //Console.WriteLine("Questions     " + result);
+            //foreach (Question q in result)
+            //{
+            //    Console.WriteLine("Questions     " + JsonConvert.SerializeObject(q.QuestionText));
+            //    foreach(var x in q.OptionList)
+            //    {
+            //        Console.WriteLine(x.Option.ToString());
+            //    }
+            //}
             
             return result;
 

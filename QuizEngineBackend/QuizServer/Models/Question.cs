@@ -10,16 +10,16 @@ namespace QuizServer.Models
         public string QuestionId { get; set; }
         public string Domain { get; set; }
         public string QuestionText { get; set; }
-        public List<OptionList> Options { get; set; }
+        public List<Options> OptionList { get; set; }
         public string QuestionType { get; set; }
         public string[] ConceptTags { get; set; }
         public string userResponse { get; set; }
         public int DifficultyLevel { get; set; }
-        public Boolean IsCorrect { get; set; }
+        public bool IsCorrect { get; set; }
        // public string CorrectOption{ get; set; }
     }
 
-    public class OptionList
+    public class Options
     {
         public string Option { get; set; }
     }

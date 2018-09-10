@@ -58,6 +58,8 @@ namespace QuizServer
             Console.WriteLine("Inside ENDQUIZ indexOfAttemptedQuestion " + indexOfAttemptedQuestion);
             userInfo.QuestionBank[indexOfAttemptedQuestion].userResponse = question.userResponse;
             Console.WriteLine("userid in the serve " + userInfo.UserId);
+            Console.WriteLine("user info " + (userInfo));
+
             return Clients.Caller.SendAsync("EndQuiz", userInfo);
             // return _userQuizState.GetValueOrDefault(Context.ConnectionId);
 
@@ -73,6 +75,15 @@ namespace QuizServer
             var response = await _client.GetAsync("http://localhost:44334/api/questions/domain/maths");
             Console.WriteLine(response);
             var result = await response.Content.ReadAsAsync<List<Question>>();
+            Console.WriteLine("Questions     " + result);
+            foreach(Question q in result)
+            {
+                Console.WriteLine("Each Question ------>  " + q);
+                foreach(var x in q.OptionList)
+                {
+                    Console.WriteLine("Each Question ------>  " + x.Option);
+                }
+            }
             UserInfo userInfo = new UserInfo(_iquizEngineService, result);
             userInfo.UserId = userId;
             // Should have the logic of getting the questions sometime later
