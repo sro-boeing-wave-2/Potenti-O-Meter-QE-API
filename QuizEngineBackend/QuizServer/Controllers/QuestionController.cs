@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using QuizServer.Service;
 
 namespace QuizServer.Controllers
 {
@@ -13,10 +14,12 @@ namespace QuizServer.Controllers
     public class QuestionController : ControllerBase
     {
         private IHubContext<QuestionHub> _questionHubContext;
+        private IQuizEngineService _quizEngineService;
 
-        public QuestionController(IHubContext<QuestionHub> questionHubContext)
+        public QuestionController(IHubContext<QuestionHub> questionHubContext, IQuizEngineService quizEngineService)
         {
             _questionHubContext = questionHubContext;
+            _quizEngineService = quizEngineService;
         }
 
         public IActionResult Post()
@@ -33,6 +36,13 @@ namespace QuizServer.Controllers
         {
             _questionHubContext.Clients.All.SendAsync("endOfQuiz", "This is the end of Quiz... BYE");
             return Ok();
+        }
+
+        [HttpGet("domain/{domain}")]
+        public async Task<IActionResult> GetQuestionsBydomain()
+        {
+            var questions = await _quizEngineService.GetQuestionByDomain();
+            return Ok(questions);
         }
 
     }

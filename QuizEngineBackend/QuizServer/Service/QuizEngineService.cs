@@ -6,22 +6,41 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Text;
+using System.Net.Http.Formatting;
+
 namespace QuizServer.Service
 {
     public class QuizEngineService : IQuizEngineService
     {
         public static readonly HttpClient _client = new HttpClient();
 
-        public async Task GetQuestionByDomain()
+        public async Task<List<Question>> GetQuestionByDomain()
         {
             Console.WriteLine("thiis is inside getQuestionBy Domain");
-            var response = await _client.GetAsync("http://172.23.238.185:44334/api/questions/domain/{science}");
+            var response = await _client.GetAsync("http://localhost:44334/api/questions/domain/maths");
             Console.WriteLine(response);
-            var result = await response.Content.ReadAsStringAsync();
-            Console.WriteLine(result);
+            var result = await response.Content.ReadAsAsync<List<Question>>();
+            Console.WriteLine("Questions     " + result);
+            foreach (Question q in result)
+            {
+                Console.WriteLine("Questions     " + JsonConvert.SerializeObject(q.QuestionText));
+                foreach(var x in q.Options)
+                {
+                    Console.WriteLine(x.option);
+                }
+            }
             
-         
+            return result;
+
+            //var task = await _client.GetAsync("http://localhost:44334/api/questions/domain/maths");
+            //var contacts = task.Content.ReadAsAsync(
+            //    t => {
+            //        return t.Result.Content.ReadAsAsync<List<Question>>();
+            //    }).Unwrap().Result;
+
+
         }
+
         public async Task PostUserInfoAsync(UserInfo userinfo)
         {
             HttpRequestMessage postMessage = new HttpRequestMessage(HttpMethod.Post, "http://localhost:8083/api/userinfo")
@@ -32,9 +51,6 @@ namespace QuizServer.Service
             var responseString = await response.Content.ReadAsStringAsync();
             Console.WriteLine(responseString);
         }
-
     }
 
-
-  
 }

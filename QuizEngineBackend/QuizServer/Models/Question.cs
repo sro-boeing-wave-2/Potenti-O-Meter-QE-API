@@ -10,7 +10,7 @@ namespace QuizServer.Models
         public string QuestionId { get; set; }
         public string Domain { get; set; }
         public string QuestionText { get; set; }
-        public List<string> Options { get; set; }
+        public List<OptionList> Options { get; set; }
         public string QuestionType { get; set; }
         public string[] ConceptTags { get; set; }
         public string userResponse { get; set; }
@@ -19,5 +19,10 @@ namespace QuizServer.Models
        // public string CorrectOption{ get; set; }
     }
 
-    
+    public class OptionList
+    {
+        public string Option { get; set; }
+    }
+
+
 }

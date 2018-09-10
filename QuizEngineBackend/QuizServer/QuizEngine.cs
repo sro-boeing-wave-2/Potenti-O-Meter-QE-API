@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using QuizServer.Models;
@@ -13,6 +14,8 @@ namespace QuizServer
         private static Dictionary<string, UserInfo> _userQuizState = new Dictionary<string, UserInfo>();
 
         private IQuizEngineService _iquizEngineService;
+
+        public static readonly HttpClient _client = new HttpClient();
 
         public QuestionHub(IQuizEngineService iquizEngineService)
         {
@@ -62,18 +65,21 @@ namespace QuizServer
             // Do a post request to analytics microservice
         }
 
-        public Task StartQuiz(int userId, string domain)
+        public async Task StartQuiz(int userId, string domain)
         {
             Console.WriteLine("This is inside start" + domain);
             // Needs to generate a quizid
             int userID = userId;
-            UserInfo userInfo = new UserInfo();
+            var response = await _client.GetAsync("http://localhost:44334/api/questions/domain/maths");
+            Console.WriteLine(response);
+            var result = await response.Content.ReadAsAsync<List<Question>>();
+            UserInfo userInfo = new UserInfo(_iquizEngineService, result);
             userInfo.UserId = userId;
             // Should have the logic of getting the questions sometime later
             _userQuizState.Add(Context.ConnectionId, userInfo);
-            _iquizEngineService.GetQuestionByDomain();
+            //_iquizEngineService.GetQuestionByDomain();
             Console.WriteLine("END OF START");
-            return GetNextQuestion(null);
+            GetNextQuestion(null);
         }
     }
 }

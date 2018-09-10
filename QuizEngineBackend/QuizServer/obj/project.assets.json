@@ -5789,7 +5789,7 @@
       ]
     },
     "Microsoft.CodeAnalysis.Analyzers/1.1.0": {
-      "sha512": "HS3iRWZKcUw/8eZ/08GXKY2Bn7xNzQPzf8gRPHGSowX7u7XXu9i9YEaBeBNKUXWfI7qjvT2zXtLUvbN0hds8vg==",
+      "sha512": "3kl8a9dBcofCzshGdRBbEK4DAA57gClm/UDz6/horG6MVb7K1d2mH4W8uF3CCadI7VvgmirQBZ4be4SDyCxOZg==",
       "type": "package",
       "path": "microsoft.codeanalysis.analyzers/1.1.0",
       "files": [
@@ -9430,7 +9430,7 @@
       ]
     },
     "System.Linq.Queryable/4.0.1": {
-      "sha512": "Yn/WfYe9RoRfmSLvUt2JerP0BTGGykCZkQPgojaxgzF2N0oPo+/AhB8TXOpdCcNlrG3VRtsamtK2uzsp3cqRVw==",
+      "sha512": "+rm4dXlcQI4eSvR5YKXS+jJvRBLsAF2xRFLOJwLEP+MR3QWDdm00z2YPV2eVbbt68tC6Ogg3P4iAuXAZ74G1Hw==",
       "type": "package",
       "path": "system.linq.queryable/4.0.1",
       "files": [
@@ -12225,11 +12225,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Admin\\Documents\\UpdatedBackendQE\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServer\\QuizServer.csproj",
+      "projectUniqueName": "E:\\workspace\\Product_development\\Potenti-O-Meter-QE-API\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServer\\QuizServer.csproj",
       "projectName": "QuizServer",
-      "projectPath": "C:\\Users\\Admin\\Documents\\UpdatedBackendQE\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServer\\QuizServer.csproj",
+      "projectPath": "E:\\workspace\\Product_development\\Potenti-O-Meter-QE-API\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServer\\QuizServer.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Admin\\Documents\\UpdatedBackendQE\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServer\\obj\\",
+      "outputPath": "E:\\workspace\\Product_development\\Potenti-O-Meter-QE-API\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

@@ -8,9 +8,10 @@ namespace QuizServer.Service
 {
     public interface IQuizEngineService
     {
-       
-            Task GetQuestionByDomain();
-            Task PostUserInfoAsync(UserInfo userinfo);
-        
+
+        Task<List<Question>> GetQuestionByDomain();
+        Task PostUserInfoAsync(UserInfo userinfo);
+        //private static Random rng = new Random();
+        //void Shuffle<T>(this IList<T> list);
     }
 }

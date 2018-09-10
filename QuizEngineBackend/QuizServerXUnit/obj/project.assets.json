@@ -2,6 +2,19 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.1": {
+      "Microsoft.AspNet.WebApi.Client/5.2.6": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "10.0.1",
+          "Newtonsoft.Json.Bson": "1.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/System.Net.Http.Formatting.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/System.Net.Http.Formatting.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Authentication.Abstractions/2.1.1": {
         "type": "package",
         "dependencies": {
@@ -1166,6 +1179,19 @@
         },
         "runtime": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Newtonsoft.Json.Bson/1.0.1": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.1",
+          "Newtonsoft.Json": "10.0.1"
+        },
+        "compile": {
+          "lib/netstandard1.3/Newtonsoft.Json.Bson.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard1.3/Newtonsoft.Json.Bson.dll": {}
         }
       },
       "NuGet.Frameworks/4.7.0": {
@@ -3029,6 +3055,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
         "dependencies": {
+          "Microsoft.AspNet.WebApi.Client": "5.2.6",
           "Microsoft.AspNetCore.SignalR": "1.0.3",
           "Microsoft.NETCore.App": "2.1.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.1.1"
@@ -3043,6 +3070,22 @@
     }
   },
   "libraries": {
+    "Microsoft.AspNet.WebApi.Client/5.2.6": {
+      "sha512": "rMDlyePoxggkmN/qgha1+BR2Uy+dOr38xKCQOPfVNKGY07R2nYJGMTKJFE1XFgwD70RYUNazf2fqutjJF18XgQ==",
+      "type": "package",
+      "path": "microsoft.aspnet.webapi.client/5.2.6",
+      "files": [
+        ".signature.p7s",
+        "lib/net45/System.Net.Http.Formatting.dll",
+        "lib/net45/System.Net.Http.Formatting.xml",
+        "lib/netstandard2.0/System.Net.Http.Formatting.dll",
+        "lib/netstandard2.0/System.Net.Http.Formatting.xml",
+        "lib/portable-wp8+netcore45+net45+wp81+wpa81/System.Net.Http.Formatting.dll",
+        "lib/portable-wp8+netcore45+net45+wp81+wpa81/System.Net.Http.Formatting.xml",
+        "microsoft.aspnet.webapi.client.5.2.6.nupkg.sha512",
+        "microsoft.aspnet.webapi.client.nuspec"
+      ]
+    },
     "Microsoft.AspNetCore.Authentication.Abstractions/2.1.1": {
       "sha512": "kl1yZmNeUMm9/kWtqoOvIATBavqHPwJICl0FA9rpvNqETqeTgakAbbY25TdG82wKKbjo4LpqZ0YCHwktNPaR2Q==",
       "type": "package",
@@ -3302,7 +3345,7 @@
       ]
     },
     "Microsoft.CodeAnalysis.Analyzers/1.1.0": {
-      "sha512": "HS3iRWZKcUw/8eZ/08GXKY2Bn7xNzQPzf8gRPHGSowX7u7XXu9i9YEaBeBNKUXWfI7qjvT2zXtLUvbN0hds8vg==",
+      "sha512": "3kl8a9dBcofCzshGdRBbEK4DAA57gClm/UDz6/horG6MVb7K1d2mH4W8uF3CCadI7VvgmirQBZ4be4SDyCxOZg==",
       "type": "package",
       "path": "microsoft.codeanalysis.analyzers/1.1.0",
       "files": [
@@ -4392,7 +4435,7 @@
       ]
     },
     "Microsoft.Win32.Registry/4.0.0": {
-      "sha512": "q+eLtROUAQ3OxYA5mpQrgyFgzLQxIyrfT2eLpYX5IEPlHmIio2nh4F5bgOaQoGOV865kFKZZso9Oq9RlazvXtg==",
+      "sha512": "1EjmS6pp4U1r5zJL918LpHFD5HqAkyRzdesANxdK9aO4kEjxuOJ2QWPqKOXql5rzVMSGusBUfrc9S8NjoYjong==",
       "type": "package",
       "path": "microsoft.win32.registry/4.0.0",
       "files": [
@@ -4572,6 +4615,19 @@
         "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
         "newtonsoft.json.11.0.2.nupkg.sha512",
         "newtonsoft.json.nuspec"
+      ]
+    },
+    "Newtonsoft.Json.Bson/1.0.1": {
+      "sha512": "5PYT/IqQ+UK31AmZiSS102R6EsTo+LGTSI8bp7WAUqDKaF4wHXD8U9u4WxTI1vc64tYi++8p3dk3WWNqPFgldw==",
+      "type": "package",
+      "path": "newtonsoft.json.bson/1.0.1",
+      "files": [
+        "lib/net45/Newtonsoft.Json.Bson.dll",
+        "lib/net45/Newtonsoft.Json.Bson.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.Bson.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.Bson.xml",
+        "newtonsoft.json.bson.1.0.1.nupkg.sha512",
+        "newtonsoft.json.bson.nuspec"
       ]
     },
     "NuGet.Frameworks/4.7.0": {
@@ -5011,7 +5067,7 @@
       ]
     },
     "System.Collections.NonGeneric/4.0.1": {
-      "sha512": "hMxFT2RhhlffyCdKLDXjx8WEC5JfCvNozAZxCablAuFRH74SCV4AgzE8yJCh/73bFnEoZgJ9MJmkjQ0dJmnKqA==",
+      "sha512": "wb5HC93sCtStwJmsKQDcWC91KfqRzUZ+Ju7o32U7kbb67HLRm7ya9Wr4iZ+O9E5C/WLRefn0EXQrjJyej+aAXA==",
       "type": "package",
       "path": "system.collections.nongeneric/4.0.1",
       "files": [
@@ -5574,7 +5630,7 @@
       ]
     },
     "System.Diagnostics.Process/4.1.0": {
-      "sha512": "mpVZ5bnlSs3tTeJ6jYyDJEIa6tavhAd88lxq1zbYhkkCu0Pno2+gHXcvZcoygq2d8JxW3gojXqNJMTAshduqZA==",
+      "sha512": "Un3D7yYZpj+bOKhrmXuvGpFS6dzET8yL3NzYXd6dloEh/oSB8S0rKb9ZrTo4dt+cwTmohBj0vqassWDtQbOS2w==",
       "type": "package",
       "path": "system.diagnostics.process/4.1.0",
       "files": [
@@ -5759,7 +5815,7 @@
       ]
     },
     "System.Diagnostics.TraceSource/4.0.0": {
-      "sha512": "6WVCczFZKXwpWpzd/iJkYnsmWTSFFiU24Xx/YdHXBcu+nFI/ehTgeqdJQFbtRPzbrO3KtRNjvkhtj4t5/WwWsA==",
+      "sha512": "kXo9KAscOQPPBxcg6KXuJB83qg4pEwlp+/vaC7rhcwF4gBf0jrNc15t0dc7aBYpb7mu5KFwyIQdPDE53cRJTyg==",
       "type": "package",
       "path": "system.diagnostics.tracesource/4.0.0",
       "files": [
@@ -7451,7 +7507,7 @@
       ]
     },
     "System.Runtime.Loader/4.0.0": {
-      "sha512": "4UN78GOVU/mbDFcXkEWtetJT/sJ0yic2gGk1HSlSpWI0TDf421xnrZTDZnwNBapk1GQeYN7U1lTj/aQB1by6ow==",
+      "sha512": "nV5mxLFh9JmZCahA4880GDLfbn0lm75xSpmEn6ff+5mVBPkYN8Ry0CWwobQ5VBMKJgD5NNf0FrQlJAF2XzbLag==",
       "type": "package",
       "path": "system.runtime.loader/4.0.0",
       "files": [
@@ -7587,7 +7643,7 @@
       ]
     },
     "System.Runtime.Serialization.Primitives/4.1.1": {
-      "sha512": "HZ6Du5QrTG8MNJbf4e4qMO3JRAkIboGT5Fk804uZtg3Gq516S7hAqTm2UZKUHa7/6HUGdVy3AqMQKbns06G/cg==",
+      "sha512": "5ud2PvZBXvhAbXdjPI9YN/wSAzNNJIXFENavjdqSsHzxa4nkuhJBlW1PmyWJaKrcxSljZgSqc5dC/ShKP74pqA==",
       "type": "package",
       "path": "system.runtime.serialization.primitives/4.1.1",
       "files": [
@@ -8419,7 +8475,7 @@
       ]
     },
     "System.Threading.ThreadPool/4.0.10": {
-      "sha512": "IMXgB5Vf/5Qw1kpoVgJMOvUO1l32aC+qC3OaIZjWJOjvcxuxNWOK2ZTWWYXfij22NHxT2j1yWX5vlAeQWld9vA==",
+      "sha512": "CYw80qheUs5KHWgC0BVWJ47leLno9kUffSSrzSf2LhqXL8SZRUrfenlGKeCZr/FQ0rQcYo8DCIEDfzDQM3SiLw==",
       "type": "package",
       "path": "system.threading.threadpool/4.0.10",
       "files": [
@@ -8959,11 +9015,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Admin\\Documents\\UpdatedBackendQE\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServerXUnit\\QuizServerXUnit.csproj",
+      "projectUniqueName": "E:\\workspace\\Product_development\\Potenti-O-Meter-QE-API\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServerXUnit\\QuizServerXUnit.csproj",
       "projectName": "QuizServerXUnit",
-      "projectPath": "C:\\Users\\Admin\\Documents\\UpdatedBackendQE\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServerXUnit\\QuizServerXUnit.csproj",
+      "projectPath": "E:\\workspace\\Product_development\\Potenti-O-Meter-QE-API\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServerXUnit\\QuizServerXUnit.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Admin\\Documents\\UpdatedBackendQE\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServerXUnit\\obj\\",
+      "outputPath": "E:\\workspace\\Product_development\\Potenti-O-Meter-QE-API\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServerXUnit\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -8982,8 +9038,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "C:\\Users\\Admin\\Documents\\UpdatedBackendQE\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServer\\QuizServer.csproj": {
-              "projectPath": "C:\\Users\\Admin\\Documents\\UpdatedBackendQE\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServer\\QuizServer.csproj"
+            "E:\\workspace\\Product_development\\Potenti-O-Meter-QE-API\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServer\\QuizServer.csproj": {
+              "projectPath": "E:\\workspace\\Product_development\\Potenti-O-Meter-QE-API\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServer\\QuizServer.csproj"
             }
           }
         }
