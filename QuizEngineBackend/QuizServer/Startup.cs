@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.SignalR;
 using QuizServer.Service;
+using QuizServer.Data;
 
 namespace QuizServer
 {
@@ -34,10 +35,22 @@ namespace QuizServer
                 .AllowAnyHeader()
                 .AllowAnyMethod()
             ));
+
+
+            services.Configure<Settings>(Options =>
+            {
+                Options.ConnectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
+                Options.Database = Configuration.GetSection("MongoConnection:Database").Value;
+            });
+
             services.AddSignalR();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddTransient<IQuizEngineService,QuizEngineService>();
+            services.AddTransient<IQuizEngineService, QuizEngineService>();
+            services.AddTransient<IResultContext,ResultContext>();
+            services.AddTransient<IResultService, ResultService>();
+            
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,12 +60,18 @@ namespace QuizServer
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+            //else
+            //{
+            //    app.UseHsts();
+            //}
+
             app.UseCors("CorsPolicy");
             app.UseSignalR(routes =>
             {
                 routes.MapHub<QuestionHub>("/question");
             });
+
+            //app.UseHttpsRedirection();
             app.UseMvc();
         }
     }

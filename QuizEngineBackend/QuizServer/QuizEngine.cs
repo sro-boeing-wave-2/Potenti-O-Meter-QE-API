@@ -15,12 +15,14 @@ namespace QuizServer
 
         private IQuizEngineService _iquizEngineService;
 
+        private IResultService _resultService;
         public static readonly HttpClient _client = new HttpClient();
 
-        public QuestionHub(IQuizEngineService iquizEngineService)
+        public QuestionHub(IQuizEngineService iquizEngineService, IResultService resultService)
         {
 
             _iquizEngineService = iquizEngineService;
+            _resultService = resultService;
         }
 
         public Task GetNextQuestion(Question question)
@@ -33,14 +35,20 @@ namespace QuizServer
            
             if (question != null)
             {
+                
                 int indexOfAttemptedQuestion = userInfo.QuestionBank.FindIndex(q => q.QuestionId == question.QuestionId);
                 userInfo.QuestionBank[indexOfAttemptedQuestion].userResponse = question.userResponse;
+               // userInfo.QuestionBank[indexOfAttemptedQuestion].
                 userInfo.CurrentQuestionIndex += 1;
             }
 
             if (userInfo.CurrentQuestionIndex < userInfo.QuestionBank.Count)
             {
-                var nextQuestion = userInfo.QuestionBank[userInfo.CurrentQuestionIndex];
+               var nextQuestion = userInfo.QuestionBank[userInfo.CurrentQuestionIndex];
+               //Question nextQuestion = (from q in userInfo.QuestionBank
+               //                             where q.DifficultyLevel == userInfo.MaximumDifficaultyLevelReached
+               //                             select q).First();
+              //String nextQuestion.CorrectOption
                 return Clients.Caller.SendAsync("NextQuestion", nextQuestion);
             }
             else
@@ -59,8 +67,11 @@ namespace QuizServer
             userInfo.QuestionBank[indexOfAttemptedQuestion].userResponse = question.userResponse;
             Console.WriteLine("userid in the serve " + userInfo.UserId);
             Console.WriteLine("user info " + (userInfo));
-
-            return Clients.Caller.SendAsync("EndQuiz", userInfo);
+            _resultService.PostUserInfo(userInfo);
+            Console.WriteLine("========================== between two ================================");
+            _iquizEngineService.PostUserInfoAsync(userInfo);
+            
+           return Clients.Caller.SendAsync("EndQuiz", userInfo);
             // return _userQuizState.GetValueOrDefault(Context.ConnectionId);
 
             // Also store a copy of the UserQuizState in the Database
@@ -71,24 +82,28 @@ namespace QuizServer
         {
             Console.WriteLine("This is inside start" + domain);
             // Needs to generate a quizid
-            int userID = userId;
-            var response = await _client.GetAsync("http://localhost:44334/api/questions/domain/maths");
-            Console.WriteLine(response);
-            var result = await response.Content.ReadAsAsync<List<Question>>();
-            Console.WriteLine("Questions     " + result);
-            foreach(Question q in result)
-            {
-                Console.WriteLine("Each Question ------>  " + q);
-                foreach(var x in q.OptionList)
-                {
-                    Console.WriteLine("Each Question ------>  " + x.Option);
-                }
-            }
-            UserInfo userInfo = new UserInfo(_iquizEngineService, result);
+            //int userID = userId;
+            //var response = await _client.GetAsync("http://localhost:44334/api/questions/domain/science");
+            //Console.WriteLine(response);
+            //var result = await response.Content.ReadAsAsync<List<Question>>();
+            //Console.WriteLine("Questions     " + result);
+            //foreach(Question q in result)
+            //{
+            //    Console.WriteLine("Each Question ------>  " + q);
+            //    foreach(var x in q.OptionList)
+            //    {
+            //        Console.WriteLine("Each Question ------>  " + x.Option);
+            //    }
+            //}
+            UserInfo userInfo = new UserInfo();
+            //UserInfo userInfo = new UserInfo(_iquizEngineService, result);
             userInfo.UserId = userId;
+            userInfo.DomainName = domain;
+            //userInfo.MaximumDifficaultyLevelReached = 3;
             // Should have the logic of getting the questions sometime later
             _userQuizState.Add(Context.ConnectionId, userInfo);
-            //_iquizEngineService.GetQuestionByDomain();
+            userInfo.QuestionBank = await _iquizEngineService.GetQuestionByDomain();
+            userInfo.QuestionsAttempted = await _iquizEngineService.GetQuestionByDomain();
             Console.WriteLine("END OF START");
             GetNextQuestion(null);
         }

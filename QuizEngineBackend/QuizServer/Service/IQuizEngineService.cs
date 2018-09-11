@@ -10,7 +10,7 @@ namespace QuizServer.Service
     {
 
         Task<List<Question>> GetQuestionByDomain();
-        Task PostUserInfoAsync(UserInfo userinfo);
+        Task PostUserInfoAsync(UserInfo userInfo);
         //private static Random rng = new Random();
         //void Shuffle<T>(this IList<T> list);
     }

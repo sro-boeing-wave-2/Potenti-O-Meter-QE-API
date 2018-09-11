@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using QuizServer.Service;
 
 namespace QuizServer.Models
@@ -10,13 +12,17 @@ namespace QuizServer.Models
     {
         public int UserId { get; set; }
 
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string QuizId { get; set; }
 
         public string DomainName { get; set; }
 
         public int CurrentQuestionIndex { get; set; }
 
-        public List<Question> QuestionsAttempted { get; set; }
+       // public int MaximumDifficaultyLevelReached { get; set; }
+
+        public List<Question> QuestionsAttempted = new List<Question>();
 
         public List<Question> QuestionBank = new List<Question>();
 
@@ -77,12 +83,17 @@ namespace QuizServer.Models
         //    }
         //};
 
-        private IQuizEngineService _quizEngineService;
-        public UserInfo(IQuizEngineService quizEngineService, List<Question> questions)
-        {
-            _quizEngineService = quizEngineService;
-            //QuestionBank = _quizEngineService.GetQuestionByDomain();
-            this.QuestionBank = questions;
-        }
+        //private IQuizEngineService _quizEngineService;
+        //public UserInfo(IQuizEngineService quizEngineService, List<Question> questions)
+        //{
+        //    _quizEngineService = quizEngineService;
+        //    //QuestionBank = _quizEngineService.GetQuestionByDomain();
+        //    this.QuestionBank = questions;
+        //    this.QuestionsAttempted = questions;
+        //}
+
+        //public UserInfo()
+        //{
+        //}
     }
 }
