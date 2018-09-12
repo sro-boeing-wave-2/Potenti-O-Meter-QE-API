@@ -52,7 +52,7 @@ namespace QuizServer.Controllers
             return Ok(questions);
         }
 
-        [HttpGet]
+        [HttpGet("getall")]
         public async Task<IActionResult> GetAllEntries()
         {
             var entries = await _resultService.GetAll();

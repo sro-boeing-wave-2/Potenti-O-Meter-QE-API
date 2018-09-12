@@ -20,7 +20,7 @@
     "QuizServer": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/result",
+      "launchUrl": "api/question",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

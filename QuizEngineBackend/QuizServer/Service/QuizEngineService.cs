@@ -14,10 +14,11 @@ namespace QuizServer.Service
     {
         public static readonly HttpClient _client = new HttpClient();
 
-        public async Task<List<Question>> GetQuestionByDomain()
+        public async Task<List<Question>> GetQuestionByDomain(int userId, string domain)
         {
             Console.WriteLine("thiis is inside getQuestionBy Domain");
-            var response = await _client.GetAsync("http://localhost:44334/api/questions/domain/science");
+            var response = await _client.GetAsync("http://localhost:44334/api/questions/domain/" + domain);
+            //var response = await _client.GetAsync("http://localhost:44334/api/questions/domain/science");
             Console.WriteLine(response);
 
             //response.options.toString()=>

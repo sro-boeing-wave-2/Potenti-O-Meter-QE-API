@@ -16,6 +16,7 @@ namespace QuizServer
         private IQuizEngineService _iquizEngineService;
 
         private IResultService _resultService;
+
         public static readonly HttpClient _client = new HttpClient();
 
         public QuestionHub(IQuizEngineService iquizEngineService, IResultService resultService)
@@ -102,8 +103,8 @@ namespace QuizServer
             //userInfo.MaximumDifficaultyLevelReached = 3;
             // Should have the logic of getting the questions sometime later
             _userQuizState.Add(Context.ConnectionId, userInfo);
-            userInfo.QuestionBank = await _iquizEngineService.GetQuestionByDomain();
-            userInfo.QuestionsAttempted = await _iquizEngineService.GetQuestionByDomain();
+            userInfo.QuestionBank = await _iquizEngineService.GetQuestionByDomain(userId, domain);
+            userInfo.QuestionsAttempted = await _iquizEngineService.GetQuestionByDomain(userId, domain);
             Console.WriteLine("END OF START");
             GetNextQuestion(null);
         }

@@ -23,10 +23,9 @@ namespace QuizServer.Service
 
         public async Task<UserInfo> GetByID(int id)
         {
-            //var notes = new List<Note>();
-            var note = await _context.ResultCollection.Find(t => t.UserId == id).FirstOrDefaultAsync();
+            var userInfo = await _context.ResultCollection.Find(t => t.UserId == id).FirstOrDefaultAsync();
 
-            return note;
+            return userInfo;
         }
 
         public async Task<List<UserInfo>> GetAll()
