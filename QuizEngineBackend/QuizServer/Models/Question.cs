@@ -22,6 +22,7 @@ namespace QuizServer.Models
         public int DifficultyLevel { get; set; }
         public bool IsCorrect { get; set; }
         public string CorrectOption{ get; set; }
+        //public List<Options> CorrectOption { get; set; }
     }
 
     public class Options

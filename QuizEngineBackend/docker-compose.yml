@@ -11,4 +11,4 @@ services:
         container_name: quizenginemongo
         image: "mongo:latest"
         ports:
-            - "27017:27017"
+            - "9007:27017"

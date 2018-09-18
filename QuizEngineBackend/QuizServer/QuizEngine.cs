@@ -34,15 +34,28 @@ namespace QuizServer
             {
 
                 int indexOfAttemptedQuestion = userInfo.QuestionBank.FindIndex(q => q.QuestionId == question.QuestionId);
+                Console.WriteLine("Question response is " + question.userResponse);
+                Console.WriteLine("correct option is " + userInfo.QuestionBank[indexOfAttemptedQuestion].CorrectOption);
+                //for(var i=0; i<userInfo.QuestionBank[indexOfAttemptedQuestion].CorrectOption.Count;i++)
+                //{
+                //    if (userInfo.QuestionBank[indexOfAttemptedQuestion].CorrectOption[i].Option == question.userResponse[i])
+                //    {
+
+                //            userInfo.MaximumDifficaultyLevelReached++;
+                //            userInfo.QuestionBank[indexOfAttemptedQuestion].IsCorrect = true;
+                //            userInfo.QuestionBank.Remove(userInfo.QuestionBank[indexOfAttemptedQuestion]);
+
+                //    }
+                //}
                 if (userInfo.QuestionBank[indexOfAttemptedQuestion].CorrectOption == question.userResponse)
                 {
-                    userInfo.MaximumDifficaultyLevelReached = userInfo.MaximumDifficaultyLevelReached + 10;
+                    userInfo.MaximumDifficaultyLevelReached++;
                     userInfo.QuestionBank[indexOfAttemptedQuestion].IsCorrect = true;
+                    userInfo.QuestionBank.Remove(userInfo.QuestionBank[indexOfAttemptedQuestion]);
                 }
                 else
                 {
                     userInfo.MaximumDifficaultyLevelReached--;
-
                     userInfo.QuestionBank[indexOfAttemptedQuestion].IsCorrect = false;
                 }
                 userInfo.QuestionBank[indexOfAttemptedQuestion].userResponse = question.userResponse;
@@ -54,8 +67,10 @@ namespace QuizServer
                 var nextQuestion = (from q in userInfo.QuestionBank
                                     where q.DifficultyLevel == userInfo.MaximumDifficaultyLevelReached
                                     select q).First();
+                Console.WriteLine("Maximum difficulty level reached " + userInfo.MaximumDifficaultyLevelReached);
+                Console.WriteLine("difficulty level of the question sending " + nextQuestion.DifficultyLevel);
                 //var save = nextQuestion.CorrectOption;
-                nextQuestion.CorrectOption = null;
+                //nextQuestion.CorrectOption = null;
                 return Clients.Caller.SendAsync("NextQuestion", nextQuestion);
             }
             else
