@@ -81,7 +81,7 @@ namespace QuizServer
 
         public async Task StartQuiz(int userId, string domain)
         {
-            Console.WriteLine("This is inside start" + domain);
+            Console.WriteLine("This is inside start --> " + domain);
             // Needs to generate a quizid
             //int userID = userId;
             //var response = await _client.GetAsync("http://localhost:44334/api/questions/domain/science");

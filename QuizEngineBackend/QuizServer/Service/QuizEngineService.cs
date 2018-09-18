@@ -17,8 +17,8 @@ namespace QuizServer.Service
         public async Task<List<Question>> GetQuestionByDomain(int userId, string domain)
         {
             Console.WriteLine("thiis is inside getQuestionBy Domain");
-            var response = await _client.GetAsync("http://localhost:44334/api/questions/domain/" + domain);
-            //var response = await _client.GetAsync("http://localhost:44334/api/questions/domain/science");
+            var response = await _client.GetAsync("http://172.23.238.185:44334/api/questions/domain/" + domain);
+            // var response = await _client.GetAsync("http://localhost:5060/api/questions/domain/science");
             Console.WriteLine(response);
 
             //response.options.toString()=>
@@ -33,7 +33,6 @@ namespace QuizServer.Service
             //        Console.WriteLine(x.Option.ToString());
             //    }
             //}
-
             return result;
 
             //var task = await _client.GetAsync("http://localhost:44334/api/questions/domain/maths");
@@ -41,11 +40,7 @@ namespace QuizServer.Service
             //    t => {
             //        return t.Result.Content.ReadAsAsync<List<Question>>();
             //    }).Unwrap().Result;
-
-
         }
-
-
 
         public async Task PostUserInfoAsync(UserInfo userInfo)
         {
@@ -85,23 +80,19 @@ namespace QuizServer.Service
             //        QuestionType = "MCQ"
             //    }
             //    }
-
             //};
-
             Console.WriteLine("UserINFO =====>  " + JsonConvert.SerializeObject(userInfo));
             //HttpRequestMessage postMessage = new HttpRequestMessage(HttpMethod.Post, "https://localhost:44343/api/QuizResult")
             //{
             //    Content = new StringContent(JsonConvert.SerializeObject(userInfo), UnicodeEncoding.UTF8, "application/json")
             //};
             //Console.WriteLine("Post Message  -- > " + postMessage);
-            var response = await _client.PostAsync("http://172.23.238.183/api/QuizResult", new StringContent(JsonConvert.SerializeObject(userInfo), UnicodeEncoding.UTF8, "application/json"));
+            var response = await _client.PostAsync("http://localhost:5000/api/QuizResult", new StringContent(JsonConvert.SerializeObject(userInfo), UnicodeEncoding.UTF8, "application/json"));
             Console.WriteLine("RESPONSE -- > " + response);
             var responseString = await response.Content.ReadAsStringAsync();
             var result = await response.Content.ReadAsAsync<UserInfo>();
             Console.WriteLine("Response String   " + responseString);
             Console.WriteLine("Result   " + result);
-
         }
     }
-
 }

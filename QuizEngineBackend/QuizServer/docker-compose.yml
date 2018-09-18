@@ -1,0 +1,17 @@
+version: "3"
+services:
+    web:
+        build: .
+        container_name: docker-mongo-QuizEngine-new
+        build: .
+        ports:
+            - "8010:80"
+        depends_on:
+            - db
+        network_mode: potentiometer
+    db:
+        container_name: quizenginemongo-new
+        image: "mongo:latest"
+        ports:
+            - "27017:27017"
+        network_mode: potentiometer

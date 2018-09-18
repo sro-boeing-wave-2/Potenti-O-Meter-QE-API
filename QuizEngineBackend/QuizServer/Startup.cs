@@ -43,16 +43,16 @@ namespace QuizServer
                 Options.Database = Configuration.GetSection("MongoConnection:Database").Value;
             });
 
-            services.AddSignalR();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddTransient<IQuizEngineService, QuizEngineService>();
             services.AddTransient<IResultContext,ResultContext>();
             services.AddTransient<IResultService, ResultService>();
+            services.AddSignalR();
             
             
         }
-
+        
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
@@ -60,18 +60,22 @@ namespace QuizServer
             {
                 app.UseDeveloperExceptionPage();
             }
-            //else
-            //{
-            //    app.UseHsts();
-            //}
+            else
+            {
+                app.UseHsts();
+            }
 
             app.UseCors("CorsPolicy");
             app.UseSignalR(routes =>
             {
                 routes.MapHub<QuestionHub>("/question");
             });
+            app.UseHttpsRedirection();
 
-            //app.UseHttpsRedirection();
+
+            //var hubConfiguration = new HubConfiguration();
+            //hubConfiguration.EnableDetailedErrors = true;
+            //app.MapSignalR(hubConfiguration);
             app.UseMvc();
         }
     }

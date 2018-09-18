@@ -20,11 +20,11 @@
     "QuizServer": {
       "commandName": "Project",
       "launchBrowser": true,
+      "applicationUrl": "http://0.0.0.0:9100",
       "launchUrl": "api/question",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "https://localhost:8090;http://localhost:9100"
+      }
     }
   }
 }
