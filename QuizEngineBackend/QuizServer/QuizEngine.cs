@@ -28,28 +28,34 @@ namespace QuizServer
 
         public Task GetNextQuestion(Question question)
         {
-            Console.WriteLine("connection ID " + Context.ConnectionId);
-            // Update the user's response in the Question present in the Question Bank
-            var userInfo = _userQuizState.GetValueOrDefault(Context.ConnectionId);
-            Console.WriteLine("Inside get next question");
-            // If the question exists then update the response of the question 
            
+            var userInfo = _userQuizState.GetValueOrDefault(Context.ConnectionId);
             if (question != null)
             {
-                
+
                 int indexOfAttemptedQuestion = userInfo.QuestionBank.FindIndex(q => q.QuestionId == question.QuestionId);
+                if (userInfo.QuestionBank[indexOfAttemptedQuestion].CorrectOption == question.userResponse)
+                {
+                    userInfo.MaximumDifficaultyLevelReached = userInfo.MaximumDifficaultyLevelReached + 10;
+                    userInfo.QuestionBank[indexOfAttemptedQuestion].IsCorrect = true;
+                }
+                else
+                {
+                    userInfo.MaximumDifficaultyLevelReached--;
+
+                    userInfo.QuestionBank[indexOfAttemptedQuestion].IsCorrect = false;
+                }
                 userInfo.QuestionBank[indexOfAttemptedQuestion].userResponse = question.userResponse;
-               // userInfo.QuestionBank[indexOfAttemptedQuestion].
+                userInfo.QuestionsAttempted.Add(question);
                 userInfo.CurrentQuestionIndex += 1;
             }
-
             if (userInfo.CurrentQuestionIndex < userInfo.QuestionBank.Count)
             {
-               var nextQuestion = userInfo.QuestionBank[userInfo.CurrentQuestionIndex];
-               //Question nextQuestion = (from q in userInfo.QuestionBank
-               //                             where q.DifficultyLevel == userInfo.MaximumDifficaultyLevelReached
-               //                             select q).First();
-              //String nextQuestion.CorrectOption
+                var nextQuestion = (from q in userInfo.QuestionBank
+                                    where q.DifficultyLevel == userInfo.MaximumDifficaultyLevelReached
+                                    select q).First();
+                //var save = nextQuestion.CorrectOption;
+                nextQuestion.CorrectOption = null;
                 return Clients.Caller.SendAsync("NextQuestion", nextQuestion);
             }
             else
@@ -59,53 +65,28 @@ namespace QuizServer
             }
         }
 
+
         public Task EndQuiz(Question question)
         {
-
             UserInfo userInfo = _userQuizState.GetValueOrDefault(Context.ConnectionId);
-            int indexOfAttemptedQuestion = userInfo.QuestionBank.FindIndex(q => q.QuestionId == question.QuestionId);
-            Console.WriteLine("Inside ENDQUIZ indexOfAttemptedQuestion " + indexOfAttemptedQuestion);
+            int indexOfAttemptedQuestion = userInfo.QuestionBank.FindIndex(q => q.QuestionId == question.QuestionId);          
             userInfo.QuestionBank[indexOfAttemptedQuestion].userResponse = question.userResponse;
-            Console.WriteLine("userid in the serve " + userInfo.UserId);
-            Console.WriteLine("user info " + (userInfo));
-            _resultService.PostUserInfo(userInfo);
-            Console.WriteLine("========================== between two ================================");
+            userInfo.QuestionsAttempted.Add(question);           
+            _resultService.PostUserInfo(userInfo);          
+            userInfo.QuestionBank = null;
             _iquizEngineService.PostUserInfoAsync(userInfo);
-            
-           return Clients.Caller.SendAsync("EndQuiz", userInfo);
-            // return _userQuizState.GetValueOrDefault(Context.ConnectionId);
-
-            // Also store a copy of the UserQuizState in the Database
-            // Do a post request to analytics microservice
+            return Clients.Caller.SendAsync("EndQuiz", userInfo);
         }
 
         public async Task StartQuiz(int userId, string domain)
         {
-            Console.WriteLine("This is inside start --> " + domain);
-            // Needs to generate a quizid
-            //int userID = userId;
-            //var response = await _client.GetAsync("http://localhost:44334/api/questions/domain/science");
-            //Console.WriteLine(response);
-            //var result = await response.Content.ReadAsAsync<List<Question>>();
-            //Console.WriteLine("Questions     " + result);
-            //foreach(Question q in result)
-            //{
-            //    Console.WriteLine("Each Question ------>  " + q);
-            //    foreach(var x in q.OptionList)
-            //    {
-            //        Console.WriteLine("Each Question ------>  " + x.Option);
-            //    }
-            //}
-            UserInfo userInfo = new UserInfo();
-            //UserInfo userInfo = new UserInfo(_iquizEngineService, result);
+          
+            UserInfo userInfo = new UserInfo();          
             userInfo.UserId = userId;
             userInfo.DomainName = domain;
-            //userInfo.MaximumDifficaultyLevelReached = 3;
-            // Should have the logic of getting the questions sometime later
+            userInfo.MaximumDifficaultyLevelReached = 3;           
             _userQuizState.Add(Context.ConnectionId, userInfo);
-            userInfo.QuestionBank = await _iquizEngineService.GetQuestionByDomain(userId, domain);
-            userInfo.QuestionsAttempted = await _iquizEngineService.GetQuestionByDomain(userId, domain);
-            Console.WriteLine("END OF START");
+            userInfo.QuestionBank = await _iquizEngineService.GetQuestionByDomain(domain);
             GetNextQuestion(null);
         }
     }

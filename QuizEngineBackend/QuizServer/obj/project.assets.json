@@ -6922,7 +6922,7 @@
       ]
     },
     "Microsoft.CodeAnalysis.Analyzers/1.1.0": {
-      "sha512": "3kl8a9dBcofCzshGdRBbEK4DAA57gClm/UDz6/horG6MVb7K1d2mH4W8uF3CCadI7VvgmirQBZ4be4SDyCxOZg==",
+      "sha512": "HS3iRWZKcUw/8eZ/08GXKY2Bn7xNzQPzf8gRPHGSowX7u7XXu9i9YEaBeBNKUXWfI7qjvT2zXtLUvbN0hds8vg==",
       "type": "package",
       "path": "microsoft.codeanalysis.analyzers/1.1.0",
       "files": [
@@ -10135,7 +10135,7 @@
       ]
     },
     "System.Diagnostics.TraceSource/4.0.0": {
-      "sha512": "kXo9KAscOQPPBxcg6KXuJB83qg4pEwlp+/vaC7rhcwF4gBf0jrNc15t0dc7aBYpb7mu5KFwyIQdPDE53cRJTyg==",
+      "sha512": "6WVCczFZKXwpWpzd/iJkYnsmWTSFFiU24Xx/YdHXBcu+nFI/ehTgeqdJQFbtRPzbrO3KtRNjvkhtj4t5/WwWsA==",
       "type": "package",
       "path": "system.diagnostics.tracesource/4.0.0",
       "files": [
@@ -10898,7 +10898,7 @@
       ]
     },
     "System.Linq.Queryable/4.0.1": {
-      "sha512": "+rm4dXlcQI4eSvR5YKXS+jJvRBLsAF2xRFLOJwLEP+MR3QWDdm00z2YPV2eVbbt68tC6Ogg3P4iAuXAZ74G1Hw==",
+      "sha512": "Yn/WfYe9RoRfmSLvUt2JerP0BTGGykCZkQPgojaxgzF2N0oPo+/AhB8TXOpdCcNlrG3VRtsamtK2uzsp3cqRVw==",
       "type": "package",
       "path": "system.linq.queryable/4.0.1",
       "files": [
@@ -14202,7 +14202,8 @@
       "Microsoft.AspNetCore.SignalR >= 1.1.0-preview2-35157",
       "Microsoft.NETCore.App >= 2.1.0",
       "MongoDB.Bson >= 2.7.0",
-      "MongoDB.Driver >= 2.7.0"
+      "MongoDB.Driver >= 2.7.0",
+      "System.Reflection.Emit.Lightweight >= 4.3.0"
     ]
   },
   "packageFolders": {
@@ -14212,11 +14213,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\workspace\\Product_development\\Potenti-O-Meter-QE-API\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServer\\QuizServer.csproj",
+      "projectUniqueName": "C:\\Users\\Admin\\Desktop\\18-BE\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServer\\QuizServer.csproj",
       "projectName": "QuizServer",
-      "projectPath": "E:\\workspace\\Product_development\\Potenti-O-Meter-QE-API\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServer\\QuizServer.csproj",
+      "projectPath": "C:\\Users\\Admin\\Desktop\\18-BE\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServer\\QuizServer.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "E:\\workspace\\Product_development\\Potenti-O-Meter-QE-API\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServer\\obj\\",
+      "outputPath": "C:\\Users\\Admin\\Desktop\\18-BE\\Potenti-O-Meter-QE-API\\QuizEngineBackend\\QuizServer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -14268,6 +14269,10 @@
           "MongoDB.Driver": {
             "target": "Package",
             "version": "[2.7.0, )"
+          },
+          "System.Reflection.Emit.Lightweight": {
+            "target": "Package",
+            "version": "[4.3.0, )"
           }
         },
         "imports": [

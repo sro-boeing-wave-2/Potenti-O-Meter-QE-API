@@ -20,13 +20,12 @@ namespace QuizServer.Models
 
         public int CurrentQuestionIndex { get; set; }
 
-       // public int MaximumDifficaultyLevelReached { get; set; }
+        public int MaximumDifficaultyLevelReached { get; set; }
 
         public List<Question> QuestionsAttempted = new List<Question>();
 
         public List<Question> QuestionBank = new List<Question>();
 
-        //public List<Question> RandomisedQuestionBank = randomiseList(QuestionBank);
 
         //public List<Question> QuestionBank = new List<Question>()
         //{

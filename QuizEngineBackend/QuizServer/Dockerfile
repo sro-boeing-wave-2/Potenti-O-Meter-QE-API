@@ -12,7 +12,7 @@ RUN dotnet publish -c Release -o out
 # Build runtime image
 FROM microsoft/dotnet:aspnetcore-runtime
 WORKDIR /app
-RUN curl -X GET http://172.23.238.232:8010/api/values
+#RUN curl -X GET http://172.23.238.232:8010/api/values
 EXPOSE 80
 COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "QuizServer.dll"]

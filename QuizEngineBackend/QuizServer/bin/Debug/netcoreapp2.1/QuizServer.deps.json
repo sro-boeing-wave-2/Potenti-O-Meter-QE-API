@@ -28,7 +28,8 @@
           "Microsoft.AspNetCore.SignalR": "1.1.0-preview2-35157",
           "Microsoft.NETCore.App": "2.1.0",
           "MongoDB.Bson": "2.7.0",
-          "MongoDB.Driver": "2.7.0"
+          "MongoDB.Driver": "2.7.0",
+          "System.Reflection.Emit.Lightweight": "4.3.0"
         },
         "runtime": {
           "QuizServer.dll": {}
@@ -4393,7 +4394,7 @@
     "System.Diagnostics.TraceSource/4.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-kXo9KAscOQPPBxcg6KXuJB83qg4pEwlp+/vaC7rhcwF4gBf0jrNc15t0dc7aBYpb7mu5KFwyIQdPDE53cRJTyg==",
+      "sha512": "sha512-6WVCczFZKXwpWpzd/iJkYnsmWTSFFiU24Xx/YdHXBcu+nFI/ehTgeqdJQFbtRPzbrO3KtRNjvkhtj4t5/WwWsA==",
       "path": "system.diagnostics.tracesource/4.0.0",
       "hashPath": "system.diagnostics.tracesource.4.0.0.nupkg.sha512"
     },
@@ -5058,7 +5059,7 @@
     "Microsoft.CodeAnalysis.Analyzers/1.1.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-3kl8a9dBcofCzshGdRBbEK4DAA57gClm/UDz6/horG6MVb7K1d2mH4W8uF3CCadI7VvgmirQBZ4be4SDyCxOZg==",
+      "sha512": "sha512-HS3iRWZKcUw/8eZ/08GXKY2Bn7xNzQPzf8gRPHGSowX7u7XXu9i9YEaBeBNKUXWfI7qjvT2zXtLUvbN0hds8vg==",
       "path": "microsoft.codeanalysis.analyzers/1.1.0",
       "hashPath": "microsoft.codeanalysis.analyzers.1.1.0.nupkg.sha512"
     },
@@ -5989,7 +5990,7 @@
     "System.Linq.Queryable/4.0.1": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-+rm4dXlcQI4eSvR5YKXS+jJvRBLsAF2xRFLOJwLEP+MR3QWDdm00z2YPV2eVbbt68tC6Ogg3P4iAuXAZ74G1Hw==",
+      "sha512": "sha512-Yn/WfYe9RoRfmSLvUt2JerP0BTGGykCZkQPgojaxgzF2N0oPo+/AhB8TXOpdCcNlrG3VRtsamtK2uzsp3cqRVw==",
       "path": "system.linq.queryable/4.0.1",
       "hashPath": "system.linq.queryable.4.0.1.nupkg.sha512"
     },
