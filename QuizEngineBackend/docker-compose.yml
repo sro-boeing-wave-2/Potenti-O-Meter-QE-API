@@ -7,8 +7,10 @@ services:
             - "8010:80"
         depends_on:
             - db
+        network_mode: potentiometer
     db:
         container_name: quizenginemongo
         image: "mongo:latest"
         ports:
             - "9007:27017"
+        network_mode: potentiometer
