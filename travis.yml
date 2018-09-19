@@ -10,3 +10,5 @@ dotnet: 2.1
 script:
  - dotnet restore QuizEngineBackend/
  - dotnet test QuizEngineBackend/QuizServerXUnit
+after_success:
+  - /bin/bash ./deploy.sh
