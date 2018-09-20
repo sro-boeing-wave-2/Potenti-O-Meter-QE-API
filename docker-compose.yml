@@ -1,16 +1,19 @@
 version: "3"
 services:
     web:
-        container_name: docker-mongo-QuizEngine
         build: ./QuizEngineBackend/QuizServer
-        ports:
-            - "8010:80"
+        # ports:
+        #     - "8010:80"
         depends_on:
             - db
-        network_mode: potentiometer
+        # network_mode: potentiometer
+        expose:
+            - "80"
+        labels:
+            - "SERVICE_NAME=QuizEngine"
+            - "SERVICE_TAGS=QuizEngineTag"
     db:
-        container_name: quizenginemongo
         image: "mongo:latest"
-        ports:
-            - "9007:27017"
-        network_mode: potentiometer
+        # ports:
+        #     - "9007:27017"
+        # network_mode: potentiometer
