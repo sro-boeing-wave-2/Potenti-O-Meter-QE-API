@@ -48,6 +48,7 @@ namespace QuizServer
             services.AddTransient<IQuizEngineService, QuizEngineService>();
             services.AddTransient<IResultContext,ResultContext>();
             services.AddTransient<IResultService, ResultService>();
+            services.AddTransient<IGraphService, GraphService>();
             services.AddSignalR();
             
             

@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using QuizServer.Service;
+using QuizServer.Models;
+using Potentiometer.Core.QuestionTypes;
 
 namespace QuizServer.Models
 {
@@ -22,10 +24,42 @@ namespace QuizServer.Models
 
         public int MaximumDifficaultyLevelReached { get; set; }
 
-        public List<Question> QuestionsAttempted = new List<Question>();
+        public List<Object> QuestionsAttempted = new List<Object>();
+        //public List<IQuestion> 
+        public List<Object> QuestionsFromQuestionBank = new List<Object>();
+        //public List<Question> QuestionBank = new List<Question>();
 
-        public List<Question> QuestionBank = new List<Question>();
+        //public ConceptGraph ConceptGraph = new ConceptGraph()
+        //{
 
+        //    version = "5",
+        //    domain = "C",
+        //    triplet = new List<Triplet>()
+        //    {
+        //        new Triplet()
+        //        {
+        //            source = new Source()
+        //            {
+        //                ConceptName = "biology",
+        //                domain = "science"
+        //            },
+        //            target = new Target()
+        //            {
+        //                QuestionId = "5ba1cb27a6c442000107fb39"
+        //            },
+        //            relationship = new Relationship ()
+        //            {
+        //                name = "sub_concept_of"
+
+        //            }
+        //        }
+
+        //    };
+        }
+        
+    }        
+
+           
 
         //public List<Question> QuestionBank = new List<Question>()
         //{
@@ -94,5 +128,5 @@ namespace QuizServer.Models
         //public UserInfo()
         //{
         //}
-    }
-}
+    
+

@@ -7,6 +7,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using System.Text;
 using System.Net.Http.Formatting;
+using Potentiometer.Core.QuestionTypes;
 
 namespace QuizServer.Service
 {
@@ -14,13 +15,22 @@ namespace QuizServer.Service
     {
         public static readonly HttpClient _client = new HttpClient();
 
-        public async Task<List<Question>> GetQuestionByDomain(string domain)
-        {         
-            var response = await _client.GetAsync("http://172.23.238.185:44334/api/questions/domain/" + domain);       
-            var result = await response.Content.ReadAsAsync<List<Question>>();            
+        public async Task<List<Object>> GetQuestionByDomain(string domain)
+        {
+            Console.WriteLine("INSIDE GETDOMAIN");
+            var response = await _client.GetAsync("http://localhost:44334/api/questions/domain/" + domain);
+            //var response = await _client.GetAsync("http://localhost:44334/api/questions");
+            Console.WriteLine(response.ToString());
+            List<Object>  result = await response.Content.ReadAsAsync<List<Object>>();
+            //Console.WriteLine("Response from the question bank  IS " + JsonConvert.SerializeObject(result));
             return result;
         }
-
+        public async Task<Object> GetConceptGraph(string domain)
+        {
+            var response = await _client.GetAsync("");
+            return response;
+            //not sure how the object look like
+        }
         public async Task PostUserInfoAsync(UserInfo userInfo)
         {         
             var response = await _client.PostAsync("http://localhost:5000/api/QuizResult", new StringContent(JsonConvert.SerializeObject(userInfo), UnicodeEncoding.UTF8, "application/json"));

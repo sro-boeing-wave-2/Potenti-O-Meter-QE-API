@@ -37,7 +37,5 @@ namespace QuizServer.Service
 
             return entries;
         }
-
-
     }
 }

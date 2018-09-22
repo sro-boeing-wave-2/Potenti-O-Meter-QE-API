@@ -4,8 +4,11 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
+using Newtonsoft.Json;
 using QuizServer.Models;
 using QuizServer.Service;
+using Potentiometer.Core.QuestionTypes;
+using Newtonsoft.Json.Linq;
 
 namespace QuizServer
 {
@@ -17,7 +20,7 @@ namespace QuizServer
 
         private IResultService _resultService;
 
-        public static readonly HttpClient _client = new HttpClient();
+        public static readonly HttpClient _client = new HttpClient(); 
 
         public QuestionHub(IQuizEngineService iquizEngineService, IResultService resultService)
         {
@@ -28,50 +31,59 @@ namespace QuizServer
 
         public Task GetNextQuestion(Question question)
         {
-           
+
             var userInfo = _userQuizState.GetValueOrDefault(Context.ConnectionId);
             if (question != null)
             {
-
-                int indexOfAttemptedQuestion = userInfo.QuestionBank.FindIndex(q => q.QuestionId == question.QuestionId);
-                Console.WriteLine("Question response is " + question.userResponse);
-                Console.WriteLine("correct option is " + userInfo.QuestionBank[indexOfAttemptedQuestion].CorrectOption);
-                //for(var i=0; i<userInfo.QuestionBank[indexOfAttemptedQuestion].CorrectOption.Count;i++)
+                //should get the question from the question on the basis of ID's in the concept graph
+                //int indexOfAttemptedQuestion = userInfo.QuestionBank.FindIndex(q => q.QuestionId == question.QuestionId);
+                //Console.WriteLine("Question response is " + question.userResponse);
+                //Console.WriteLine("correct option is " + userInfo.QuestionBank[indexOfAttemptedQuestion].CorrectOption);
+                //if (userInfo.QuestionBank[indexOfAttemptedQuestion].CorrectOption == question.userResponse)
                 //{
-                //    if (userInfo.QuestionBank[indexOfAttemptedQuestion].CorrectOption[i].Option == question.userResponse[i])
-                //    {
-
-                //            userInfo.MaximumDifficaultyLevelReached++;
-                //            userInfo.QuestionBank[indexOfAttemptedQuestion].IsCorrect = true;
-                //            userInfo.QuestionBank.Remove(userInfo.QuestionBank[indexOfAttemptedQuestion]);
-
-                //    }
+                //    userInfo.MaximumDifficaultyLevelReached++;
+                //    userInfo.QuestionBank[indexOfAttemptedQuestion].IsCorrect = true;
+                //    userInfo.QuestionBank.Remove(userInfo.QuestionBank[indexOfAttemptedQuestion]);
                 //}
-                if (userInfo.QuestionBank[indexOfAttemptedQuestion].CorrectOption == question.userResponse)
-                {
-                    userInfo.MaximumDifficaultyLevelReached++;
-                    userInfo.QuestionBank[indexOfAttemptedQuestion].IsCorrect = true;
-                    userInfo.QuestionBank.Remove(userInfo.QuestionBank[indexOfAttemptedQuestion]);
-                }
-                else
-                {
-                    userInfo.MaximumDifficaultyLevelReached--;
-                    userInfo.QuestionBank[indexOfAttemptedQuestion].IsCorrect = false;
-                }
-                userInfo.QuestionBank[indexOfAttemptedQuestion].userResponse = question.userResponse;
-                userInfo.QuestionsAttempted.Add(question);
-                userInfo.CurrentQuestionIndex += 1;
+                //else
+                //{
+                //    userInfo.MaximumDifficaultyLevelReached--;
+                //    userInfo.QuestionBank[indexOfAttemptedQuestion].IsCorrect = false;
+                //}
+                //userInfo.QuestionBank[indexOfAttemptedQuestion].userResponse = question.userResponse;
+                //userInfo.QuestionsAttempted.Add(question);
+                //userInfo.CurrentQuestionIndex += 1;
             }
-            if (userInfo.CurrentQuestionIndex < userInfo.QuestionBank.Count)
+            if (userInfo.CurrentQuestionIndex < userInfo.QuestionsFromQuestionBank.Count)
             {
-                var nextQuestion = (from q in userInfo.QuestionBank
-                                    where q.DifficultyLevel == userInfo.MaximumDifficaultyLevelReached
-                                    select q).First();
-                Console.WriteLine("Maximum difficulty level reached " + userInfo.MaximumDifficaultyLevelReached);
-                Console.WriteLine("difficulty level of the question sending " + nextQuestion.DifficultyLevel);
-                //var save = nextQuestion.CorrectOption;
-                //nextQuestion.CorrectOption = null;
-                return Clients.Caller.SendAsync("NextQuestion", nextQuestion);
+                try
+                {
+                    //var qu = userInfo.ConceptGraph.triplet[0].target.QuestionId;
+                    Console.WriteLine("========================" + userInfo.QuestionsFromQuestionBank[userInfo.CurrentQuestionIndex]);
+                    Type type = userInfo.QuestionsFromQuestionBank[userInfo.CurrentQuestionIndex].GetType();
+
+                    var q = (JObject)userInfo.QuestionsFromQuestionBank[userInfo.CurrentQuestionIndex];
+
+                    var qtype = q["questionType"].Value<string>();
+                    Potentiometer.Core.QuestionTypes.MCQ q1 = new Potentiometer.Core.QuestionTypes.MCQ();
+                    System.Reflection.Assembly a = System.Reflection.Assembly.Load("Potentiometer.Core");
+                    Type type1 = a.GetType("Potentiometer.Core.QuestionTypes."+qtype);
+                    Console.WriteLine(System.Reflection.Assembly.GetAssembly(typeof(Potentiometer.Core.QuestionTypes.MCQ)).FullName.ToString());
+                    Console.WriteLine("TYPE11111 " + type1);
+
+                    Console.WriteLine("TYPE OF THE QUESTION " + "Potentiometer.Core." + qtype);
+                    object instanceObject = Activator.CreateInstance(type1);
+                    Console.WriteLine("INSTANCE OF THE OBJECT " + instanceObject);
+                    JsonConvert.PopulateObject(JsonConvert.SerializeObject(userInfo.QuestionsFromQuestionBank[userInfo.CurrentQuestionIndex]), instanceObject);
+                    Console.WriteLine("POPULATED OBJECT " + instanceObject);
+                    //userInfo.MaximumDifficaultyLevelReached = nextQuestion.DifficultyLevel;
+                    return Clients.Caller.SendAsync("NextQuestion", instanceObject);
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+                return Clients.Caller.SendAsync("NextQuestion", "");
             }
             else
             {
@@ -84,24 +96,33 @@ namespace QuizServer
         public Task EndQuiz(Question question)
         {
             UserInfo userInfo = _userQuizState.GetValueOrDefault(Context.ConnectionId);
-            int indexOfAttemptedQuestion = userInfo.QuestionBank.FindIndex(q => q.QuestionId == question.QuestionId);          
-            userInfo.QuestionBank[indexOfAttemptedQuestion].userResponse = question.userResponse;
-            userInfo.QuestionsAttempted.Add(question);           
-            _resultService.PostUserInfo(userInfo);          
-            userInfo.QuestionBank = null;
+            //int indexOfAttemptedQuestion = userInfo.QuestionBank.FindIndex(q => q.QuestionId == question.QuestionId);
+           // userInfo.QuestionBank[indexOfAttemptedQuestion].userResponse = question.userResponse;
+           // userInfo.QuestionsAttempted.Add(question);
+            _resultService.PostUserInfo(userInfo);
+            //userInfo.QuestionBank = null;
             _iquizEngineService.PostUserInfoAsync(userInfo);
+            Console.WriteLine("RESULT IS " + JsonConvert.SerializeObject(userInfo));
             return Clients.Caller.SendAsync("EndQuiz", userInfo);
         }
 
         public async Task StartQuiz(int userId, string domain)
         {
-          
-            UserInfo userInfo = new UserInfo();          
+
+            UserInfo userInfo = new UserInfo();
             userInfo.UserId = userId;
             userInfo.DomainName = domain;
-            userInfo.MaximumDifficaultyLevelReached = 3;           
+            userInfo.MaximumDifficaultyLevelReached = 3;
             _userQuizState.Add(Context.ConnectionId, userInfo);
-            userInfo.QuestionBank = await _iquizEngineService.GetQuestionByDomain(domain);
+            userInfo.QuestionsFromQuestionBank = await  _iquizEngineService.GetQuestionByDomain(domain);
+
+            Console.WriteLine("QUESTIONS -- > " + userInfo.QuestionsFromQuestionBank);
+            //Console.WriteLine("questions inside ENGINE " +JsonConvert.SerializeObject( userInfo.QuestionsFromQuestionBank));
+            //userInfo.ConceptGraph = await _iquizEngineService.GetConceptGraph(domain);
+            // userInfo.QuestionBank = await _iquizEngineService.GetQuestionByDomain(domain);
+            //getting the concept graph from the concept graph MS
+
+            //update userInfo with his own concept graph
             GetNextQuestion(null);
         }
     }
