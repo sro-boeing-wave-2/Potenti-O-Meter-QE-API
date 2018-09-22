@@ -18,8 +18,8 @@ namespace QuizServer.Service
         public async Task<List<Object>> GetQuestionByDomain(string domain)
         {
             Console.WriteLine("INSIDE GETDOMAIN");
-            var response = await _client.GetAsync("http://localhost:44334/api/questions/domain/" + domain);
-            //var response = await _client.GetAsync("http://localhost:44334/api/questions");
+           //var response = await _client.GetAsync("http://localhost:44334/api/questions/domain/" + domain);
+            var response = await _client.GetAsync("http://localhost:44334/api/questions");
             Console.WriteLine(response.ToString());
             List<Object>  result = await response.Content.ReadAsAsync<List<Object>>();
             //Console.WriteLine("Response from the question bank  IS " + JsonConvert.SerializeObject(result));

@@ -19,14 +19,17 @@ namespace QuizServer
         private IQuizEngineService _iquizEngineService;
 
         private IResultService _resultService;
+        private IGraphService _graphService;
 
         public static readonly HttpClient _client = new HttpClient(); 
 
-        public QuestionHub(IQuizEngineService iquizEngineService, IResultService resultService)
+        public QuestionHub(IQuizEngineService iquizEngineService, IResultService resultService, IGraphService graphService)
         {
 
             _iquizEngineService = iquizEngineService;
             _resultService = resultService;
+            _graphService = graphService;
+
         }
 
         public Task GetNextQuestion(Question question)
@@ -114,9 +117,42 @@ namespace QuizServer
             userInfo.DomainName = domain;
             userInfo.MaximumDifficaultyLevelReached = 3;
             _userQuizState.Add(Context.ConnectionId, userInfo);
-            userInfo.QuestionsFromQuestionBank = await  _iquizEngineService.GetQuestionByDomain(domain);
+            userInfo.QuestionsFromQuestionBank = await _iquizEngineService.GetQuestionByDomain(domain);
+            Console.WriteLine("afetr questions");
+            //var obj = //call to the quesstion bank;
+            //List<Triplet> questionConceptTriplet = obj['questionConceptTriplet']Value<List<Triplet>();;
+            List<Triplet> triplet = new List<Triplet>()
+            {
+                new Triplet()
+                {
+                   source =  new Concept()
+                    {
+                        ConceptName="checmistry",
+                         domain = "science"
+                    },
+                    target = new QuestionIdNode()
+                    {
+                        QuestionId =  "5db1b4f3d5c1a8cda768a"
+                    },
 
-            Console.WriteLine("QUESTIONS -- > " + userInfo.QuestionsFromQuestionBank);
+                    relationship = new Relationship()
+                    {
+                        name = "belongs_to"
+                    }
+                }
+            };
+            
+            var result = _graphService.CreateConceptNode(triplet);
+            //QuestionIdNode q = new QuestionIdNode()
+            //{
+            //    QuestionId = "5db1b4f3d5c1a8cda768a"
+            //};
+            //var result = _graphService.CreateQuestionIdNode(q);
+            //Console.WriteLine("GRAPH DATA " + JsonConvert.SerializeObject(result));
+            
+            //List<ConceptMap> conceptMap = obj['concepttriplet'].Value<List<ConceptMap>();
+
+            //Console.WriteLine("QUESTIONS -- > " + userInfo.QuestionsFromQuestionBank);
             //Console.WriteLine("questions inside ENGINE " +JsonConvert.SerializeObject( userInfo.QuestionsFromQuestionBank));
             //userInfo.ConceptGraph = await _iquizEngineService.GetConceptGraph(domain);
             // userInfo.QuestionBank = await _iquizEngineService.GetQuestionByDomain(domain);

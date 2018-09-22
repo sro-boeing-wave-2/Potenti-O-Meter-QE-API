@@ -19,26 +19,26 @@ namespace QuizServer.Controllers
         {
             _service = service;
         }
-        [HttpPost]
-        public IActionResult CreateConceptNode([FromBody] Concept node)
-        {
-            bool exists = _service.ConceptExists(node);
-            IStatementResult result;
-            if (!exists)
-            {
-                result = _service.CreateConceptNode(node);
-            }
-            else
-            {
-                return BadRequest(error: "Concept already exists");
-            }
-            if (result == null)
-            {
-                return BadRequest();
-            }
-            _service.Dispose();
-            return Ok();
-        }
+        //[HttpPost]
+        //public IActionResult CreateConceptNode([FromBody] Concept node)
+        //{
+        //    bool exists = _service.ConceptExists(node);
+        //    IStatementResult result;
+        //    if (!exists)
+        //    {
+        //        result = _service.CreateConceptNode(node);
+        //    }
+        //    else
+        //    {
+        //        return BadRequest(error: "Concept already exists");
+        //    }
+        //    if (result == null)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    _service.Dispose();
+        //    return Ok();
+        //}
         [HttpPost]
         public IActionResult CreateQuestionNode([FromBody]QuestionIdNode node)
         {
