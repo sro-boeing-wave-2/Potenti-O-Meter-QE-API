@@ -20,16 +20,29 @@ namespace QuizServer.Service
             throw new NotImplementedException();
         }
 
-        public IStatementResult CreateConceptNode(List<Triplet> node)
+        public IStatementResult CreateConceptToQuestionMapping(List<Triplet> node)
         {
             List<Triplet> list = node;
-            IStatementResult result =null;
-            for (int i=0;i<list.Count;i++)
+            IStatementResult result = null;
+            using (ISession session = driver.Session())
+            {
+                var version = "3.3";
+                var domain = "science";
+                var predicate = "Of";
+                result = session.Run("CREATE (n:Version {name:\"" + version + "\"}) return n");
+                result = session.Run("CREATE (n:Domain {name:\"" + domain + "\"}) return n");
+                result = session.Run("Match (n:Version {name:\"" + version + "\"}) match (m:Domain {name:\"" + domain + "\"}) CREATE (m)-[x:" + predicate + "]->(n) return n,m,x");
+                Console.WriteLine("version node created " + JsonConvert.SerializeObject(result));
+                Console.WriteLine("=================================");
+            }
+            Console.WriteLine("LIST OF COUNT " + list.Count());
+
+            for (int i = 0; i < list.Count; i++)
             {
                 using (ISession session = driver.Session())
                 {
                     //result = session.Run("create (n:Concept {Name:" + concept1.ConceptName + "}); create (n:Concept {Name:" + concept2.ConceptName + "}); match (n:Concept {Name:" + concept1.ConceptName + "}),(m:Concept) {Name:" + concept2.ConceptName + "}); create (n)-[trialrelation:" + relationship.RelationshipName + "]->(m); return n,m,trialrelation;");
-                    
+
                     result = session.Run("CREATE (n:Concept {name:\"" + list[i].source.ConceptName + "\"}) return n");
                     Console.WriteLine("Node Created " + JsonConvert.SerializeObject(result));
                     Console.WriteLine("==============================================");
@@ -48,26 +61,60 @@ namespace QuizServer.Service
                     var sourceConcept = list[i].source;
                     var targetConcept = list[i].target;
                     var predicate = list[i].relationship;
-                    result = session.Run("Match (n:Concept {name:\"" + sourceConcept.ConceptName + "\"}) match (m:QuestionIdNode {name:\"" + targetConcept.QuestionId + "\"}) CREATE (n)-[x:" + predicate.name + "]->(m) return n,m,x");
+                    result = session.Run("Match (n:Concept {name:\"" + sourceConcept.ConceptName + "\"}) match (m:QuestionIdNode {name:\"" + targetConcept.QuestionId + "\"}) CREATE (m)-[x:" + predicate.name + "]->(n) return n,m,x");
                     //result = session.Run("Match(n:Concept) Match(m:QuestionIdNode) where(n.ConceptName = 'checmistry' AND m.QuestionId = '5db1b4f3d5c1a8cda768a') create ((n)-[x:" + predicate.name + " ]->(m)) return x");
-                   
+
                     Console.WriteLine(" Relation Node Created " + JsonConvert.SerializeObject(result));
                     Console.WriteLine("==============================================");
                 }
 
+
+            }
+            using (ISession session = driver.Session())
+            {
+                var predicate = "of";
+
+                result = session.Run("match (n:Concept) match(m:Domain) CREATE (m)-[x:" + predicate + "]->(n) return n,m,x");
+
             }
             return result;
-            //using (Neo4j.Driver.V1.ISession session = driver.Session())
-            //{
-            //    //result = session.Run("create (n:Concept {Name:" + concept1.ConceptName + "}); create (n:Concept {Name:" + concept2.ConceptName + "}); match (n:Concept {Name:" + concept1.ConceptName + "}),(m:Concept) {Name:" + concept2.ConceptName + "}); create (n)-[trialrelation:" + relationship.RelationshipName + "]->(m); return n,m,trialrelation;");
-
-            //    result = session.Run("CREATE (n:Concept {name:\"" + node.ConceptName + "\"}, {name:\"" + node.domain + "\"}) return n");
-            //}
-            //driver.Dispose();
-
 
         }
 
+        public IStatementResult CreateConceptToConceptMapping(List<ConceptMap> node)
+        {
+            List<ConceptMap> list = node;
+            IStatementResult result = null;
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                using (ISession session = driver.Session())
+                {
+                    var FromConcept = list[i].Source.ConceptName;
+                    var Toconcept = list[i].Target.ConceptName;
+                    var predicate = list[i].Predicate.name;
+
+                    result = session.Run("match (n:Concept {name:\"" + FromConcept + "\"}) match (m:Concept { name:\"" + Toconcept + "\" }) create(m)-[x:" + predicate + "]-> (n) return n,m,x");
+                  
+                }
+               
+            }
+            return result;
+
+        }
+        public bool IsDomainExist(string domain)
+        {
+            IStatementResult result;
+            using (ISession session = driver.Session())
+            {
+                result = session.Run("match (n:Domain{name:\"" + domain + "\"}) return n");
+                if (result != null)
+                    return true;
+                else
+                    return false;
+                
+            }
+        }
 
         public IStatementResult GetGraph()
         {
@@ -86,45 +133,7 @@ namespace QuizServer.Service
             throw new NotImplementedException();
         }
 
-          public IStatementResult CreateQuestionIdNode(QuestionIdNode target)
-        {
-            IStatementResult result;
-            using (ISession session = driver.Session())
-            {
-                //result = session.Run("create (n:Concept {Name:" + concept1.ConceptName + "}); create (n:Concept {Name:" + concept2.ConceptName + "}); match (n:Concept {Name:" + concept1.ConceptName + "}),(m:Concept) {Name:" + concept2.ConceptName + "}); create (n)-[trialrelation:" + relationship.RelationshipName + "]->(m); return n,m,trialrelation;");
-
-                result = session.Run("CREATE (n:QuestionIdNode {name:\"" + target.QuestionId + "\"}) return n");
-            }
-            //driver.Dispose();
-            return result;
-        }
-        public IStatementResult CreateConceptwithAssociatedConcepts(ConceptMap concept)
-        {
-            IStatementResult result;
-            using (ISession session = driver.Session())
-            {
-                //result = session.Run("create (n:Concept {Name:" + concept1.ConceptName + "}); create (n:Concept {Name:" + concept2.ConceptName + "}); match (n:Concept {Name:" + concept1.ConceptName + "}),(m:Concept) {Name:" + concept2.ConceptName + "}); create (n)-[trialrelation:" + relationship.RelationshipName + "]->(m); return n,m,trialrelation;");
-                var sourceConcept = concept.Source;
-                var targetConcept = concept.Target;
-                var predicate = concept.Predicate;
-                result = session.Run("Match (n:Concept {name:\"" + sourceConcept + "\"}) create (m:Concept {name:\"" + targetConcept + "\"}) CREATE (n)-[x:" + predicate + "]->(m) return n,m,x");
-            }
-            //driver.Dispose();
-            return result;
-        }
-        public IStatementResult CreateConceptwithAssociatedQuestions(Triplet concept)
-        {
-            IStatementResult result;
-            using (ISession session = driver.Session())
-            {
-                //result = session.Run("create (n:Concept {Name:" + concept1.ConceptName + "}); create (n:Concept {Name:" + concept2.ConceptName + "}); match (n:Concept {Name:" + concept1.ConceptName + "}),(m:Concept) {Name:" + concept2.ConceptName + "}); create (n)-[trialrelation:" + relationship.RelationshipName + "]->(m); return n,m,trialrelation;");
-                var sourceConcept = concept.source;
-                var targetConcept = concept.target;
-                var predicate = concept.relationship;
-                result = session.Run("Match (n:Concept {name:\"" + sourceConcept + "\"}) create (m:QuestionIdNode {name:\"" + targetConcept + "\"}) CREATE (n)-[x:" + predicate + "]->(m) return n,m,x");
-            }
-            //driver.Dispose();
-            return result;
-        }
+      
+    
     }
 }

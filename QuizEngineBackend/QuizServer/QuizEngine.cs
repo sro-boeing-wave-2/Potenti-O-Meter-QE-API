@@ -117,9 +117,13 @@ namespace QuizServer
             userInfo.DomainName = domain;
             userInfo.MaximumDifficaultyLevelReached = 3;
             _userQuizState.Add(Context.ConnectionId, userInfo);
+            bool IsDomainExist = _graphService.IsDomainExist(domain);
+           
             userInfo.QuestionsFromQuestionBank = await _iquizEngineService.GetQuestionByDomain(domain);
             Console.WriteLine("afetr questions");
             //var obj = //call to the quesstion bank;
+            //get the version and domain seperately as a string
+            //send them to with the triplet to form a graph;
             //List<Triplet> questionConceptTriplet = obj['questionConceptTriplet']Value<List<Triplet>();;
             List<Triplet> triplet = new List<Triplet>()
             {
@@ -127,7 +131,7 @@ namespace QuizServer
                 {
                    source =  new Concept()
                     {
-                        ConceptName="checmistry",
+                        ConceptName="chemistry",
                          domain = "science"
                     },
                     target = new QuestionIdNode()
@@ -137,19 +141,83 @@ namespace QuizServer
 
                     relationship = new Relationship()
                     {
-                        name = "belongs_to"
+                        name = "forget"
+                    }
+                },
+               
+                 new Triplet()
+                {
+                   source =  new Concept()
+                    {
+                        ConceptName="biology",
+                         domain = "science"
+                    },
+                    target = new QuestionIdNode()
+                    {
+                        QuestionId =  "78db1b4f3d5c1a8cda768a"
+                    },
+
+                    relationship = new Relationship()
+                    {
+                        name = "remember"
+                    }
+                },
+                  new Triplet()
+                {
+                   source =  new Concept()
+                    {
+                        ConceptName="physics",
+                         domain = "science"
+                    },
+                    target = new QuestionIdNode()
+                    {
+                        QuestionId =  "895db1b4f3d5c1a8cda768a"
+                    },
+
+                    relationship = new Relationship()
+                    {
+                        name = "understanding"
                     }
                 }
+
             };
+            List<ConceptMap> conceptMap = new List<ConceptMap>()
+            {
+                new ConceptMap()
+                {
+                    Source = new Concept()
+                    {
+                        ConceptName="physics",
+                         domain = "science"
+                    },
+                    Target = new Concept()
+                    {
+                        ConceptName = "biology",
+                        domain = "science"
+                    },
+                    Predicate = new Relationship()
+                    {
+                        name = "Subconcept_of"
+                    }
+
+
+                }
+            };
+            if (!IsDomainExist)
+            {
+                var result = _graphService.CreateConceptToQuestionMapping(triplet);
+                var resultOfConceptToConceptMapping = _graphService.CreateConceptToConceptMapping(conceptMap);
+            }
             
-            var result = _graphService.CreateConceptNode(triplet);
+            Console.WriteLine("THIS IS WHAT I'M LOOKING FOR " + IsDomainExist);
+
             //QuestionIdNode q = new QuestionIdNode()
             //{
             //    QuestionId = "5db1b4f3d5c1a8cda768a"
             //};
             //var result = _graphService.CreateQuestionIdNode(q);
             //Console.WriteLine("GRAPH DATA " + JsonConvert.SerializeObject(result));
-            
+
             //List<ConceptMap> conceptMap = obj['concepttriplet'].Value<List<ConceptMap>();
 
             //Console.WriteLine("QUESTIONS -- > " + userInfo.QuestionsFromQuestionBank);
@@ -158,7 +226,7 @@ namespace QuizServer
             // userInfo.QuestionBank = await _iquizEngineService.GetQuestionByDomain(domain);
             //getting the concept graph from the concept graph MS
 
-            //update userInfo with his own concept graph
+
             GetNextQuestion(null);
         }
     }
