@@ -10,7 +10,7 @@ namespace QuizServer.Service
     public interface IGraphService
     {
         IStatementResult GetGraph();
-        IStatementResult CreateConceptToQuestionMapping(List<Triplet> node);
+        IStatementResult CreateConceptToQuestionMapping(List<Triplet> node, string version, string domain);
         IStatementResult CreateConceptToConceptMapping(List<ConceptMap> node);
        
         bool ConceptExists(Concept node);

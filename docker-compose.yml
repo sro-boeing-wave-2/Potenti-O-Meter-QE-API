@@ -5,21 +5,22 @@ services:
         ports:
         - "8010:80"
         depends_on:
-            - db
+            - neo4j
+            - mongo
         network_mode: potentiometer
         #expose:
         #    - "80"
         labels:
             - "SERVICE_NAME=QuizEngine"
             - "SERVICE_TAGS=QuizEngineTag"
-    db:
+    neo4j:
         image: "neo4j:3.2.6"
         environment:
             - "NEO4J_AUTH=none"
         ports:
             - "7474:7474"
             - "7687:7687"
-        
+    mongo:    
         image: "mongo:latest"
         ports:
             - "27019:27017"

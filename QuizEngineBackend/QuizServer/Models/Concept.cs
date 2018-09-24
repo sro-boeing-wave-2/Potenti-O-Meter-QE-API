@@ -7,7 +7,7 @@ namespace QuizServer.Models
 {
     public class Concept
     {
-        public string ConceptName { get; set; }
+        public string name { get; set; }
         public string domain { get; set; }
 
     }

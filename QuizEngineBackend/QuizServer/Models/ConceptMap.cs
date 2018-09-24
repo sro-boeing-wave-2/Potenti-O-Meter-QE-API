@@ -8,8 +8,8 @@ namespace QuizServer.Models
     public class ConceptMap
     {
 
-        public Concept Source { get; set; }
-        public Concept Target { get; set; }
-        public Relationship Predicate { get; set; }
+        public Concept source { get; set; }
+        public Concept target { get; set; }
+        public Relationship relationship { get; set; }
     }
 }

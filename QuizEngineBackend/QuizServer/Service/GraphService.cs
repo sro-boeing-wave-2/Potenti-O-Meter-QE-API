@@ -19,15 +19,14 @@ namespace QuizServer.Service
         {
             throw new NotImplementedException();
         }
-
-        public IStatementResult CreateConceptToQuestionMapping(List<Triplet> node)
+       
+        public IStatementResult CreateConceptToQuestionMapping(List<Triplet> node, string version , string domain)
         {
             List<Triplet> list = node;
             IStatementResult result = null;
             using (ISession session = driver.Session())
             {
-                var version = "3.3";
-                var domain = "science";
+               
                 var predicate = "Of";
                 result = session.Run("CREATE (n:Version {name:\"" + version + "\"}) return n");
                 result = session.Run("CREATE (n:Domain {name:\"" + domain + "\"}) return n");
@@ -43,7 +42,7 @@ namespace QuizServer.Service
                 {
                     //result = session.Run("create (n:Concept {Name:" + concept1.ConceptName + "}); create (n:Concept {Name:" + concept2.ConceptName + "}); match (n:Concept {Name:" + concept1.ConceptName + "}),(m:Concept) {Name:" + concept2.ConceptName + "}); create (n)-[trialrelation:" + relationship.RelationshipName + "]->(m); return n,m,trialrelation;");
 
-                    result = session.Run("CREATE (n:Concept {name:\"" + list[i].source.ConceptName + "\"}) return n");
+                    result = session.Run("CREATE (n:Concept {name:\"" + list[i].source.name + "\"}) return n");
                     Console.WriteLine("Node Created " + JsonConvert.SerializeObject(result));
                     Console.WriteLine("==============================================");
                 }
@@ -51,7 +50,7 @@ namespace QuizServer.Service
                 {
                     //result = session.Run("create (n:Concept {Name:" + concept1.ConceptName + "}); create (n:Concept {Name:" + concept2.ConceptName + "}); match (n:Concept {Name:" + concept1.ConceptName + "}),(m:Concept) {Name:" + concept2.ConceptName + "}); create (n)-[trialrelation:" + relationship.RelationshipName + "]->(m); return n,m,trialrelation;");
 
-                    result = session.Run("CREATE (n:QuestionIdNode {name:\"" + list[i].target.QuestionId + "\"}) return n");
+                    result = session.Run("CREATE (n:QuestionIdNode {name:\"" + list[i].target.questionId + "\"}) return n");
                     Console.WriteLine(" Question Node Created " + JsonConvert.SerializeObject(result));
                     Console.WriteLine("==============================================");
                 }
@@ -61,7 +60,7 @@ namespace QuizServer.Service
                     var sourceConcept = list[i].source;
                     var targetConcept = list[i].target;
                     var predicate = list[i].relationship;
-                    result = session.Run("Match (n:Concept {name:\"" + sourceConcept.ConceptName + "\"}) match (m:QuestionIdNode {name:\"" + targetConcept.QuestionId + "\"}) CREATE (m)-[x:" + predicate.name + "]->(n) return n,m,x");
+                    result = session.Run("Match (n:Concept {name:\"" + sourceConcept.name + "\"}) match (m:QuestionIdNode {name:\"" + targetConcept.questionId + "\"}) CREATE (m)-[x:" + predicate.name + "]->(n) return n,m,x");
                     //result = session.Run("Match(n:Concept) Match(m:QuestionIdNode) where(n.ConceptName = 'checmistry' AND m.QuestionId = '5db1b4f3d5c1a8cda768a') create ((n)-[x:" + predicate.name + " ]->(m)) return x");
 
                     Console.WriteLine(" Relation Node Created " + JsonConvert.SerializeObject(result));
@@ -90,9 +89,9 @@ namespace QuizServer.Service
             {
                 using (ISession session = driver.Session())
                 {
-                    var FromConcept = list[i].Source.ConceptName;
-                    var Toconcept = list[i].Target.ConceptName;
-                    var predicate = list[i].Predicate.name;
+                    var FromConcept = list[i].source.name;
+                    var Toconcept = list[i].target.name;
+                    var predicate = list[i].relationship.name;
 
                     result = session.Run("match (n:Concept {name:\"" + FromConcept + "\"}) match (m:Concept { name:\"" + Toconcept + "\" }) create(m)-[x:" + predicate + "]-> (n) return n,m,x");
                   
@@ -118,7 +117,13 @@ namespace QuizServer.Service
 
         public IStatementResult GetGraph()
         {
-            throw new NotImplementedException();
+            IStatementResult result;
+            using (ISession session = driver.Session())
+            {
+                result = session.Run("MATCH (n:Domain{name:'science'})-[*]-(connected) RETURN connected");
+                Console.WriteLine("THIS IS THE GRAPH " + JsonConvert.SerializeObject(result));
+                return result;
+            }
         }
 
 

@@ -7,6 +7,6 @@ namespace QuizServer.Models
 {
     public class QuestionIdNode
     {
-        public string QuestionId { get; set; }
+        public string questionId { get; set; }
     }
 }
