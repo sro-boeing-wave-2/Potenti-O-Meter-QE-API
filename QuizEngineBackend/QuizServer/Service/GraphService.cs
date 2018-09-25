@@ -119,12 +119,13 @@ namespace QuizServer.Service
             }
         }
 
-        public IStatementResult GetGraph(string domain)
+        public void GetGraph(string domain)
         {
             IStatementResult result;
             using (ISession session = driver.Session())
             {
                 result = session.Run("match (n:Domain{name:\"" + domain + "\"}) return n");
+                Console.WriteLine("THIS IS THE RESULT" + result.Single()[0].As<string>());
                 Console.WriteLine("Rsult from the graph " + result);
 
                 //foreach (var r in result)
@@ -138,7 +139,7 @@ namespace QuizServer.Service
 
                 //    Console.WriteLine($"{name} is {age} years old.");
                 //}
-                return result;
+               // return result;
 
             }
         }

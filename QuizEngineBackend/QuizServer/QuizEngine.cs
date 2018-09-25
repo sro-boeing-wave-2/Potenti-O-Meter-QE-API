@@ -39,18 +39,27 @@ namespace QuizServer
             var userInfo = _userQuizState.GetValueOrDefault(Context.ConnectionId);
             if (question != null)
             {
-                Console.WriteLine("INSIDE WHAT ");
                
+               // JObject a = JObject.Parse(JsonConvert.SerializeObject(question));
 
-                var x = JsonConvert.SerializeObject(question);
-                
+                //string qType = a.GetValue("questionType").ToString();
+                //Console.WriteLine("PRINITNG QTYPE");
+                //Console.WriteLine(qType);
+                //System.Reflection.Assembly b = System.Reflection.Assembly.Load("Potentiometer.Core");
+                //Type type1 = b.GetType("Potentiometer.Core.QuestionTypes." + qType);
+                //object instanceObject = Activator.CreateInstance(type1);
+                //JsonConvert.PopulateObject(JsonConvert.SerializeObject(question), instanceObject);
+                //bool result = (bool)type1.InvokeMember("Evaluate", BindingFlags.InvokeMethod, null, instanceObject, new object[0]);
+                Console.WriteLine("THIS IS THE QUESTION POSTING ", question);
                 userInfo.QuestionsAttempted.Add(question);
-                //JObject z = JObject.Parse(x);
+                
+                //JObject z = JObject.Parse(question);
                 ////JToken q = z[0];
                 //Console.WriteLine("PRINTING QUESTION TYPE");
                 ////Console.WriteLine(z["questionType");
                 //Console.WriteLine(z.GetValue("questionType"));
-                //var qtype = z["questionType"].Value<string>();
+                
+               // var qtype = x["questionType"].Value<string>();
                 //Potentiometer.Core.QuestionTypes.MCQ q1 = new Potentiometer.Core.QuestionTypes.MCQ();
                 //System.Reflection.Assembly a = System.Reflection.Assembly.Load("Potentiometer.Core");
                 //Type type1 = a.GetType("Potentiometer.Core.QuestionTypes." + qtype);
@@ -62,7 +71,7 @@ namespace QuizServer
                 //Type type1 = a.GetType("Potentiometer.Core.QuestionTypes." + qtype);
                 //object instanceObject = Activator.CreateInstance(type1);
                 //JsonConvert.PopulateObject(JsonConvert.SerializeObject(question), instanceObject);
-                //bool result = (bool)type1.InvokeMember("Evaluate", BindingFlags.InvokeMethod, null, instanceObject, new object[0]);
+                //
                 //userInfo.QuestionsAttempted.Add(question);
 
                 //int indexOfAttemptedQuestion = userInfo.QuestionBank.FindIndex(q => q.QuestionId == question.QuestionId);
@@ -123,20 +132,23 @@ namespace QuizServer
         }
 
 
-        public Task EndQuiz(Question question)
+        public  Task EndQuiz(Object question)
         {
             UserInfo userInfo = _userQuizState.GetValueOrDefault(Context.ConnectionId);
             //int indexOfAttemptedQuestion = userInfo.QuestionBank.FindIndex(q => q.QuestionId == question.QuestionId);
             // userInfo.QuestionBank[indexOfAttemptedQuestion].userResponse = question.userResponse;
             // userInfo.QuestionsAttempted.Add(question);
             //var x = JsonConvert.SerializeObject(question);
-
+            int i = 78;
             userInfo.QuestionsAttempted.Add(question);
-            _resultService.PostUserInfo(userInfo);
-            //userInfo.QuestionBank = null;
-            _iquizEngineService.PostUserInfoAsync(userInfo);
-            
+            userInfo.QuizId = userInfo.CurrentQuestionIndex + "ksa9b37ar47da700017a8y" + i;
+            userInfo.QuestionsFromQuestionBank = null;
+            i++;
             Console.WriteLine("RESULT IS " + JsonConvert.SerializeObject(userInfo));
+            _iquizEngineService.PostUserInfoAsync(userInfo);
+            //await _resultService.PostUserInfo(userInfo);
+            //UserInfo ui = await _resultService.GetByID(userInfo.UserId);
+            
             return Clients.Caller.SendAsync("EndQuiz", userInfo);
         }
 
@@ -161,6 +173,7 @@ namespace QuizServer
             {
                 var resul = _graphService.CreateConceptToQuestionMapping(questionConceptTriplet, (string)version, (string)domainForConceptGraph);
                 var resultOfConceptToConceptMapping = _graphService.CreateConceptToConceptMapping(ConceptToConceptTriplet);
+              
             }
             JToken QuestionIDs = ConceptMapandConcepttoQuestionMap[0]["questionIds"];
             List<string> Q = new List<string>();
@@ -179,6 +192,8 @@ namespace QuizServer
             //var result = _graphService.GetGraph((string)domainForConceptGraph);
             //var obj = _graphService.GetGraph();
             Console.WriteLine("Question Bank " + userInfo.QuestionsFromQuestionBank[0]);
+            Console.WriteLine("==================================================>");
+             
             GetNextQuestion(null);
         }
     }
