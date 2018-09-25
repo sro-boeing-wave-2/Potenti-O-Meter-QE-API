@@ -156,11 +156,11 @@ namespace QuizServer
             List<Triplet> questionConceptTriplet = ConceptMapandConcepttoQuestionMap[0]["questionconceptTriplet"].ToObject<List<Triplet>>();
             List<ConceptMap> ConceptToConceptTriplet = ConceptMapandConcepttoQuestionMap[0]["concepttriplet"].ToObject<List<ConceptMap>>();
             bool IsDomainExist = _graphService.IsDomainExist((string)domainForConceptGraph);
-            if (!IsDomainExist)
-            {
+            
+            
                 var result = _graphService.CreateConceptToQuestionMapping(questionConceptTriplet, (string)version, (string)domainForConceptGraph);
                 var resultOfConceptToConceptMapping = _graphService.CreateConceptToConceptMapping(ConceptToConceptTriplet);
-            }
+            
             JToken QuestionIDs = ConceptMapandConcepttoQuestionMap[0]["questionIds"];
             List<string> Q = new List<string>();
             foreach(string x in QuestionIDs)
