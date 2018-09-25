@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Net.Http.Formatting;
 using Potentiometer.Core.QuestionTypes;
+using Newtonsoft.Json.Linq;
 
 namespace QuizServer.Service
 {
@@ -28,17 +29,22 @@ namespace QuizServer.Service
         }
         public async Task<List<Object>> GetQuestionByIds(List<string> ids)
         {
+            Console.WriteLine("HERE");
             List<Object> listofq = new List<Object>();
-            List<string> list = new List<string>();
-            list.Add("5ba88cc31d3117000149e342");
-            list.Add("5ba88cf21d3117000149e345");
-            //var response = await _client.GetAsync("http://localhost:44334/api/questions/domain/" + domain);
-            for(int i=0;i<list.Count;i++)
+            
+           
+            //var response = await _client.GetAsync("http://172.238.232.188:44334/api/questions/domain/" + domain);
+            for(int i=0;i<ids.Count;i++)
             {
-                var response = await _client.GetAsync("http://localhost:44334/api/questions/id/" + list[i] );
+                Console.WriteLine("http://172.23.238.185:44334/api/questions/id/" + ids[i]);
+                var response = await _client.GetAsync("http://172.23.238.185:44334/api/questions/id/" + ids[i] );
                 Object res = await response.Content.ReadAsAsync<Object>();
-                
-                Console.WriteLine("QUESTION BANK IS " + res);
+                Console.WriteLine("QUESTION BANK IS hhhh " + res);
+                //var x = JsonConvert.SerializeObject(res);
+                //Console.WriteLine("QUESTION BANK IS hhhh " + x);
+                //JArray z = JArray.Parse(x);
+                //JToken q = z[0];
+                //Console.WriteLine("QUESTION BANK IS hhhh " + q);
                 listofq.Add(res);
             }
             Console.WriteLine("Question From QUESTION Bank Is " + listofq[0]);
@@ -61,8 +67,9 @@ namespace QuizServer.Service
             //not sure how the object look like
         }
         public async Task PostUserInfoAsync(UserInfo userInfo)
-        {         
-            var response = await _client.PostAsync("http://localhost:5000/api/QuizResult", new StringContent(JsonConvert.SerializeObject(userInfo), UnicodeEncoding.UTF8, "application/json"));
+        {
+            Console.WriteLine("ENDING THE QUIZ ", userInfo);
+            var response = await _client.PostAsync("http://172.23.238.183:5000/api/QuizResult", new StringContent(JsonConvert.SerializeObject(userInfo), UnicodeEncoding.UTF8, "application/json"));
             var responseString = await response.Content.ReadAsStringAsync();
             var result = await response.Content.ReadAsAsync<UserInfo>();
         }

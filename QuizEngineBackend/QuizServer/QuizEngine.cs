@@ -35,11 +35,28 @@ namespace QuizServer
 
         public Task GetNextQuestion(Object question)
         {
-            Console.WriteLine("INSIDE NEXT QUESTION " + question);
+            
             var userInfo = _userQuizState.GetValueOrDefault(Context.ConnectionId);
             if (question != null)
             {
-                //var qtype = question.QuestionType;
+                Console.WriteLine("INSIDE WHAT ");
+               
+
+                var x = JsonConvert.SerializeObject(question);
+               
+                userInfo.QuestionsAttempted.Add(x);
+                //JObject z = JObject.Parse(x);
+                ////JToken q = z[0];
+                //Console.WriteLine("PRINTING QUESTION TYPE");
+                ////Console.WriteLine(z["questionType");
+                //Console.WriteLine(z.GetValue("questionType"));
+                //var qtype = z["questionType"].Value<string>();
+                //Potentiometer.Core.QuestionTypes.MCQ q1 = new Potentiometer.Core.QuestionTypes.MCQ();
+                //System.Reflection.Assembly a = System.Reflection.Assembly.Load("Potentiometer.Core");
+                //Type type1 = a.GetType("Potentiometer.Core.QuestionTypes." + qtype);
+                //object instanceObject = Activator.CreateInstance(type1);
+                //JsonConvert.PopulateObject(JsonConvert.SerializeObject(z), instanceObject);
+                //Console.WriteLine("POPULATED OBJECT Second TIME" + instanceObject);
                 //Console.WriteLine("THIS IS FROM FRONT END " + question);
                 //System.Reflection.Assembly a = System.Reflection.Assembly.Load("Potentiometer.Core");
                 //Type type1 = a.GetType("Potentiometer.Core.QuestionTypes." + qtype);
@@ -88,7 +105,7 @@ namespace QuizServer
                     object instanceObject = Activator.CreateInstance(type1);
                     JsonConvert.PopulateObject(JsonConvert.SerializeObject(q), instanceObject);
                     Console.WriteLine("POPULATED OBJECT " + instanceObject);
-                    
+                    userInfo.CurrentQuestionIndex= userInfo.CurrentQuestionIndex + 1;
                     //userInfo.MaximumDifficaultyLevelReached = nextQuestion.DifficultyLevel;
                     return Clients.Caller.SendAsync("NextQuestion", instanceObject);
                 }
@@ -110,11 +127,15 @@ namespace QuizServer
         {
             UserInfo userInfo = _userQuizState.GetValueOrDefault(Context.ConnectionId);
             //int indexOfAttemptedQuestion = userInfo.QuestionBank.FindIndex(q => q.QuestionId == question.QuestionId);
-           // userInfo.QuestionBank[indexOfAttemptedQuestion].userResponse = question.userResponse;
-           // userInfo.QuestionsAttempted.Add(question);
+            // userInfo.QuestionBank[indexOfAttemptedQuestion].userResponse = question.userResponse;
+            // userInfo.QuestionsAttempted.Add(question);
+            var x = JsonConvert.SerializeObject(question);
+
+            userInfo.QuestionsAttempted.Add(x);
             _resultService.PostUserInfo(userInfo);
             //userInfo.QuestionBank = null;
             _iquizEngineService.PostUserInfoAsync(userInfo);
+            
             Console.WriteLine("RESULT IS " + JsonConvert.SerializeObject(userInfo));
             return Clients.Caller.SendAsync("EndQuiz", userInfo);
         }
@@ -148,7 +169,7 @@ namespace QuizServer
                 Q.Add(x);
             }
             var QuestionID = JsonConvert.SerializeObject(QuestionIDs);
-            Console.WriteLine("PRINTINGGGGGGGGGGGGGGGGG");
+            Console.WriteLine("PRINTINGGGGGGGGGGGGGGGGG" + Q[0]);
             Console.WriteLine(Q[0]);
            // var QuestionIDs = ConceptMapandConcepttoQuestionMap[0]["questionIds"];
             //string[] QuestionID = { "5ba8c4181df1b6000184a58c", "5ba88cf21d3117000149e345" };
