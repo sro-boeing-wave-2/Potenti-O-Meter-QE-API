@@ -69,7 +69,7 @@ namespace QuizServer.Service
         public async Task PostUserInfoAsync(UserInfo userInfo)
         {
             Console.WriteLine("ENDING THE QUIZ ", userInfo);
-            var response = await _client.PostAsync("http://172.23.238.183:5000/api/QuizResult", new StringContent(JsonConvert.SerializeObject(userInfo), UnicodeEncoding.UTF8, "application/json"));
+            var response = await _client.PostAsync("http://172.23.238.183:80/api/QuizResult", new StringContent(JsonConvert.SerializeObject(userInfo), UnicodeEncoding.UTF8, "application/json"));
             var responseString = await response.Content.ReadAsStringAsync();
             var result = await response.Content.ReadAsAsync<UserInfo>();
         }

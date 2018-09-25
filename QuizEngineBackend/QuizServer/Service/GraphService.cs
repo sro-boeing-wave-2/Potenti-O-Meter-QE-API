@@ -107,25 +107,41 @@ namespace QuizServer.Service
             using (ISession session = driver.Session())
             {
                 result = session.Run("match (n:Domain{name:\"" + domain + "\"}) return n");
-                if (result != null)
-                    return true;
-                else
+            
+                if (result.ToList().Count == 0)
+                {
+                    Console.WriteLine("This is from the graph daata" + result.ToList());
                     return false;
-                
+                }
+                //Console.WriteLine("This is from the graph daata" + result.ToList().);
+                return true;
+
             }
         }
 
-        public IStatementResult GetGraph()
+        public IStatementResult GetGraph(string domain)
         {
             IStatementResult result;
             using (ISession session = driver.Session())
             {
-                result = session.Run("MATCH (n:Domain{name:'science'})-[*]-(connected) RETURN connected");
-                Console.WriteLine("THIS IS THE GRAPH " + JsonConvert.SerializeObject(result));
+                result = session.Run("match (n:Domain{name:\"" + domain + "\"}) return n");
+                Console.WriteLine("Rsult from the graph " + result);
+
+                //foreach (var r in result)
+                //{
+                //    //Get as an INode instance to access properties.
+                //    var node = r["science"].As<INode>();
+                //    Console.WriteLine("THIS IS THE NODE " + node.Labels);
+                //    //Properties are a Dictionary<string,object>, so you need to 'As' them
+                //    var age = node["age"].As<int>();
+                //    var name = node["name"].As<string>();
+
+                //    Console.WriteLine($"{name} is {age} years old.");
+                //}
                 return result;
+
             }
         }
-
 
 
         public IStatementResult GetConceptwithRelationships(string nodename)

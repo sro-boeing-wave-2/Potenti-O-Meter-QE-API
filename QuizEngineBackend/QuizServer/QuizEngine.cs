@@ -43,8 +43,8 @@ namespace QuizServer
                
 
                 var x = JsonConvert.SerializeObject(question);
-               
-                userInfo.QuestionsAttempted.Add(x);
+                
+                userInfo.QuestionsAttempted.Add(question);
                 //JObject z = JObject.Parse(x);
                 ////JToken q = z[0];
                 //Console.WriteLine("PRINTING QUESTION TYPE");
@@ -129,9 +129,9 @@ namespace QuizServer
             //int indexOfAttemptedQuestion = userInfo.QuestionBank.FindIndex(q => q.QuestionId == question.QuestionId);
             // userInfo.QuestionBank[indexOfAttemptedQuestion].userResponse = question.userResponse;
             // userInfo.QuestionsAttempted.Add(question);
-            var x = JsonConvert.SerializeObject(question);
+            //var x = JsonConvert.SerializeObject(question);
 
-            userInfo.QuestionsAttempted.Add(x);
+            userInfo.QuestionsAttempted.Add(question);
             _resultService.PostUserInfo(userInfo);
             //userInfo.QuestionBank = null;
             _iquizEngineService.PostUserInfoAsync(userInfo);
@@ -156,11 +156,12 @@ namespace QuizServer
             List<Triplet> questionConceptTriplet = ConceptMapandConcepttoQuestionMap[0]["questionconceptTriplet"].ToObject<List<Triplet>>();
             List<ConceptMap> ConceptToConceptTriplet = ConceptMapandConcepttoQuestionMap[0]["concepttriplet"].ToObject<List<ConceptMap>>();
             bool IsDomainExist = _graphService.IsDomainExist((string)domainForConceptGraph);
-            
-            
-                var result = _graphService.CreateConceptToQuestionMapping(questionConceptTriplet, (string)version, (string)domainForConceptGraph);
+            Console.WriteLine("THIS IS TRYE " + IsDomainExist);
+            if (IsDomainExist != true)
+            {
+                var resul = _graphService.CreateConceptToQuestionMapping(questionConceptTriplet, (string)version, (string)domainForConceptGraph);
                 var resultOfConceptToConceptMapping = _graphService.CreateConceptToConceptMapping(ConceptToConceptTriplet);
-            
+            }
             JToken QuestionIDs = ConceptMapandConcepttoQuestionMap[0]["questionIds"];
             List<string> Q = new List<string>();
             foreach(string x in QuestionIDs)
@@ -174,6 +175,8 @@ namespace QuizServer
            // var QuestionIDs = ConceptMapandConcepttoQuestionMap[0]["questionIds"];
             //string[] QuestionID = { "5ba8c4181df1b6000184a58c", "5ba88cf21d3117000149e345" };
            userInfo.QuestionsFromQuestionBank = await _iquizEngineService.GetQuestionByIds(Q);
+            Console.WriteLine("CALLING GETGRAPH ");
+            //var result = _graphService.GetGraph((string)domainForConceptGraph);
             //var obj = _graphService.GetGraph();
             Console.WriteLine("Question Bank " + userInfo.QuestionsFromQuestionBank[0]);
             GetNextQuestion(null);
