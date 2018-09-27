@@ -61,19 +61,13 @@ namespace QuizServer
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseHsts();
-            }
 
             app.UseCors("CorsPolicy");
             app.UseSignalR(routes =>
             {
                 routes.MapHub<QuestionHub>("/question");
             });
-            app.UseHttpsRedirection();
-
-
+            
             //var hubConfiguration = new HubConfiguration();
             //hubConfiguration.EnableDetailedErrors = true;
             //app.MapSignalR(hubConfiguration);
