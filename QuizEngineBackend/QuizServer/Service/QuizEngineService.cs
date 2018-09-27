@@ -15,15 +15,14 @@ namespace QuizServer.Service
     public class QuizEngineService : IQuizEngineService
     {
         public static readonly HttpClient _client = new HttpClient();
-
         public async Task<List<Object>> GetQuestionByDomain(string domain)
         {
-           
-           //var response = await _client.GetAsync("http://localhost:44334/api/questions/domain/" + domain);
-           
-            var response = await _client.GetAsync("http://localhost:44334/api/questions");
+
+            //var response = await _client.GetAsync("http://localhost:44334/api/questions/domain/" + domain);
+
+            var response = await _client.GetAsync("http://13.126.26.172/questionbank");
             //Console.WriteLine(response.ToString());
-            List<Object>  result = await response.Content.ReadAsAsync<List<Object>>();
+            List<Object> result = await response.Content.ReadAsAsync<List<Object>>();
             //Console.WriteLine("Response from the question bank  IS " + JsonConvert.SerializeObject(result));
             return result;
         }
@@ -31,13 +30,13 @@ namespace QuizServer.Service
         {
             Console.WriteLine("HERE");
             List<Object> listofq = new List<Object>();
-            
-           
+
+
             //var response = await _client.GetAsync("http://172.238.232.188:44334/api/questions/domain/" + domain);
-            for(int i=0;i<ids.Count;i++)
+            for (int i = 0; i < ids.Count; i++)
             {
                 //Console.WriteLine("http://172.23.238.185:44334/api/questions/id/" + ids[i]);
-                var response = await _client.GetAsync("http://172.23.239.181:44334/api/questions/id/" + ids[i] );
+                var response = await _client.GetAsync("http://13.126.26.172/questionbank/id/" + ids[i]);
                 Object res = await response.Content.ReadAsAsync<Object>();
                 //Console.WriteLine("QUESTION BANK IS hhhh " + res);
                 //var x = JsonConvert.SerializeObject(res);
@@ -53,7 +52,7 @@ namespace QuizServer.Service
         public async Task<Object> GetConceptAndConceptToQuestionMap(string domain)
         {
             Console.WriteLine("INSIDE GETDOMAIN");
-            var response = await _client.GetAsync("http://172.23.239.181:44334/api/questions/questionConceptMap/" + domain);
+            var response = await _client.GetAsync("http://13.126.26.172/questionbank/questionConceptMap/" + domain);
             Console.WriteLine("INSISE CONSPEC " + response);
             var result = await response.Content.ReadAsAsync<Object>();
             Console.WriteLine("THIS IS THE ANSAER " + result);
@@ -68,8 +67,8 @@ namespace QuizServer.Service
         }
         public async Task PostUserInfoAsync(UserInfo userInfo)
         {
-           Console.WriteLine("ENDING THE QUIZ " + JsonConvert.SerializeObject(userInfo));
-            var response = await _client.PostAsync("http://172.23.238.183:80/api/QuizResult", new StringContent(JsonConvert.SerializeObject(userInfo), UnicodeEncoding.UTF8, "application/json"));
+            Console.WriteLine("ENDING THE QUIZ " + JsonConvert.SerializeObject(userInfo));
+            var response = await _client.PostAsync("http://13.126.26.172/result", new StringContent(JsonConvert.SerializeObject(userInfo), UnicodeEncoding.UTF8, "application/json"));
             var responseString = await response.Content.ReadAsStringAsync();
             var result = await response.Content.ReadAsAsync<UserInfo>();
         }

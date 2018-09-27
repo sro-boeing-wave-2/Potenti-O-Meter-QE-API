@@ -15,6 +15,15 @@ namespace QuizServer
     {
         public static void Main(string[] args)
         {
+            try
+            {
+                DotNetEnv.Env.Load("./machine_config/machine.env");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            Console.WriteLine(System.Environment.GetEnvironmentVariable("MACHINE_LOCAL_IPV4"));
             CreateWebHostBuilder(args).Build().Run();
         }
 

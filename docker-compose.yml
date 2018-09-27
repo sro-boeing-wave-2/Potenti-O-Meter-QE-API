@@ -10,6 +10,8 @@ services:
         labels:
             - "SERVICE_NAME=QuizEngine"
             - "SERVICE_TAGS=QuizEngineTag"
+        volumes:
+            - "/machine_config:/app/machine_config"
     neo4j:
         image: "neo4j:3.2.6"
         environment:
