@@ -12,7 +12,8 @@ namespace QuizServer.Service
         Task<List<Object>> GetQuestionByDomain(string domain);
         Task PostUserInfoAsync(UserInfo userInfo);
         Task<Object> GetConceptGraph(string domain);
-        Task<Object> GetConceptAndConceptToQuestionMap();
+        Task<Object> GetConceptAndConceptToQuestionMap(string domain);
         Task<List<Object>> GetQuestionByIds(List<string> ids);
+
     }
 }

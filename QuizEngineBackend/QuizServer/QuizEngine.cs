@@ -39,81 +39,39 @@ namespace QuizServer
             var userInfo = _userQuizState.GetValueOrDefault(Context.ConnectionId);
             if (question != null)
             {
-               
-               // JObject a = JObject.Parse(JsonConvert.SerializeObject(question));
 
-                //string qType = a.GetValue("questionType").ToString();
-                //Console.WriteLine("PRINITNG QTYPE");
-                //Console.WriteLine(qType);
-                //System.Reflection.Assembly b = System.Reflection.Assembly.Load("Potentiometer.Core");
-                //Type type1 = b.GetType("Potentiometer.Core.QuestionTypes." + qType);
-                //object instanceObject = Activator.CreateInstance(type1);
-                //JsonConvert.PopulateObject(JsonConvert.SerializeObject(question), instanceObject);
-                //bool result = (bool)type1.InvokeMember("Evaluate", BindingFlags.InvokeMethod, null, instanceObject, new object[0]);
-                Console.WriteLine("THIS IS THE QUESTION POSTING ", question);
                 userInfo.QuestionsAttempted.Add(question);
-                
-                //JObject z = JObject.Parse(question);
-                ////JToken q = z[0];
-                //Console.WriteLine("PRINTING QUESTION TYPE");
-                ////Console.WriteLine(z["questionType");
-                //Console.WriteLine(z.GetValue("questionType"));
-                
-               // var qtype = x["questionType"].Value<string>();
-                //Potentiometer.Core.QuestionTypes.MCQ q1 = new Potentiometer.Core.QuestionTypes.MCQ();
-                //System.Reflection.Assembly a = System.Reflection.Assembly.Load("Potentiometer.Core");
-                //Type type1 = a.GetType("Potentiometer.Core.QuestionTypes." + qtype);
-                //object instanceObject = Activator.CreateInstance(type1);
-                //JsonConvert.PopulateObject(JsonConvert.SerializeObject(z), instanceObject);
-                //Console.WriteLine("POPULATED OBJECT Second TIME" + instanceObject);
-                //Console.WriteLine("THIS IS FROM FRONT END " + question);
-                //System.Reflection.Assembly a = System.Reflection.Assembly.Load("Potentiometer.Core");
-                //Type type1 = a.GetType("Potentiometer.Core.QuestionTypes." + qtype);
-                //object instanceObject = Activator.CreateInstance(type1);
-                //JsonConvert.PopulateObject(JsonConvert.SerializeObject(question), instanceObject);
-                //
-                //userInfo.QuestionsAttempted.Add(question);
-
-                //int indexOfAttemptedQuestion = userInfo.QuestionBank.FindIndex(q => q.QuestionId == question.QuestionId);
-                //Console.WriteLine("Question response is " + question.userResponse);
-                //Console.WriteLine("correct option is " + userInfo.QuestionBank[indexOfAttemptedQuestion].CorrectOption);
-                // (userInfo.QuestionsFromQuestionBank[userInfo.CurrentQuestionIndex].CorrectOption == question.userResponse)
-                //{
-                //   userInfo.MaximumDifficaultyLevelReached++;
-                //    userInfo.QuestionsFromQuestionBank[userInfo.CurrentQuestionIndex].IsCorrect = true;
-                //   userInfo.QuestionBank.Remove(userInfo.QuestionBank[indexOfAttemptedQuestion]);
-                //}
-                //else
-                //{
-                //    userInfo.MaximumDifficaultyLevelReached--;
-                //    userInfo.QuestionBank[indexOfAttemptedQuestion].IsCorrect = false;
-                //}
-                //userInfo.QuestionBank[indexOfAttemptedQuestion].userResponse = question.userResponse;
-                //userInfo.QuestionsAttempted.Add(question);
-                //userInfo.CurrentQuestionIndex += 1;
+               // JObject ParsedQuestion = JObject.Parse(JsonConvert.SerializeObject(question));
+               // string questionType = ParsedQuestion.GetValue("questionType").ToString();               
+               // System.Reflection.Assembly b = System.Reflection.Assembly.Load("Potentiometer.Core");
+               // Type QuestionType = b.GetType("Potentiometer.Core.QuestionTypes." + questionType);               
+               // object instanceObjectOfQuestion = Activator.CreateInstance(QuestionType);               
+               // JsonConvert.PopulateObject(JsonConvert.SerializeObject(question), instanceObjectOfQuestion);               
+               // bool result = (bool)QuestionType.InvokeMember("Evaluate", BindingFlags.InvokeMethod, null, instanceObjectOfQuestion, new object[0]);
+              
+               //if(result == true)
+               //{
+               //     _graphService.UpdateUserConceptRelation(ParsedQuestion.GetValue("questionId").ToString(), userInfo.UserId);
+               // }
+               //else
+               // {
+               //     _graphService.UpdateUserConceptRelationForWrongQuestion(ParsedQuestion.GetValue("questionId").ToString(), userInfo.UserId);
+               // }         
             }
             if (userInfo.CurrentQuestionIndex < userInfo.QuestionsFromQuestionBank.Count)
             {
                 try
                 {
-                    //var qu = userInfo.ConceptGraph.triplet[0].target.QuestionId;
-                    Console.WriteLine("========================" + userInfo.QuestionsFromQuestionBank[userInfo.CurrentQuestionIndex]);
-                    //Type type = userInfo.QuestionsFromQuestionBank[userInfo.CurrentQuestionIndex].GetType();
-
+                   
                     var x = JsonConvert.SerializeObject(userInfo.QuestionsFromQuestionBank[userInfo.CurrentQuestionIndex]);
                     JArray z = JArray.Parse(x);
-                    JToken q = z[0];
-                    Console.WriteLine("PRINTING QUESTION TYPE");
-                    Console.WriteLine(q["questionType"]);
-                    //var q = (JObject)userInfo.QuestionsFromQuestionBank[userInfo.CurrentQuestionIndex];
-
+                    JToken q = z[0];              
                     var qtype = q["questionType"].Value<string>();
                     Potentiometer.Core.QuestionTypes.MCQ q1 = new Potentiometer.Core.QuestionTypes.MCQ();
                     System.Reflection.Assembly a = System.Reflection.Assembly.Load("Potentiometer.Core");
                     Type type1 = a.GetType("Potentiometer.Core.QuestionTypes."+qtype);
                     object instanceObject = Activator.CreateInstance(type1);
-                    JsonConvert.PopulateObject(JsonConvert.SerializeObject(q), instanceObject);
-                    Console.WriteLine("POPULATED OBJECT " + instanceObject);
+                    JsonConvert.PopulateObject(JsonConvert.SerializeObject(q), instanceObject);                 
                     userInfo.CurrentQuestionIndex= userInfo.CurrentQuestionIndex + 1;
                     //userInfo.MaximumDifficaultyLevelReached = nextQuestion.DifficultyLevel;
                     return Clients.Caller.SendAsync("NextQuestion", instanceObject);
@@ -135,16 +93,10 @@ namespace QuizServer
         public  Task EndQuiz(Object question)
         {
             UserInfo userInfo = _userQuizState.GetValueOrDefault(Context.ConnectionId);
-            //int indexOfAttemptedQuestion = userInfo.QuestionBank.FindIndex(q => q.QuestionId == question.QuestionId);
-            // userInfo.QuestionBank[indexOfAttemptedQuestion].userResponse = question.userResponse;
-            // userInfo.QuestionsAttempted.Add(question);
-            //var x = JsonConvert.SerializeObject(question);
-            int i = 78;
+            //int indexOfAttemptedQuestion = userInfo.QuestionBank.FindIndex(q => q.QuestionId == question.QuestionId);           
             userInfo.QuestionsAttempted.Add(question);
-            userInfo.QuizId = userInfo.CurrentQuestionIndex + "ksa9b37ar47da700017a8y" + i;
+            userInfo.QuizId = userInfo.CurrentQuestionIndex + "ktya9b37jh47hkqw700017a8y" + userInfo.UserId;
             userInfo.QuestionsFromQuestionBank = null;
-            i++;
-            Console.WriteLine("RESULT IS " + JsonConvert.SerializeObject(userInfo));
             _iquizEngineService.PostUserInfoAsync(userInfo);
             //await _resultService.PostUserInfo(userInfo);
             //UserInfo ui = await _resultService.GetByID(userInfo.UserId);
@@ -157,24 +109,28 @@ namespace QuizServer
             UserInfo userInfo = new UserInfo();
             userInfo.UserId = userId;
             userInfo.DomainName = domain;
-            //userInfo.MaximumDifficaultyLevelReached = 3;
             _userQuizState.Add(Context.ConnectionId, userInfo);
-            var g = await _iquizEngineService.GetConceptAndConceptToQuestionMap();
-           
-            var stringForm = JsonConvert.SerializeObject(g);
+            var ConceptAndConceptToQuestionMap = await _iquizEngineService.GetConceptAndConceptToQuestionMap(domain);
+            var stringForm = JsonConvert.SerializeObject(ConceptAndConceptToQuestionMap);
             var ConceptMapandConcepttoQuestionMap = JArray.Parse(stringForm);
             var version = ConceptMapandConcepttoQuestionMap[0]["version"];
             var domainForConceptGraph = ConceptMapandConcepttoQuestionMap[0]["domain"];
             List<Triplet> questionConceptTriplet = ConceptMapandConcepttoQuestionMap[0]["questionconceptTriplet"].ToObject<List<Triplet>>();
             List<ConceptMap> ConceptToConceptTriplet = ConceptMapandConcepttoQuestionMap[0]["concepttriplet"].ToObject<List<ConceptMap>>();
             bool IsDomainExist = _graphService.IsDomainExist((string)domainForConceptGraph);
-            Console.WriteLine("THIS IS TRYE " + IsDomainExist);
+            bool IsUser = _graphService.IsUserExist(userInfo.UserId);
+            if(IsUser != true)
+            {
+                _graphService.CreateUser(userInfo.UserId);
+            }
             if (IsDomainExist != true)
             {
                 var resul = _graphService.CreateConceptToQuestionMapping(questionConceptTriplet, (string)version, (string)domainForConceptGraph);
                 var resultOfConceptToConceptMapping = _graphService.CreateConceptToConceptMapping(ConceptToConceptTriplet);
               
             }
+            //get the questions from the graph 
+            //_graphService.GetQuestionsFromGraph(userInfo.UserId, userInfo.DomainName);
             JToken QuestionIDs = ConceptMapandConcepttoQuestionMap[0]["questionIds"];
             List<string> Q = new List<string>();
             foreach(string x in QuestionIDs)
@@ -183,16 +139,11 @@ namespace QuizServer
                 Q.Add(x);
             }
             var QuestionID = JsonConvert.SerializeObject(QuestionIDs);
-            Console.WriteLine("PRINTINGGGGGGGGGGGGGGGGG" + Q[0]);
-            Console.WriteLine(Q[0]);
-           // var QuestionIDs = ConceptMapandConcepttoQuestionMap[0]["questionIds"];
-            //string[] QuestionID = { "5ba8c4181df1b6000184a58c", "5ba88cf21d3117000149e345" };
-           userInfo.QuestionsFromQuestionBank = await _iquizEngineService.GetQuestionByIds(Q);
-            Console.WriteLine("CALLING GETGRAPH ");
+            userInfo.QuestionsFromQuestionBank = await _iquizEngineService.GetQuestionByIds(Q);
+            
             //var result = _graphService.GetGraph((string)domainForConceptGraph);
-            //var obj = _graphService.GetGraph();
-            Console.WriteLine("Question Bank " + userInfo.QuestionsFromQuestionBank[0]);
-            Console.WriteLine("==================================================>");
+            //_graphService.GetGraph((string)domainForConceptGraph);
+           
              
             GetNextQuestion(null);
         }

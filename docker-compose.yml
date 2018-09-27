@@ -19,3 +19,5 @@ services:
             - "7687"
     mongo:    
         image: "mongo:latest"
+        expose:
+            - "27017"

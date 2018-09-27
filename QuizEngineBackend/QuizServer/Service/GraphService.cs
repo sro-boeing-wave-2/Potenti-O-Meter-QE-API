@@ -71,7 +71,7 @@ namespace QuizServer.Service
             }
             using (ISession session = driver.Session())
             {
-                var predicate = "of";
+                var predicate = "Has";
 
                 result = session.Run("match (n:Concept) match(m:Domain) CREATE (m)-[x:" + predicate + "]->(n) return n,m,x");
 
@@ -113,21 +113,46 @@ namespace QuizServer.Service
                     Console.WriteLine("This is from the graph daata" + result.ToList());
                     return false;
                 }
-                //Console.WriteLine("This is from the graph daata" + result.ToList().);
+               
                 return true;
 
             }
         }
-
-        public void GetGraph(string domain)
+        public bool IsUserExist(int userId)
         {
             IStatementResult result;
             using (ISession session = driver.Session())
             {
-                result = session.Run("match (n:Domain{name:\"" + domain + "\"}) return n");
-                Console.WriteLine("THIS IS THE RESULT" + result.Single()[0].As<string>());
-                Console.WriteLine("Rsult from the graph " + result);
+                result = session.Run("match (n:User{name:\"" + userId + "\"}) return n");
 
+                if (result.ToList().Count == 0)
+                {
+                   
+                    return false;
+                }
+               
+                return true;
+
+            }
+        }
+        public void CreateUser(int userID)
+        {
+            IStatementResult result;
+            using(ISession session = driver.Session())
+            {
+                result = session.Run("create (n:User{name:\"" + userID + "\"}) return n");
+            }
+        }
+
+        public IStatementResult GetQuestionsFromGraph(int UserId, string DomainName)
+        {
+            IStatementResult result;
+            using (ISession session = driver.Session())
+            {
+                result = session.Run("match (n:Domain{name:\"" + DomainName + "\"}) return n");
+                Console.WriteLine("THIS IS THE RESULT" + result.Single()[0].As<string>());
+                Console.WriteLine("Rsult from the graph " + JsonConvert.SerializeObject(result));
+                //result.Single()[0].As<string>();
                 //foreach (var r in result)
                 //{
                 //    //Get as an INode instance to access properties.
@@ -139,15 +164,27 @@ namespace QuizServer.Service
 
                 //    Console.WriteLine($"{name} is {age} years old.");
                 //}
-               // return result;
+                return result;
 
             }
         }
-
-
-        public IStatementResult GetConceptwithRelationships(string nodename)
+        public void UpdateUserConceptRelationForWrongQuestion(string questionId, int userId)
         {
-            throw new NotImplementedException();
+            IStatementResult result;
+            using (ISession session = driver.Session())
+            {
+                result = session.Run("MATCH (a:QuestionIdNode{name: \"" + questionId + "\"}) match(b:Concept) match (c:User{name:\"" + userId + "\"}) CREATE(b) -[r: weak]->(c) RETURN b,c");
+
+            }
+        }
+        public void UpdateUserConceptRelation(string questionId, int userId)
+        {
+            IStatementResult result;
+            using (ISession session = driver.Session())
+            {
+                result = session.Run("MATCH (a:QuestionIdNode{name: \"" + questionId + "\"}) match(b:Concept) match (c:User{name:\"" + userId + "\"}) CREATE(b) -[r: strong]->(c) RETURN b,c");
+
+            }
         }
 
         public void Dispose()
