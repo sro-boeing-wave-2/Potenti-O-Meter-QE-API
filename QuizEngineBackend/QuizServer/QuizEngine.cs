@@ -107,6 +107,7 @@ namespace QuizServer
         public async Task StartQuiz(int userId, string domain)
         {
             UserInfo userInfo = new UserInfo();
+            Console.WriteLine("INSIDE START");
             userInfo.UserId = userId;
             userInfo.DomainName = domain;
             _userQuizState.Add(Context.ConnectionId, userInfo);
@@ -117,18 +118,18 @@ namespace QuizServer
             var domainForConceptGraph = ConceptMapandConcepttoQuestionMap[0]["domain"];
             List<Triplet> questionConceptTriplet = ConceptMapandConcepttoQuestionMap[0]["questionconceptTriplet"].ToObject<List<Triplet>>();
             List<ConceptMap> ConceptToConceptTriplet = ConceptMapandConcepttoQuestionMap[0]["concepttriplet"].ToObject<List<ConceptMap>>();
-            bool IsDomainExist = _graphService.IsDomainExist((string)domainForConceptGraph);
-            bool IsUser = _graphService.IsUserExist(userInfo.UserId);
-            if(IsUser != true)
-            {
-                _graphService.CreateUser(userInfo.UserId);
-            }
-            if (IsDomainExist != true)
-            {
-                var resul = _graphService.CreateConceptToQuestionMapping(questionConceptTriplet, (string)version, (string)domainForConceptGraph);
-                var resultOfConceptToConceptMapping = _graphService.CreateConceptToConceptMapping(ConceptToConceptTriplet);
+            //bool IsDomainExist = _graphService.IsDomainExist((string)domainForConceptGraph);
+            //bool IsUser = _graphService.IsUserExist(userInfo.UserId);
+            //if(IsUser != true)
+            //{
+            //    _graphService.CreateUser(userInfo.UserId);
+            //}
+            //if (IsDomainExist != true)
+            //{
+            //    var resul = _graphService.CreateConceptToQuestionMapping(questionConceptTriplet, (string)version, (string)domainForConceptGraph);
+            //    var resultOfConceptToConceptMapping = _graphService.CreateConceptToConceptMapping(ConceptToConceptTriplet);
               
-            }
+            //}
             //get the questions from the graph 
             //_graphService.GetQuestionsFromGraph(userInfo.UserId, userInfo.DomainName);
             JToken QuestionIDs = ConceptMapandConcepttoQuestionMap[0]["questionIds"];
