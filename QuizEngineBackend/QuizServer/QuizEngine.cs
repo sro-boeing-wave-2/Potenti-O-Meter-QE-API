@@ -141,12 +141,12 @@ namespace QuizServer
             }
             var QuestionID = JsonConvert.SerializeObject(QuestionIDs);
             userInfo.QuestionsFromQuestionBank = await _iquizEngineService.GetQuestionByIds(Q);
-            
+
             //var result = _graphService.GetGraph((string)domainForConceptGraph);
             //_graphService.GetGraph((string)domainForConceptGraph);
-           
-             
-            GetNextQuestion(null);
+
+
+            await GetNextQuestion(null);
         }
     }
 }
