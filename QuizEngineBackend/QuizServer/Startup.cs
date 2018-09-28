@@ -69,7 +69,7 @@ namespace QuizServer
             app.UseCors("CorsPolicy");
             app.UseSignalR(routes =>
             {
-                routes.MapHub<QuestionHub>("/question");
+                routes.MapHub<QuestionHub>("/start");
             });
             app.UseHttpsRedirection();
 
