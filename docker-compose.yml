@@ -1,29 +1,19 @@
-
 version: "3"
 services:
-  web:
-      build: ./QuizEngineBackend/QuizServer
-      ports:
-      - "8010:80"
-      depends_on:
-          - neo4j
-          - mongo
-      network_mode: potentiometer
-      #expose:
-      #    - "80"
-      labels:
-          - "SERVICE_NAME=QuizEngine"
-          - "SERVICE_TAGS=QuizEngineTag"
-  neo4j:
-      image: "neo4j:3.4.1"
-      environment:
-          - "NEO4J_AUTH=none"
-      ports:
-          - "7474:7474"
-          - "7687:7687"
-
-  mongo:
-      image: "mongo:latest"
-      ports:
-          - "27019:27017"
-      network_mode: potentiometer
+   web:
+       build: ./QuizEngineBackend/QuizServer
+       depends_on:
+           - neo4j
+           - mongo
+       expose:
+          - "80"
+       labels:
+           - "SERVICE_NAME=QuizEngine"
+           - "SERVICE_TAGS=QuizEngineTag"
+   neo4j:
+       image: "neo4j:3.2.6"
+       environment:
+           - "NEO4J_AUTH=none"
+      
+   mongo:
+       image: "mongo:latest"
