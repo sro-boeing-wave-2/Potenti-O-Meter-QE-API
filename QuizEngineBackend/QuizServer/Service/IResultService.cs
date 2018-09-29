@@ -10,6 +10,7 @@ namespace QuizServer.Service
     {
         Task PostUserInfo(UserInfo userInfo);
         Task<UserInfo> GetByID(int id);
+        Task DeleteByIdAsync(int id);
         Task<List<UserInfo>> GetAll();
     }
 }

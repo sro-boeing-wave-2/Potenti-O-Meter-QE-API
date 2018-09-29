@@ -11,15 +11,15 @@ namespace QuizServer.Service
     {
        
         IStatementResult CreateConceptToQuestionMapping(List<Triplet> node, string version, string domain);
-        IStatementResult CreateConceptToConceptMapping(List<ConceptMap> node);
-        void UpdateUserConceptRelation(string questionId, int userId);
-        void UpdateUserConceptRelationForWrongQuestion(string questionId, int userId);
-        IStatementResult GetQuestionsFromGraph(int UserId, string DomainName);
+        IStatementResult CreateConceptToConceptMapping(List<ConceptMap> node, string domain);
+            
+        List<string> GetQuestionsFromGraph(int UserId, string DomainName);
         bool ConceptExists(Concept node);
         bool QuestionIdExists(QuestionIdNode node);
         bool IsDomainExist(string domain);
         bool IsUserExist(int userId);
         void CreateUser(int userId);
         void Dispose();
+        void UpdateUserConceptRelation(UserInfo userInfo, int userId);
     }
 }

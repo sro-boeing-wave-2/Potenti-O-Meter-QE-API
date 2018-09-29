@@ -52,6 +52,14 @@ namespace QuizServer.Controllers
             return Ok(questions);
         }
 
+
+        [HttpDelete("id/{id}")]
+        public async Task<IActionResult> DeleteById([FromRoute] int id)
+        {
+            await _resultService.DeleteByIdAsync(id);
+            Console.WriteLine("Inside delete by Id method " + id);
+            return Ok();
+        }
         [HttpGet("getall")]
         public async Task<IActionResult> GetAllEntries()
         {

@@ -37,5 +37,10 @@ namespace QuizServer.Service
 
             return entries;
         }
+
+        public async Task DeleteByIdAsync(int id)
+        {
+            await _context.ResultCollection.FindOneAndDeleteAsync(t => t.UserId == id);
+        }
     }
 }

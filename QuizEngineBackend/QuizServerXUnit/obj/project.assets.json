@@ -1278,7 +1278,7 @@
           "lib/netstandard1.6/NuGet.Frameworks.dll": {}
         }
       },
-      "Potentiometer.Core/1.0.6": {
+      "Potentiometer.Core/1.0.9": {
         "type": "package",
         "dependencies": {
           "MongoDB.Driver": "2.7.0",
@@ -3449,7 +3449,7 @@
           "MongoDB.Bson": "2.7.0",
           "MongoDB.Driver": "2.7.0",
           "Neo4j.Driver": "1.7.0-beta01",
-          "Potentiometer.Core": "1.0.6",
+          "Potentiometer.Core": "1.0.9",
           "System.Reflection.Emit.Lightweight": "4.3.0"
         },
         "compile": {
@@ -5080,14 +5080,14 @@
         "nuget.frameworks.nuspec"
       ]
     },
-    "Potentiometer.Core/1.0.6": {
-      "sha512": "KJbQZ2FBNL1utlFiafs2OPhCKmLbU8pea9vFuCA58xll9SFfQwyuXLqaUqkcA12PGQgZDmuV+AbFobQKPC4H4w==",
+    "Potentiometer.Core/1.0.9": {
+      "sha512": "M51VN1cLKjSKdfEkMekrK0G1z5XxJXqnbW4bHf+J7qMp4LT6uk0YrjMpYgotWa+3R+NcaUnFbixs0eZhyT09MQ==",
       "type": "package",
-      "path": "potentiometer.core/1.0.6",
+      "path": "potentiometer.core/1.0.9",
       "files": [
         ".signature.p7s",
         "lib/netstandard2.0/Potentiometer.Core.dll",
-        "potentiometer.core.1.0.6.nupkg.sha512",
+        "potentiometer.core.1.0.9.nupkg.sha512",
         "potentiometer.core.nuspec"
       ]
     },

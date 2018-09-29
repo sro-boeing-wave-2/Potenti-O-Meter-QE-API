@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "e4782725d3d16f6abe27f1a49ae6eae4e95ac335"
+    "signature": "59a65d939d87613807b8f23fbd7c39962c44d7be"
   },
   "compilationOptions": {
     "defines": [
@@ -31,7 +31,7 @@
           "MongoDB.Bson": "2.7.0",
           "MongoDB.Driver": "2.7.0",
           "Neo4j.Driver": "1.7.0-beta01",
-          "Potentiometer.Core": "1.0.6",
+          "Potentiometer.Core": "1.0.9",
           "System.Reflection.Emit.Lightweight": "4.3.0"
         },
         "runtime": {
@@ -934,15 +934,15 @@
           "lib/netstandard1.6/NuGet.Frameworks.dll": {}
         }
       },
-      "Potentiometer.Core/1.0.6": {
+      "Potentiometer.Core/1.0.9": {
         "dependencies": {
           "MongoDB.Driver": "2.7.0",
           "Newtonsoft.Json": "11.0.2"
         },
         "runtime": {
           "lib/netstandard2.0/Potentiometer.Core.dll": {
-            "assemblyVersion": "1.0.6.0",
-            "fileVersion": "1.0.6.0"
+            "assemblyVersion": "1.0.9.0",
+            "fileVersion": "1.0.9.0"
           }
         },
         "compile": {
@@ -4806,12 +4806,12 @@
       "path": "nuget.frameworks/4.7.0",
       "hashPath": "nuget.frameworks.4.7.0.nupkg.sha512"
     },
-    "Potentiometer.Core/1.0.6": {
+    "Potentiometer.Core/1.0.9": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-KJbQZ2FBNL1utlFiafs2OPhCKmLbU8pea9vFuCA58xll9SFfQwyuXLqaUqkcA12PGQgZDmuV+AbFobQKPC4H4w==",
-      "path": "potentiometer.core/1.0.6",
-      "hashPath": "potentiometer.core.1.0.6.nupkg.sha512"
+      "sha512": "sha512-M51VN1cLKjSKdfEkMekrK0G1z5XxJXqnbW4bHf+J7qMp4LT6uk0YrjMpYgotWa+3R+NcaUnFbixs0eZhyT09MQ==",
+      "path": "potentiometer.core/1.0.9",
+      "hashPath": "potentiometer.core.1.0.9.nupkg.sha512"
     },
     "runtime.native.System.Net.Security/4.3.0": {
       "type": "package",
