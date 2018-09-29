@@ -108,6 +108,7 @@ namespace QuizServer
             bool IsDomainExist = _graphService.IsDomainExist(domain);
             if (IsDomainExist != true)
             {
+<<<<<<< HEAD
                 var ConceptAndConceptToQuestionMap = await _iquizEngineService.GetConceptAndConceptToQuestionMap(domain);
                 var stringForm = JsonConvert.SerializeObject(ConceptAndConceptToQuestionMap);
                 var ConceptMapandConcepttoQuestionMap = JArray.Parse(stringForm);
@@ -127,6 +128,19 @@ namespace QuizServer
             List<string> QuestionsId = _graphService.GetQuestionsFromGraph(userInfo.UserId, userInfo.DomainName);           
             userInfo.QuestionsFromQuestionBank = await _iquizEngineService.GetQuestionByIds(QuestionsId);  
             GetNextQuestion(null);
+=======
+                Console.WriteLine(x.GetType());
+                Q.Add(x);
+            }
+            var QuestionID = JsonConvert.SerializeObject(QuestionIDs);
+            userInfo.QuestionsFromQuestionBank = await _iquizEngineService.GetQuestionByIds(Q);
+
+            //var result = _graphService.GetGraph((string)domainForConceptGraph);
+            //_graphService.GetGraph((string)domainForConceptGraph);
+
+
+            await GetNextQuestion(null);
+>>>>>>> 2a0808ab40a9e19c15afe31aa46d2b6bc30444e1
         }
     }
 }
