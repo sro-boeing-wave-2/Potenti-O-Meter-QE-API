@@ -14,6 +14,10 @@ services:
        image: "neo4j:3.2.6"
        environment:
            - "NEO4J_AUTH=none"
-      
+       ports:
+           - "7474:7474"
+           - "7687:7687"     
    mongo:
        image: "mongo:latest"
+       ports:
+           - "27019:27017"
