@@ -14,7 +14,7 @@ namespace QuizServer.Service
     public class GraphService : IGraphService
     {
         readonly string ConsulIP = Environment.GetEnvironmentVariable("MACHINE_LOCAL_IPV4");
-        IDriver driver = GraphDatabase.Driver("bolt://13.126.26.172:7687", AuthTokens.Basic("neo4j", "password"));
+        IDriver driver = GraphDatabase.Driver("bolt://neo4j", AuthTokens.Basic("neo4j", "password"));
         public bool ConceptExists(Concept node)
         {
             throw new NotImplementedException();
