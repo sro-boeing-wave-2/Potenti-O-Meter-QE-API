@@ -47,7 +47,7 @@ namespace QuizServer.Service
 
             //    listofq.Add(res);
             //}
-            Console.WriteLine("THIS IS IMP " + JsonConvert.SerializeObject(listofq));
+           // Console.WriteLine("THIS IS IMP " + JsonConvert.SerializeObject(listofq));
             return listofq;
         }
         public async Task<Object> GetConceptAndConceptToQuestionMap(string domain)

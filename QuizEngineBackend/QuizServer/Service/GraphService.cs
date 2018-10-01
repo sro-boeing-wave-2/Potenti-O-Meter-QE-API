@@ -37,7 +37,7 @@ namespace QuizServer.Service
                 //result = session.Run("Match (n:Version {name:\"" + version + "\"}) match (m:Domain {name:\"" + domain + "\"}) create (m)-[x:" + predicate + "]->(n) return n,m,x");
                
             }
-            Console.WriteLine("LIST OF COUNT " + list.Count());
+            //Console.WriteLine("LIST OF COUNT " + list.Count());
 
             for (int i = 0; i < list.Count; i++)
             {
@@ -65,8 +65,8 @@ namespace QuizServer.Service
                     result = session.Run("Match (n:Concept {name:\"" + sourceConcept.name + "\"}) match (m:Question {name:\"" + targetConcept.questionId + "\"}) merge (n)-[x:" + predicate.name + "]->(m) return n,m,x");
                     //result = session.Run("Match(n:Concept) Match(m:QuestionIdNode) where(n.ConceptName = 'checmistry' AND m.QuestionId = '5db1b4f3d5c1a8cda768a') create ((n)-[x:" + predicate.name + " ]->(m)) return x");
 
-                    Console.WriteLine(" Relation Node Created " + JsonConvert.SerializeObject(result));
-                    Console.WriteLine("==============================================");
+                   // Console.WriteLine(" Relation Node Created " + JsonConvert.SerializeObject(result));
+                    //Console.WriteLine("==============================================");
                 }
 
 
@@ -80,7 +80,7 @@ namespace QuizServer.Service
         {
             List<ConceptMap> list = node;
             IStatementResult result = null;
-            Console.WriteLine("Length is " + JsonConvert.SerializeObject(node));
+            //Console.WriteLine("Length is " + JsonConvert.SerializeObject(node));
             for (int i = 0; i < list.Count; i++)
             {
                 using (ISession session = driver.Session())
@@ -94,7 +94,7 @@ namespace QuizServer.Service
                     result = session.Run("match (n:Concept {name:\"" + Toconcept + "\"}) match(m:Domain {name:\"" + domain + "\"}) merge (n)-[x:Concept_Of]->(m) return n,m,x");
 
                     result = session.Run("match (n:Concept {name:\"" + FromConcept + "\"}) match (m:Concept { name:\"" + Toconcept + "\" }) merge (m)-[x:" + predicate + "]-> (n) return n,m,x");
-                    Console.WriteLine("THIS IS CONCEPT TO CONCEPT MAPPING " + list[i].source.name);
+                   // Console.WriteLine("THIS IS CONCEPT TO CONCEPT MAPPING " + list[i].source.name);
                 }
 
             }
@@ -110,7 +110,7 @@ namespace QuizServer.Service
 
                 if (result.ToList().Count == 0)
                 {
-                    Console.WriteLine("This is from the graph daata" + result.ToList());
+                   // Console.WriteLine("This is from the graph daata" + result.ToList());
                     return false;
                 }
 
@@ -147,27 +147,54 @@ namespace QuizServer.Service
         public List<string> GetQuestionsFromGraph(int UserId, string DomainName)
         {
             IStatementResult result;
-
+            IStatementResult resultRepeated;
             using (ISession session = driver.Session())
             {
                 List<string> listOfQuestionId = new List<string>();
                 result = session.Run("match (c:Concept)  WHERE NOT (c)<-[]-(:User{name:\"" + UserId + "\"})  and (c)-[:Concept_Of]->(:Domain{name:\"" + DomainName + "\"}) WITH  COLLECT (DISTINCT c) as ccoll Match (q:Question) <-[]-(cprime:Concept) WHERE  cprime in ccoll return q LIMIT 6");
                 var res = result.ToList();
-                for (int i = 0; i < res.ToList().Count(); i++)
+               // Console.WriteLine("I'm INSIDE CORRECT QUESTION AREA " + result.ToList().Count());
+                if (res.Count() != 0)
                 {
-                    Object o = res[i];
-                    JObject ParsedQuestion = JObject.Parse(JsonConvert.SerializeObject(o));
-                    Object q = ParsedQuestion.GetValue("Values");
-                    JObject P = JObject.Parse(JsonConvert.SerializeObject(q));
-                    Object values = P.GetValue("q");
-                    JObject prop = JObject.Parse(JsonConvert.SerializeObject(values));
-                    Object property = prop.GetValue("Properties");
-                    JObject qid = JObject.Parse(JsonConvert.SerializeObject(property));
-                    string questionId = qid.GetValue("name").ToString();
+                    for (int i = 0; i < res.ToList().Count(); i++)
+                    {
+                        // Console.WriteLine("I'm INSIDE CORRECT QUESTION AREA " + JsonConvert.SerializeObject(res[i]));
+                        Object o = res[i];
+                        JObject ParsedQuestion = JObject.Parse(JsonConvert.SerializeObject(o));
+                        Object q = ParsedQuestion.GetValue("Values");
+                        JObject P = JObject.Parse(JsonConvert.SerializeObject(q));
+                        Object values = P.GetValue("q");
+                        JObject prop = JObject.Parse(JsonConvert.SerializeObject(values));
+                        Object property = prop.GetValue("Properties");
+                        JObject qid = JObject.Parse(JsonConvert.SerializeObject(property));
+                        string questionId = qid.GetValue("name").ToString();
 
-                    listOfQuestionId.Add(questionId);
+                        listOfQuestionId.Add(questionId);
+                    }
                 }
+               else
+                {
 
+                    resultRepeated = session.Run("match (c:Concept)-[x]-(ul:User{name:\"" + UserId + "\"}) where (c)-[:Concept_Of]-(:Domain{name:\"" + DomainName + "\"}) WITH COLLECT (DISTINCT c) as ccoll Match(q: Question) -[r] - (cprime: Concept) < -[rel] - (u: User{ name: \"" + UserId + "\"}) WHERE cprime in ccoll return q order by rel.Intensity limit 6");
+                    Console.WriteLine("THIS IS THE RESULT " + JsonConvert.SerializeObject(result));
+                    var ress = resultRepeated.ToList();
+                    Console.WriteLine("THIS IS THE COUNT " + resultRepeated.ToList().Count());
+                    for (int i = 0; i < ress.ToList().Count(); i++)
+                    {
+                        Console.WriteLine("I'm INSIDE QUESTION ARER " + JsonConvert.SerializeObject(ress[i]));
+                        Object o = ress[i];
+                        JObject ParsedQuestion = JObject.Parse(JsonConvert.SerializeObject(o));
+                        Object q = ParsedQuestion.GetValue("Values");
+                        JObject P = JObject.Parse(JsonConvert.SerializeObject(q));
+                        Object values = P.GetValue("q");
+                        JObject prop = JObject.Parse(JsonConvert.SerializeObject(values));
+                        Object property = prop.GetValue("Properties");
+                        JObject qid = JObject.Parse(JsonConvert.SerializeObject(property));
+                        string questionId = qid.GetValue("name").ToString();
+                        Console.WriteLine("THIS IS THE INTENSITY QUESTION AREA " + questionId);
+                        listOfQuestionId.Add(questionId);
+                    }
+                }
 
                 return listOfQuestionId;
 
@@ -178,7 +205,7 @@ namespace QuizServer.Service
             IStatementResult result;
 
             List<Object> questionAttemted = userInfo.QuestionsAttempted;
-            Console.WriteLine("QUESTIONS ATTEMPTED" + JsonConvert.SerializeObject(userInfo.QuestionsAttempted));
+            //Console.WriteLine("QUESTIONS ATTEMPTED" + JsonConvert.SerializeObject(userInfo.QuestionsAttempted));
                 using (ISession session = driver.Session())
                 {
 
@@ -198,7 +225,7 @@ namespace QuizServer.Service
                     string concept = Parseddetail.GetValue("conceptTags").ToString();
                     JArray concepts = JArray.Parse(concept);
                     JToken target = concepts[0];
-                    Console.WriteLine("This is ===============================" + res);
+                    //Console.WriteLine("This is ===============================" + res);
                     string taxonomy = Parseddetail.GetValue("taxonomy").ToString();
                     if (res)
                     {

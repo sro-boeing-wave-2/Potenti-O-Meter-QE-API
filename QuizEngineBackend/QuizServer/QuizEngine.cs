@@ -87,7 +87,7 @@ namespace QuizServer
             userInfo.QuestionsAttempted.Add(question);
             
             questionsToBeAdded = userInfo.QuestionsAttempted;
-            //userInfo.QuizId = "78bjhrufe8fe47g" + userInfo.UserId;
+           
             userInfo.QuestionsFromQuestionBank = null;
             _graphService.UpdateUserConceptRelation(userInfo, userInfo.UserId);          
             userInfo.QuestionsAttempted = null;
@@ -99,10 +99,10 @@ namespace QuizServer
             Console.WriteLine("THIS IS THE RESULT " + JsonConvert.SerializeObject(ui));
             await _iquizEngineService.PostUserInfoAsync(ui);
           
-            await _resultService.DeleteByIdAsync(userInfo.UserId);
+           await _resultService.DeleteByIdAsync(userInfo.UserId);
 
             
-            Clients.Caller.SendAsync("EndQuiz", userInfo);
+            Clients.Caller.SendAsync("EndQuiz", ui);
         }
 
         public async Task StartQuiz(int userId, string domain)
@@ -133,7 +133,7 @@ namespace QuizServer
             }
             List<string> QuestionsId = _graphService.GetQuestionsFromGraph(userInfo.UserId, userInfo.DomainName);
             userInfo.QuestionsFromQuestionBank = await _iquizEngineService.GetQuestionByIds(QuestionsId);
-            Console.WriteLine("THIS IS THE " + JsonConvert.SerializeObject(userInfo.QuestionsFromQuestionBank));
+            //Console.WriteLine("THIS IS THE " + JsonConvert.SerializeObject(userInfo.QuestionsFromQuestionBank));
             GetNextQuestion(null);
 
         }
