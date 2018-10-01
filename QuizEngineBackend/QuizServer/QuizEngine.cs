@@ -50,10 +50,13 @@ namespace QuizServer
             {
                 try
                 {
-                   
+                    
                     var x = JsonConvert.SerializeObject(userInfo.QuestionsFromQuestionBank[userInfo.CurrentQuestionIndex]);
-                    JArray z = JArray.Parse(x);
-                    JToken q = z[0];              
+                   
+                    var q = JObject.Parse(x);
+                   
+                    //JArray z = JArray.Parse(x);
+                    //JToken q = z[0];              
                     var qtype = q["questionType"].Value<string>();
                     Potentiometer.Core.QuestionTypes.MCQ q1 = new Potentiometer.Core.QuestionTypes.MCQ();
                     System.Reflection.Assembly a = System.Reflection.Assembly.Load("Potentiometer.Core");
@@ -84,15 +87,19 @@ namespace QuizServer
             userInfo.QuestionsAttempted.Add(question);
             
             questionsToBeAdded = userInfo.QuestionsAttempted;
-            userInfo.QuizId = "78bjhrufe8fe47g" + userInfo.UserId;
+            //userInfo.QuizId = "78bjhrufe8fe47g" + userInfo.UserId;
             userInfo.QuestionsFromQuestionBank = null;
             _graphService.UpdateUserConceptRelation(userInfo, userInfo.UserId);          
-           // userInfo.QuestionsAttempted = null;
-           // await _resultService.PostUserInfo(userInfo);
-           // UserInfo ui = await _resultService.GetByID(userInfo.UserId);
-           // ui.QuestionsAttempted = questionsToBeAdded;
-            await _iquizEngineService.PostUserInfoAsync(userInfo);
-            //await _resultService.DeleteByIdAsync(userInfo.UserId);
+            userInfo.QuestionsAttempted = null;
+            await _resultService.PostUserInfo(userInfo);
+            
+           
+            UserInfo ui = await _resultService.GetByID(userInfo.UserId);
+            ui.QuestionsAttempted = questionsToBeAdded;
+            Console.WriteLine("THIS IS THE RESULT " + JsonConvert.SerializeObject(ui));
+            await _iquizEngineService.PostUserInfoAsync(ui);
+          
+            await _resultService.DeleteByIdAsync(userInfo.UserId);
 
             
             Clients.Caller.SendAsync("EndQuiz", userInfo);
@@ -126,6 +133,7 @@ namespace QuizServer
             }
             List<string> QuestionsId = _graphService.GetQuestionsFromGraph(userInfo.UserId, userInfo.DomainName);
             userInfo.QuestionsFromQuestionBank = await _iquizEngineService.GetQuestionByIds(QuestionsId);
+            Console.WriteLine("THIS IS THE " + JsonConvert.SerializeObject(userInfo.QuestionsFromQuestionBank));
             GetNextQuestion(null);
 
         }

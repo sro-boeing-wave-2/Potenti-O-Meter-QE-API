@@ -13,7 +13,6 @@ services:
    neo4j:
        image: "neo4j:3.2.6"
        environment:
-           - "NEO4J_AUTH=none"  
+           - "NEO4J_AUTH=none"
    mongo:
        image: "mongo:latest"
-      
