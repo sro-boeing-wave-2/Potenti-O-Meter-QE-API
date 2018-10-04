@@ -206,10 +206,10 @@ namespace QuizServer.Service
             using (ISession session = driver.Session())
             {
                 List<string> listOfQuestionId = new List<string>();
-                result = session.Run("match (c:Concept)  WHERE NOT (c)<-[]-(:User{name:\"" + UserId + "\"})  and (c)-[:Concept_Of]->(:Domain{name:\"" + DomainName + "\"}) WITH  COLLECT (DISTINCT c) as ccoll Match (q:Question)-[]->(cprime:Concept) WHERE  cprime in ccoll return q LIMIT 10");
+                result = session.Run("match (c:Concept)  WHERE NOT (c)<-[]-(:User{name:\"" + UserId + "\"})  and (c)-[:Concept_Of]->(:Domain{name:\"" + DomainName + "\"}) WITH  COLLECT (DISTINCT c) as ccoll Match (q:Question)-[]->(cprime:Concept) WHERE  cprime in ccoll return dictinct q LIMIT 10");
                 var res = result.ToList();
               
-                if (res.Count() != 0)
+                if (res.Count() != 0 && res.Count==10)
                 {
                     for (int i = 0; i < res.ToList().Count(); i++)
                     {
@@ -230,7 +230,7 @@ namespace QuizServer.Service
                else
                 {
 
-                    resultRepeated = session.Run("match (c:Concept)-[x]-(ul:User{name:\"" + UserId + "\"}) where (c)-[:Concept_Of]-(:Domain{name:\"" + DomainName + "\"}) WITH COLLECT (DISTINCT c) as ccoll Match (q:Question)-[r]->(cprime:Concept)<-[rel]-(u: User{ name: \"" + UserId + "\"}) WHERE cprime in ccoll  return q order by rel.Intensity limit 10");
+                    resultRepeated = session.Run("match (c:Concept)-[x]-(ul:User{name:\"" + UserId + "\"}) where (c)-[:Concept_Of]-(:Domain{name:\"" + DomainName + "\"}) WITH COLLECT (DISTINCT c) as ccoll Match (q:Question)-[r]->(cprime:Concept)<-[rel]-(u: User{ name: \"" + UserId + "\"}) WHERE cprime in ccoll  return distinct q order by rel.Intensity limit 10");
                     Console.WriteLine("THIS IS THE RESULT " + JsonConvert.SerializeObject(result));
                     var ress = resultRepeated.ToList();
                     Console.WriteLine("THIS IS THE COUNT " + resultRepeated.ToList().Count());
