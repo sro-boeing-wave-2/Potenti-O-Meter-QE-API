@@ -19,5 +19,8 @@ services:
         expose:
             - "7474"
             - "7687"
+        labels:
+            - "SERVICE_NAME=KnowledgeState"
+            - "SERVICE_TAGS=KnowledgeStateTag"
     mongo:
         image: "mongo:latest"
