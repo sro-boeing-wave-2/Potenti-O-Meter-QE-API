@@ -29,7 +29,7 @@ namespace QuizServer.Service
             Console.WriteLine("LISTENINIG ");
 
             channel.QueueDeclare(queue: "ConceptMap",
-                            durable: true,
+                            durable: false,
                             exclusive: false,
                             autoDelete: false,
                             arguments: null);
