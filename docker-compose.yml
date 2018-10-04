@@ -16,8 +16,9 @@ services:
         image: "neo4j:3.2.6"
         environment:
             - "NEO4J_AUTH=none"
-        expose:
-            - "7474"
+        ports:
+            - "7474:7474"
+            - "7687:7687"
         labels:
             - "SERVICE_7474_NAME=KnowledgeState"
             - "SERVICE_TAGS=KnowledgeStateTag"
