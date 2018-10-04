@@ -19,12 +19,6 @@ namespace QuizServer.Service
         {
 
            
-           //var response = await _client.GetAsync("http://localhost:44334/api/questions/domain/" + domain);
-           
-           
-
-            //var response = await _client.GetAsync("http://localhost:44334/api/questions/domain/" + domain);
-
             var response = await _client.GetAsync("http://13.126.26.172/questionbank");
             //Console.WriteLine(response.ToString());
             List<Object> result = await response.Content.ReadAsAsync<List<Object>>();
@@ -36,6 +30,7 @@ namespace QuizServer.Service
             List<Object> listofq = new List<Object>();
             string s = JsonConvert.SerializeObject(ids);
             var response = await _client.GetAsync("http://13.126.26.172/questionbank/idlist/" + s);
+            Console.WriteLine(response);
             listofq = await response.Content.ReadAsAsync<List<Object>>();
 
             //for (int i = 0; i < ids.Count; i++)
@@ -47,7 +42,7 @@ namespace QuizServer.Service
 
             //    listofq.Add(res);
             //}
-           // Console.WriteLine("THIS IS IMP " + JsonConvert.SerializeObject(listofq));
+            Console.WriteLine("THIS IS IMP " + JsonConvert.SerializeObject(listofq));
             return listofq;
         }
         public async Task<Object> GetConceptAndConceptToQuestionMap(string domain)

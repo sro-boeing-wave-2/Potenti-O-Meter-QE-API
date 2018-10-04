@@ -3442,6 +3442,15 @@
           "lib/netstandard2.0/Potentiometer.Core.dll": {}
         }
       },
+      "RabbitMQ.Client/6.0.0-pre3": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/RabbitMQ.Client.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/RabbitMQ.Client.dll": {}
+        }
+      },
       "Remotion.Linq/2.2.0": {
         "type": "package",
         "dependencies": {
@@ -9383,6 +9392,22 @@
         "potentiometer.core.nuspec"
       ]
     },
+    "RabbitMQ.Client/6.0.0-pre3": {
+      "sha512": "3V3kGiS6rOG9UPh80me/T5WtN0hJZcKvPfHwEej/QJhSxuKPyaN7kL0R3udTa2UzoikPYrvIB3TXHNLb/HE5iA==",
+      "type": "package",
+      "path": "rabbitmq.client/6.0.0-pre3",
+      "files": [
+        ".signature.p7s",
+        "lib/net451/RabbitMQ.Client.dll",
+        "lib/net451/RabbitMQ.Client.xml",
+        "lib/netstandard1.5/RabbitMQ.Client.dll",
+        "lib/netstandard1.5/RabbitMQ.Client.xml",
+        "lib/netstandard2.0/RabbitMQ.Client.dll",
+        "lib/netstandard2.0/RabbitMQ.Client.xml",
+        "rabbitmq.client.6.0.0-pre3.nupkg.sha512",
+        "rabbitmq.client.nuspec"
+      ]
+    },
     "Remotion.Linq/2.2.0": {
       "sha512": "fK/76UmpC0FXBlGDFVPLJHQlDLYnGC+XY3eoDgCgbtrhi0vzbXDQ3n/IYHhqSKqXQfGw/u04A1drWs7rFVkRjw==",
       "type": "package",
@@ -14998,6 +15023,7 @@
       "MongoDB.Driver >= 2.7.0",
       "Neo4j.Driver >= 1.7.0-beta01",
       "Potentiometer.Core >= 1.0.9",
+      "RabbitMQ.Client >= 6.0.0-pre3",
       "System.Reflection.Emit.Lightweight >= 4.3.0"
     ]
   },
@@ -15078,6 +15104,10 @@
           "Potentiometer.Core": {
             "target": "Package",
             "version": "[1.0.9, )"
+          },
+          "RabbitMQ.Client": {
+            "target": "Package",
+            "version": "[6.0.0-pre3, )"
           },
           "System.Reflection.Emit.Lightweight": {
             "target": "Package",

@@ -10,8 +10,5 @@ namespace QuizServer.Models
         public Concept  source { get; set; }
         public QuestionIdNode target { get; set; }
         public Relationship relationship { get; set; }
-
-
-
     }
 }

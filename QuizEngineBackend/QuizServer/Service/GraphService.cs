@@ -14,7 +14,21 @@ namespace QuizServer.Service
     public class GraphService : IGraphService
     {
         readonly string ConsulIP = Environment.GetEnvironmentVariable("MACHINE_LOCAL_IPV4");
-        IDriver driver = GraphDatabase.Driver("bolt://neo4j", AuthTokens.Basic("neo4j", "password"));
+        IDriver driver;
+
+        public GraphService()
+        {
+            try
+            {           
+                driver = GraphDatabase.Driver(new Uri("bolt://neo4j"), AuthTokens.Basic("neo4j", "password"));
+                Console.WriteLine("Graph Driver Initialized");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
         public bool ConceptExists(Concept node)
         {
             throw new NotImplementedException();
@@ -28,14 +42,15 @@ namespace QuizServer.Service
         {
             List<Triplet> list = node;
             IStatementResult result = null;
+            
             using (ISession session = driver.Session())
             {
 
                 var predicate = "Of";
-                result = session.Run("create (n:Version {name:\"" + version + "\"}) create (m:Domain {name:\"" + domain + "\"})  merge (m)-[x:" + predicate + "]->(n) return n,m");
-                //result = session.Run("create (n:Domain {name:\"" + domain + "\"}) return n");
+                result = session.Run("merge (n:Version {name:\"" + version + "\"}) merge (m:Domain {name:\"" + domain + "\"})  merge (m)-[x:" + predicate + "]->(n) return n,m");
+                //result1 = session.Run("merge (m:Domain {name:\"" + domain + "\"}) return n");
                 //result = session.Run("Match (n:Version {name:\"" + version + "\"}) match (m:Domain {name:\"" + domain + "\"}) create (m)-[x:" + predicate + "]->(n) return n,m,x");
-               
+               // Console.WriteLine(" Domain Node Created " + JsonConvert.SerializeObject(result));
             }
             //Console.WriteLine("LIST OF COUNT " + list.Count());
 
@@ -65,7 +80,7 @@ namespace QuizServer.Service
                     result = session.Run("Match (n:Concept {name:\"" + sourceConcept.name + "\"}) match (m:Question {name:\"" + targetConcept.questionId + "\"}) merge (n)-[x:" + predicate.name + "]->(m) return n,m,x");
                     //result = session.Run("Match(n:Concept) Match(m:QuestionIdNode) where(n.ConceptName = 'checmistry' AND m.QuestionId = '5db1b4f3d5c1a8cda768a') create ((n)-[x:" + predicate.name + " ]->(m)) return x");
 
-                   // Console.WriteLine(" Relation Node Created " + JsonConvert.SerializeObject(result));
+                    //Console.WriteLine(" Relation Node Created " + JsonConvert.SerializeObject(result));
                     //Console.WriteLine("==============================================");
                 }
 
@@ -94,7 +109,46 @@ namespace QuizServer.Service
                     result = session.Run("match (n:Concept {name:\"" + Toconcept + "\"}) match(m:Domain {name:\"" + domain + "\"}) merge (n)-[x:Concept_Of]->(m) return n,m,x");
 
                     result = session.Run("match (n:Concept {name:\"" + FromConcept + "\"}) match (m:Concept { name:\"" + Toconcept + "\" }) merge (m)-[x:" + predicate + "]-> (n) return n,m,x");
-                   // Console.WriteLine("THIS IS CONCEPT TO CONCEPT MAPPING " + list[i].source.name);
+                    //Console.WriteLine("THIS IS CONCEPT TO CONCEPT MAPPING " + list[i].source.name);
+                }
+
+            }
+            return result;
+
+        }
+        public IStatementResult CreateContentRecommendationMapping(List<ContentConceptTriplet> node, string domain)
+        {
+            List<ContentConceptTriplet> list = node;
+           
+            IStatementResult result=null;
+            IStatementResult result1 = null;
+            IStatementResult result2= null;
+            for (int i = 0; i < list.Count; i++)
+            {
+                using (ISession session = driver.Session())
+                {
+                    var FromConcept = list[i].Target.name;
+                    var url = list[i].Source.Url;
+                    var predicate = list[i].Relationship.Name;
+                    var tag = list[i].Source.Tags[0];
+                    var taxonomy = list[i].Relationship.Taxonomy;
+                    //sConsole.WriteLine("This is from concept " + taxonomy + tag + FromConcept);
+                    var query = $"MERGE (n:Concept {{ name:'{FromConcept}' }}) return n";
+                    Console.WriteLine(query);
+                    //result = session.Run(query);
+
+                    var conceptContentCreatorQuery = $@"
+                    MERGE (n:Concept {{name: '{FromConcept}'}})
+                    MERGE(m: Content {{url: '{list[i].Source.Url}', tags: [{ string.Join(',', list[i].Source.Tags.Select(x => $"'{x}'"))}]}}) 
+                    MERGE(n) -[x:{list[i].Relationship.Name} {{Taxonomy: '{list[i].Relationship.Taxonomy}'}}]->(m) return n, m, x";
+
+                    Console.WriteLine(conceptContentCreatorQuery);
+
+                    result1 = session.Run(conceptContentCreatorQuery);
+                    //result = session.Run("merge (n:Content {URL:\"" + url+ "\" ,Tags:\"" + tag + "\" })  return n");
+                    //result = session.Run("match (n:Concept {name:\"" + FromConcept + "\"}) match(m:Content {URL:\"" + url + "\"  ,Tags:\"" + tag + "\"}) create (n)-[x:\"" + predicate + "\"]->(m) return n,m,x");
+
+                    Console.WriteLine("THIS IS CONCEPT TO CONCEPT MAPPING " + JsonConvert.SerializeObject(result1));
                 }
 
             }
@@ -153,7 +207,7 @@ namespace QuizServer.Service
                 List<string> listOfQuestionId = new List<string>();
                 result = session.Run("match (c:Concept)  WHERE NOT (c)<-[]-(:User{name:\"" + UserId + "\"})  and (c)-[:Concept_Of]->(:Domain{name:\"" + DomainName + "\"}) WITH  COLLECT (DISTINCT c) as ccoll Match (q:Question) <-[]-(cprime:Concept) WHERE  cprime in ccoll return q LIMIT 6");
                 var res = result.ToList();
-               // Console.WriteLine("I'm INSIDE CORRECT QUESTION AREA " + result.ToList().Count());
+              
                 if (res.Count() != 0)
                 {
                     for (int i = 0; i < res.ToList().Count(); i++)
@@ -175,7 +229,7 @@ namespace QuizServer.Service
                else
                 {
 
-                    resultRepeated = session.Run("match (c:Concept)-[x]-(ul:User{name:\"" + UserId + "\"}) where (c)-[:Concept_Of]-(:Domain{name:\"" + DomainName + "\"}) WITH COLLECT (DISTINCT c) as ccoll Match(q: Question) -[r] - (cprime: Concept) < -[rel] - (u: User{ name: \"" + UserId + "\"}) WHERE cprime in ccoll return q order by rel.Intensity limit 6");
+                    resultRepeated = session.Run("match (c:Concept)-[x]-(ul:User{name:\"" + UserId + "\"}) where (c)-[:Concept_Of]-(:Domain{name:\"" + DomainName + "\"}) WITH COLLECT (DISTINCT c) as ccoll Match(q: Question) -[r] - (cprime: Concept) < -[rel] - (u: User{ name: \"" + UserId + "\"}) WHERE cprime in ccoll  return q order by rel.Intensity limit 6");
                     Console.WriteLine("THIS IS THE RESULT " + JsonConvert.SerializeObject(result));
                     var ress = resultRepeated.ToList();
                     Console.WriteLine("THIS IS THE COUNT " + resultRepeated.ToList().Count());
@@ -229,11 +283,11 @@ namespace QuizServer.Service
                     string taxonomy = Parseddetail.GetValue("taxonomy").ToString();
                     if (res)
                     {
-                        result = session.Run("match (n:Concept {name:\"" + target + "\"}) match (m:User { name:\"" + userId + "\" }) merge (m)-[x:" + taxonomy + " ]-> (n) on create set x.Intensity = 1 on match set x.Intensity= x.Intensity + 1 return n,m,x");
+                        result = session.Run("merge (n:Concept {name:\"" + target + "\"}) merge (m:User { name:\"" + userId + "\" }) merge (m)-[x:" + taxonomy + "{Taxonomy:\"" + taxonomy + "\"} ]-> (n) on create set x.Intensity = 1  on match set x.Intensity= x.Intensity + 1 return n,m,x");
                     }
                     else
                     {
-                        result = session.Run("match (n:Concept {name:\"" + target + "\"}) match (m:User { name:\"" + userId + "\" }) merge (m)-[x:" + taxonomy + "]-> (n) on create set x.Intensity = 0 on match set x.Intensity= x.Intensity - 1 return n,m,x");
+                        result = session.Run("merge(n:Concept {name:\"" + target + "\"}) merge (m:User { name:\"" + userId + "\" }) merge (m)-[x:" + taxonomy + " {Taxonomy:\"" + taxonomy + "\"} ]-> (n) on create set x.Intensity = 0 on match set x.Intensity= x.Intensity - 1 return n,m,x");
                     }
                     //result = session.Run("match (n:Concept {name:\"" + target + "\"}) match (m:User { name:\"" + userId + "\" }) merge (m)-[x:" + taxonomy + "]-> (n) return n,m,x");
 
@@ -242,7 +296,49 @@ namespace QuizServer.Service
             }
 
         }
-       
+        public List<ContentRecommender> GetContentRecommendations(int userId, string domain)
+        {
+            IStatementResult result;
+            List<ContentRecommender> cr = new List<ContentRecommender>();
+            Dictionary<string, List<string>> ContentRecommendations = new Dictionary<string, List<string>>();
+            Console.WriteLine("INSIDE GET CONTENT");
+            using (ISession session = driver.Session())
+            {
+                result = session.Run("match (c:Concept)<-[x]-(ul:User{name:\"" + userId + "\"}) where (c)-[:Concept_Of]->(:Domain{name:\"" + domain + "\"}) WITH COLLECT (DISTINCT c) as ccoll Match(co:Content) -[r] - (cprime: Concept) < -[rel] - (u: User{ name:\"" + userId + "\"}) WHERE cprime in ccoll and  rel.Intensity<3 and rel.Taxonomy=r.Taxonomy return co ");
+                var res = result.ToList();
+                Console.WriteLine("COUNT " + result.ToList().Count());
+                if (res.Count() != 0)
+                {
+                    for (int i = 0; i < res.ToList().Count(); i++)
+                    {
+                        ContentRecommender c = new ContentRecommender();
+                        Object o = res[i];
+                        JObject ParsedQuestion = JObject.Parse(JsonConvert.SerializeObject(o));
+                        Object q = ParsedQuestion.GetValue("Values");
+                        JObject P = JObject.Parse(JsonConvert.SerializeObject(q));
+                        Object values = P.GetValue("co");
+                        JObject prop = JObject.Parse(JsonConvert.SerializeObject(values));
+                        Object property = prop.GetValue("Properties");
+                        JObject qid = JObject.Parse(JsonConvert.SerializeObject(property));
+                        string url = qid.GetValue("url").ToString();
+                        JToken tags = qid.GetValue("tags");
+                        c.url = url;
+                        c.tags = tags.ToObject<List<string>>();
+                        cr.Add(c);
+                        var tag = tags.ToList();
+                        Console.WriteLine("THIS IS TAGS " + tag);
+                       
+                        //listOfQuestionId.Add(questionId);
+                    }
+                }
+                
+            }
+            Console.WriteLine("THIS IS THE CONTENT " + JsonConvert.SerializeObject(cr));
+            
+            return cr;
+        }
+
+
         public void Dispose()
         {
             throw new NotImplementedException();

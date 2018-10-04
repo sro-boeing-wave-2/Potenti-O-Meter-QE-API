@@ -45,17 +45,16 @@ namespace QuizServer
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddTransient<IQuizEngineService, QuizEngineService>();
-            services.AddTransient<IResultContext,ResultContext>();
-            services.AddTransient<IResultService, ResultService>();
-            services.AddTransient<IGraphService, GraphService>();
+            services.AddSingleton<IQuizEngineService, QuizEngineService>();
+            services.AddSingleton<IResultContext, ResultContext>();
+            services.AddSingleton<IResultService, ResultService>();
+            services.AddSingleton<IGraphService, GraphService>();
+            services.AddSingleton<IMessageBusService, MessageBusService>();
             services.AddSignalR();
-            
-            
         }
         
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IMessageBusService messageBusService)
         {
             if (env.IsDevelopment())
             {
@@ -72,6 +71,7 @@ namespace QuizServer
             //hubConfiguration.EnableDetailedErrors = true;
             //app.MapSignalR(hubConfiguration);
             app.UseMvc();
+            
         }
     }
 }
