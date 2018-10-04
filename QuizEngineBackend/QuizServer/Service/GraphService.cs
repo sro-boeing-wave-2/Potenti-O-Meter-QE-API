@@ -358,11 +358,11 @@ namespace QuizServer.Service
                         //listOfQuestionId.Add(questionId);
                     }
                 }
-                
+                Console.WriteLine("THIS IS THE CONTENT " + JsonConvert.SerializeObject(cr));
+
+                return cr;
             }
-            Console.WriteLine("THIS IS THE CONTENT " + JsonConvert.SerializeObject(cr));
             
-            return cr;
         }
 
 
