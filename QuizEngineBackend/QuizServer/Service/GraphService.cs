@@ -323,8 +323,10 @@ namespace QuizServer.Service
                         Object property = prop.GetValue("Properties");
                         JObject qid = JObject.Parse(JsonConvert.SerializeObject(property));
                         string url = qid.GetValue("url").ToString();
+                        string title = qid.GetValue("title").ToString();
                         JToken tags = qid.GetValue("tags");
                         c.url = url;
+                        c.title = title;
                         c.tags = tags.ToObject<List<string>>();
                         cr.Add(c);
                         var tag = tags.ToList();
@@ -350,8 +352,10 @@ namespace QuizServer.Service
                         Object property = prop.GetValue("Properties");
                         JObject qid = JObject.Parse(JsonConvert.SerializeObject(property));
                         string url = qid.GetValue("url").ToString();
+                        string title = qid.GetValue("title").ToString();
                         JToken tags = qid.GetValue("tags");
                         c.url = url;
+                        c.title = title;
                         c.tags = tags.ToObject<List<string>>();
                         cr.Add(c);
                         var tag = tags.ToList();
