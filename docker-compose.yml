@@ -16,6 +16,7 @@ services:
         image: "neo4j:3.2.6"
         environment:
             - "NEO4J_AUTH=none"
-     
+        expose:
+            - "7474"
     mongo:
         image: "mongo:latest"
