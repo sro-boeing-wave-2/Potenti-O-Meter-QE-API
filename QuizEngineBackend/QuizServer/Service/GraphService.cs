@@ -299,11 +299,38 @@ namespace QuizServer.Service
         public List<ContentRecommender> GetContentRecommendations(int userId, string domain)
         {
             IStatementResult result;
+            IStatementResult result1;
             List<ContentRecommender> cr = new List<ContentRecommender>();
             Dictionary<string, List<string>> ContentRecommendations = new Dictionary<string, List<string>>();
             Console.WriteLine("INSIDE GET CONTENT");
             using (ISession session = driver.Session())
             {
+                result1 = session.Run("match (c:Concept)-[:Concept_Of]->(:Domain{name:\"" + domain + "\"}) WITH COLLECT (DISTINCT c) as ccoll  Match(co:Content) -[r] - (cprime: Concept) return co ");
+                var re = result1.ToList();
+                if (re.Count() != 0)
+                {
+                    for (int i = 0; i < re.ToList().Count(); i++)
+                    {
+                        ContentRecommender c = new ContentRecommender();
+                        Object o = re[i];
+                        JObject ParsedQuestion = JObject.Parse(JsonConvert.SerializeObject(o));
+                        Object q = ParsedQuestion.GetValue("Values");
+                        JObject P = JObject.Parse(JsonConvert.SerializeObject(q));
+                        Object values = P.GetValue("co");
+                        JObject prop = JObject.Parse(JsonConvert.SerializeObject(values));
+                        Object property = prop.GetValue("Properties");
+                        JObject qid = JObject.Parse(JsonConvert.SerializeObject(property));
+                        string url = qid.GetValue("url").ToString();
+                        JToken tags = qid.GetValue("tags");
+                        c.url = url;
+                        c.tags = tags.ToObject<List<string>>();
+                        cr.Add(c);
+                        var tag = tags.ToList();
+                        Console.WriteLine("THIS IS TAGS " + tag);
+
+                        //listOfQuestionId.Add(questionId);
+                    }
+                }
                 result = session.Run("match (c:Concept)<-[x]-(ul:User{name:\"" + userId + "\"}) where (c)-[:Concept_Of]->(:Domain{name:\"" + domain + "\"}) WITH COLLECT (DISTINCT c) as ccoll Match(co:Content) -[r] - (cprime: Concept) < -[rel] - (u: User{ name:\"" + userId + "\"}) WHERE cprime in ccoll and  rel.Intensity<3 and rel.Taxonomy=r.Taxonomy return co ");
                 var res = result.ToList();
                 Console.WriteLine("COUNT " + result.ToList().Count());
