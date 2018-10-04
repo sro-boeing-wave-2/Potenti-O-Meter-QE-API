@@ -21,5 +21,6 @@ services:
         labels:
             - "SERVICE_7474_NAME=KnowledgeState"
             - "SERVICE_TAGS=KnowledgeStateTag"
+            - "SERVICE_7687_NAME=KnowledgeStateBolt"
     mongo:
         image: "mongo:latest"
