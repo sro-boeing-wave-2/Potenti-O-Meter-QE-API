@@ -1,21 +1,21 @@
 version: "3"
 services:
-   web:
-       build: ./QuizEngineBackend/QuizServer
-       depends_on:
-           - neo4j
-           - mongo
-       expose:
-          - "80"
-       labels:
-           - "SERVICE_NAME=QuizEngine"
-           - "SERVICE_TAGS=QuizEngineTag"
+    web:
+        build: ./QuizEngineBackend/QuizServer
+        depends_on:
+            - neo4j
+            - mongo
+        expose:
+            - "80"
+        labels:
+            - "SERVICE_NAME=QuizEngine"
+            - "SERVICE_TAGS=QuizEngineTag"
         volumes:
             - "/machine_config:/app/machine_config"
-   neo4j:
-       image: "neo4j:3.2.6"
-       environment:
-           - "NEO4J_AUTH=none"
+    neo4j:
+        image: "neo4j:3.2.6"
+        environment:
+            - "NEO4J_AUTH=none"
      
-   mongo:
-       image: "mongo:latest"
+    mongo:
+        image: "mongo:latest"
