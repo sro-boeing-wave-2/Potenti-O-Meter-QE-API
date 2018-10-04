@@ -309,6 +309,7 @@ namespace QuizServer.Service
                 var re = result1.ToList();
                 if (re.Count() != 0)
                 {
+                    Console.WriteLine("COUNT " + result1.ToList().Count());
                     for (int i = 0; i < re.ToList().Count(); i++)
                     {
                         ContentRecommender c = new ContentRecommender();
