@@ -205,7 +205,7 @@ namespace QuizServer.Service
             using (ISession session = driver.Session())
             {
                 List<string> listOfQuestionId = new List<string>();
-                result = session.Run("match (c:Concept)  WHERE NOT (c)<-[]-(:User{name:\"" + UserId + "\"})  and (c)-[:Concept_Of]->(:Domain{name:\"" + DomainName + "\"}) WITH  COLLECT (DISTINCT c) as ccoll Match (q:Question) <-[]-(cprime:Concept) WHERE  cprime in ccoll return q LIMIT 6");
+                result = session.Run("match (c:Concept)  WHERE NOT (c)<-[]-(:User{name:\"" + UserId + "\"})  and (c)-[:Concept_Of]->(:Domain{name:\"" + DomainName + "\"}) WITH  COLLECT (DISTINCT c) as ccoll Match (q:Question) <-[]-(cprime:Concept) WHERE  cprime in ccoll return q LIMIT 10");
                 var res = result.ToList();
               
                 if (res.Count() != 0)
