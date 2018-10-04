@@ -77,7 +77,7 @@ namespace QuizServer.Service
                     var sourceConcept = list[i].source;
                     var targetConcept = list[i].target;
                     var predicate = list[i].relationship;
-                    result = session.Run("Match (n:Concept {name:\"" + sourceConcept.name + "\"}) match (m:Question {name:\"" + targetConcept.questionId + "\"}) merge (n)-[x:" + predicate.name + "]->(m) return n,m,x");
+                    result = session.Run("Match (n:Concept {name:\"" + sourceConcept.name + "\"}) match (m:Question {name:\"" + targetConcept.questionId + "\"}) merge (n)<-[x:" + predicate.name + "]-(m) return n,m,x");
                     //result = session.Run("Match(n:Concept) Match(m:QuestionIdNode) where(n.ConceptName = 'checmistry' AND m.QuestionId = '5db1b4f3d5c1a8cda768a') create ((n)-[x:" + predicate.name + " ]->(m)) return x");
 
                     //Console.WriteLine(" Relation Node Created " + JsonConvert.SerializeObject(result));
@@ -129,6 +129,7 @@ namespace QuizServer.Service
                 {
                     var FromConcept = list[i].Target.name;
                     var url = list[i].Source.Url;
+                    var title = list[i].Source.Title;
                     var predicate = list[i].Relationship.Name;
                     var tag = list[i].Source.Tags[0];
                     var taxonomy = list[i].Relationship.Taxonomy;
@@ -139,8 +140,8 @@ namespace QuizServer.Service
 
                     var conceptContentCreatorQuery = $@"
                     MERGE (n:Concept {{name: '{FromConcept}'}})
-                    MERGE(m: Content {{url: '{list[i].Source.Url}', tags: [{ string.Join(',', list[i].Source.Tags.Select(x => $"'{x}'"))}]}}) 
-                    MERGE(n) -[x:{list[i].Relationship.Name} {{Taxonomy: '{list[i].Relationship.Taxonomy}'}}]->(m) return n, m, x";
+                    MERGE(m: Content {{title:'{list[i].Source.Title}',url: '{list[i].Source.Url}', tags: [{ string.Join(',', list[i].Source.Tags.Select(x => $"'{x}'"))}]}}) 
+                    MERGE(n)<-[x:{list[i].Relationship.Name} {{Taxonomy: '{list[i].Relationship.Taxonomy}'}}]-(m) return n, m, x";
 
                     Console.WriteLine(conceptContentCreatorQuery);
 
@@ -205,7 +206,7 @@ namespace QuizServer.Service
             using (ISession session = driver.Session())
             {
                 List<string> listOfQuestionId = new List<string>();
-                result = session.Run("match (c:Concept)  WHERE NOT (c)<-[]-(:User{name:\"" + UserId + "\"})  and (c)-[:Concept_Of]->(:Domain{name:\"" + DomainName + "\"}) WITH  COLLECT (DISTINCT c) as ccoll Match (q:Question) <-[]-(cprime:Concept) WHERE  cprime in ccoll return q LIMIT 10");
+                result = session.Run("match (c:Concept)  WHERE NOT (c)<-[]-(:User{name:\"" + UserId + "\"})  and (c)-[:Concept_Of]->(:Domain{name:\"" + DomainName + "\"}) WITH  COLLECT (DISTINCT c) as ccoll Match (q:Question)-[]->(cprime:Concept) WHERE  cprime in ccoll return q LIMIT 10");
                 var res = result.ToList();
               
                 if (res.Count() != 0)
@@ -229,7 +230,7 @@ namespace QuizServer.Service
                else
                 {
 
-                    resultRepeated = session.Run("match (c:Concept)-[x]-(ul:User{name:\"" + UserId + "\"}) where (c)-[:Concept_Of]-(:Domain{name:\"" + DomainName + "\"}) WITH COLLECT (DISTINCT c) as ccoll Match(q: Question) -[r] - (cprime: Concept) < -[rel] - (u: User{ name: \"" + UserId + "\"}) WHERE cprime in ccoll  return q order by rel.Intensity limit 6");
+                    resultRepeated = session.Run("match (c:Concept)-[x]-(ul:User{name:\"" + UserId + "\"}) where (c)-[:Concept_Of]-(:Domain{name:\"" + DomainName + "\"}) WITH COLLECT (DISTINCT c) as ccoll Match (q:Question)-[r]->(cprime:Concept)<-[rel]-(u: User{ name: \"" + UserId + "\"}) WHERE cprime in ccoll  return q order by rel.Intensity limit 10");
                     Console.WriteLine("THIS IS THE RESULT " + JsonConvert.SerializeObject(result));
                     var ress = resultRepeated.ToList();
                     Console.WriteLine("THIS IS THE COUNT " + resultRepeated.ToList().Count());
@@ -305,7 +306,7 @@ namespace QuizServer.Service
             Console.WriteLine("INSIDE GET CONTENT");
             using (ISession session = driver.Session())
             {
-                result1 = session.Run("match (c:Concept)-[:Concept_Of]->(:Domain{name:\"" + domain + "\"}) WITH COLLECT (DISTINCT c) as ccoll  Match(co:Content) -[r] -> (cprime: Concept) return co limit 3");
+                result1 = session.Run("match (c:Concept)-[:Concept_Of]->(:Domain{name:\"" + domain + "\"}) WITH COLLECT (DISTINCT c) as ccoll  Match(co:Content)-[r] -> (cprime: Concept) return co limit 3");
                 var re = result1.ToList();
                 if (re.Count() != 0)
                 {
@@ -332,7 +333,7 @@ namespace QuizServer.Service
                         //listOfQuestionId.Add(questionId);
                     }
                 }
-                result = session.Run("match (c:Concept)<-[x]-(ul:User{name:\"" + userId + "\"}) where (c)-[:Concept_Of]->(:Domain{name:\"" + domain + "\"}) WITH COLLECT (DISTINCT c) as ccoll Match(co:Content) -[r] - (cprime: Concept) < -[rel] - (u: User{ name:\"" + userId + "\"}) WHERE cprime in ccoll and  rel.Intensity<3 and rel.Taxonomy=r.Taxonomy return co ");
+                result = session.Run("match (c:Concept)<-[x]-(ul:User{name:\"" + userId + "\"}) where (c)-[:Concept_Of]->(:Domain{name:\"" + domain + "\"}) WITH COLLECT (DISTINCT c) as ccoll Match(co:Content)-[r]->(cprime: Concept)<-[rel]-(u: User{ name:\"" + userId + "\"}) WHERE cprime in ccoll and  rel.Intensity<3 and rel.Taxonomy=r.Taxonomy return co ");
                 var res = result.ToList();
                 Console.WriteLine("COUNT " + result.ToList().Count());
                 if (res.Count() != 0)
