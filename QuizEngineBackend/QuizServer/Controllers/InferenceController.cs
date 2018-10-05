@@ -19,5 +19,12 @@ namespace QuizServer.Controllers
             _graphService = graphService;
         }
 
+        [HttpGet("{userid}")]
+        public string BestDomain(int userid)
+        {
+            _graphService.GetBestDomain(userid);
+            return "deepika";
+        }      
+
     }
 }

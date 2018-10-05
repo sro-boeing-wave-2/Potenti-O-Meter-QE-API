@@ -392,6 +392,33 @@ namespace QuizServer.Service
             
         }
 
+        public string GetBestDomain(int userID)
+        {
+            IStatementResult result;
+            List<BestDomain> DomainList = new List<BestDomain>();
+            //Dictionary<string, List<string>> ContentRecommendations = new Dictionary<string, List<string>>();
+            Console.WriteLine("INSIDE GET BEST DOMAIN");
+            using (ISession session = driver.Session())
+            {
+                result = session.Run("MATCH (u:User{name:\"" + userID + "\"})-[rel]-(c:Concept)-[:Concept_Of]-(n:Domain) return {intensity: sum(rel.Intensity), domain: n.name} AS domains");
+
+                var re = result.ToList();
+                Console.WriteLine("These are THE BESTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" + JsonConvert.SerializeObject(re));
+                //if (re.Count() != 0)
+                //{
+                //    Console.WriteLine("COUNT ==============" + re.Count());
+                //    for (int i = 0; i < re.ToList().Count(); i++)
+                //    {
+                //        BestDomain bd = new BestDomain();
+                //        Object o = re[i];
+                //        JObject ParsedDomain = JObject.Parse(JsonConvert.SerializeObject(o));
+                //        Object q = ParsedDomain.GetValue("intensity");
+                //    }
+                //}
+            }
+            return "deepika";
+        }
+
 
         public void Dispose()
         {
