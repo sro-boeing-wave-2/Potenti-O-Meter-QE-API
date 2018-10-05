@@ -7,7 +7,7 @@ namespace QuizServer.Models
 {
     public class BestDomain
     {
-        public string Intensity { get; set; }
+        public int Intensity { get; set; }
         public string Domain { get; set; }
     }
 }

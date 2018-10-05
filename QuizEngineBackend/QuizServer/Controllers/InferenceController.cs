@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using QuizServer.Models;
 using QuizServer.Service;
 
 namespace QuizServer.Controllers
@@ -20,10 +21,11 @@ namespace QuizServer.Controllers
         }
 
         [HttpGet("{userid}")]
-        public string BestDomain(int userid)
+        public List<BestDomain> BestDomain([FromRoute]int userid)
         {
-            _graphService.GetBestDomain(userid);
-            return "deepika";
+           List<BestDomain> li =  _graphService.GetBestDomain(userid);
+            return li;
+           
         }      
 
     }
