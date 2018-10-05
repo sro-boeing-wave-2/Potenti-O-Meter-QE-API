@@ -311,8 +311,8 @@ namespace QuizServer.Service
                 Console.WriteLine("These are CONTENTS ================" + JsonConvert.SerializeObject(re));
                 if (re.Count() != 0)
                 {
-                    Console.WriteLine("COUNT ==============" + result1.ToList().Count());
-                    for (int i = 0; i < re.ToList().Count(); i++)
+                    Console.WriteLine("COUNT ==============" + re.Count());
+                    for (int i = 0; i < re.Count(); i++)
                     {
                         ContentRecommender c = new ContentRecommender();
                         Object o = re[i];
