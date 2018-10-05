@@ -26,7 +26,8 @@ namespace QuizServer.Controllers
         {
 
             List<ContentRecommender> li = _graphService.GetContentRecommendations(id, domain);
-
+           
+             
             return li;
 
         }

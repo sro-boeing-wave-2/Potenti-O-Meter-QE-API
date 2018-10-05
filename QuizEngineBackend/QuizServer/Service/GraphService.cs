@@ -288,7 +288,7 @@ namespace QuizServer.Service
                     }
                     else
                     {
-                        result = session.Run("merge(n:Concept {name:\"" + target + "\"}) merge (m:User { name:\"" + userId + "\" }) merge (m)-[x:" + taxonomy + " {Taxonomy:\"" + taxonomy + "\"} ]-> (n) on create set x.Intensity = 0 on match set x.Intensity= x.Intensity - 1 s return n,m,x");
+                        result = session.Run("merge(n:Concept {name:\"" + target + "\"}) merge (m:User { name:\"" + userId + "\" }) merge (m)-[x:" + taxonomy + " {Taxonomy:\"" + taxonomy + "\"} ]-> (n) on create set x.Intensity = 0 return n,m,x");
                     }
                     //result = session.Run("match (n:Concept {name:\"" + target + "\"}) match (m:User { name:\"" + userId + "\" }) merge (m)-[x:" + taxonomy + "]-> (n) return n,m,x");
 
@@ -306,7 +306,7 @@ namespace QuizServer.Service
             Console.WriteLine("INSIDE GET CONTENT");
             using (ISession session = driver.Session())
             {
-                result1 = session.Run("match (c:Concept)-[:Concept_Of]->(:Domain{name:\"" + domain + "\"}) WITH COLLECT (DISTINCT c) as ccoll  Match(co:Content)-[r] -> (cprime: Concept) return co,cprime limit 4");
+                result1 = session.Run("match (c:Concept)-[:Concept_Of]->(:Domain{name:\"" + domain + "\"}) WITH COLLECT (DISTINCT c) as ccoll  Match(co:Content)-[r] -> (cprime: Concept) where cprime in ccoll return co,cprime limit 4");
                 var re = result1.ToList();
                 Console.WriteLine("These are CONTENTS ================" + JsonConvert.SerializeObject(re));
                 if (re.Count() != 0)
@@ -345,7 +345,7 @@ namespace QuizServer.Service
                         
                     }
                 }
-                result = session.Run("match (c:Concept)<-[x]-(ul:User{name:\"" + userId + "\"}) where (c)-[:Concept_Of]->(:Domain{name:\"" + domain + "\"}) WITH COLLECT (DISTINCT c) as ccoll Match(co:Content)-[r]->(cprime: Concept)<-[rel]-(u: User{ name:\"" + userId + "\"}) WHERE cprime in ccoll and  rel.Intensity<2 and rel.Taxonomy=r.Taxonomy return co ");
+                result = session.Run("match (c:Concept)<-[x]-(ul:User{name:\"" + userId + "\"}) where (c)-[:Concept_Of]->(:Domain{name:\"" + domain + "\"}) WITH COLLECT (DISTINCT c) as ccoll Match(co:Content)-[r]->(cprime: Concept)<-[rel]-(u: User{ name:\"" + userId + "\"}) WHERE cprime in ccoll and  rel.Intensity<2 and rel.Taxonomy=r.Taxonomy return co,cprime ");
                 var res = result.ToList();
                 Console.WriteLine("COUNT " + result.ToList().Count());
                 if (result.ToList().Count() != 0)
