@@ -24,5 +24,6 @@ namespace QuizServer.Service
         List<ContentRecommender> GetContentRecommendations(int userId, string domain);
         List<BestDomain> GetBestDomain(int userID);
         List<BestConceptOfDomain> GetBestConceptOfDomain(int userID, string domain);
+        List<BestTaxonomy> GetBestTaxonomy(int userID);
     }
 }

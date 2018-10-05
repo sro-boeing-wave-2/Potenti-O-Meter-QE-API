@@ -463,6 +463,41 @@ namespace QuizServer.Service
         }
 
 
+        public List<BestTaxonomy> GetBestTaxonomy(int userID)
+        {
+            IStatementResult result;
+            List<BestTaxonomy> DomainList = new List<BestTaxonomy>();
+
+
+            using (ISession session = driver.Session())
+            {
+                result = session.Run("MATCH (u:User {name: \""+ userID+"})-[x]->(c:Concept) return {intensity: max(x.Intensity), Taxonomy:x.Taxonomy} AS taxonomy");
+
+                var re = result.ToList();
+
+                if (re.Count() != 0)
+                {
+                    Console.WriteLine("COUNT ==============" + re.Count());
+                    for (int i = 0; i < re.ToList().Count(); i++)
+                    {
+                        BestTaxonomy bd = new BestTaxonomy();
+                        Object o = re[i];
+                        JObject ParsedDomain = JObject.Parse(JsonConvert.SerializeObject(o));
+                        Object ParsedDomainValue = ParsedDomain.GetValue("Values");
+                        JObject DomainValuesJObject = JObject.Parse(JsonConvert.SerializeObject(ParsedDomainValue));
+                        Object domains = DomainValuesJObject.GetValue("taxonomy");
+                        JObject prop = JObject.Parse(JsonConvert.SerializeObject(domains));
+                        int intensityObj = (int)prop.GetValue("intensity");
+                        string taxonomy = prop.GetValue("Taxonomy").ToString();
+                        bd.Taxonomy = taxonomy;
+                        bd.Intensity = intensityObj;
+                        DomainList.Add(bd);
+                    }
+                }
+                return DomainList;
+            }
+        }
+
 
 
         public void Dispose()
