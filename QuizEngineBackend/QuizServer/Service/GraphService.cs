@@ -471,7 +471,7 @@ namespace QuizServer.Service
 
             using (ISession session = driver.Session())
             {
-                result = session.Run("MATCH (u:User {name: \""+ userID+"})-[x]->(c:Concept) return {intensity: max(x.Intensity), Taxonomy:x.Taxonomy} AS taxonomy");
+                result = session.Run("MATCH (u:User {name: \""+ userID+ "\"})-[x]->(c:Concept) return {intensity: max(x.Intensity), Taxonomy:x.Taxonomy} AS taxonomy");
 
                 var re = result.ToList();
 
