@@ -288,7 +288,7 @@ namespace QuizServer.Service
                     }
                     else
                     {
-                        result = session.Run("merge(n:Concept {name:\"" + target + "\"}) merge (m:User { name:\"" + userId + "\" }) merge (m)-[x:" + taxonomy + " {Taxonomy:\"" + taxonomy + "\"} ]-> (n) on create set x.Intensity = 0 on match set x.Intensity= x.Intensity - 1 return n,m,x");
+                        result = session.Run("merge(n:Concept {name:\"" + target + "\"}) merge (m:User { name:\"" + userId + "\" }) merge (m)-[x:" + taxonomy + " {Taxonomy:\"" + taxonomy + "\"} ]-> (n) on create set x.Intensity = 0 on match set x.Intensity= x.Intensity - 1 where x.Intensity<0 set x.Intensity = 0 return n,m,x");
                     }
                     //result = session.Run("match (n:Concept {name:\"" + target + "\"}) match (m:User { name:\"" + userId + "\" }) merge (m)-[x:" + taxonomy + "]-> (n) return n,m,x");
 
@@ -306,12 +306,12 @@ namespace QuizServer.Service
             Console.WriteLine("INSIDE GET CONTENT");
             using (ISession session = driver.Session())
             {
-                result1 = session.Run("match (c:Concept)-[:Concept_Of]->(:Domain{name:\"" + domain + "\"}) WITH COLLECT (DISTINCT c) as ccoll  Match(co:Content)-[r] -> (cprime: Concept) return co,cprime limit 3");
+                result1 = session.Run("match (c:Concept)-[:Concept_Of]->(:Domain{name:\"" + domain + "\"}) WITH COLLECT (DISTINCT c) as ccoll  Match(co:Content)-[r] -> (cprime: Concept) return co,cprime limit 4");
                 var re = result1.ToList();
                 Console.WriteLine("These are CONTENTS ================" + JsonConvert.SerializeObject(re));
                 if (re.Count() != 0)
                 {
-                    Console.WriteLine("COUNT " + result1.ToList().Count());
+                    Console.WriteLine("COUNT ==============" + result1.ToList().Count());
                     for (int i = 0; i < re.ToList().Count(); i++)
                     {
                         ContentRecommender c = new ContentRecommender();
@@ -332,6 +332,7 @@ namespace QuizServer.Service
                         Object Conceptproperty = prop.GetValue("Properties");
                         JObject Cname = JObject.Parse(JsonConvert.SerializeObject(Conceptproperty));
                         string name = Cname.GetValue("name").ToString();
+                        Console.WriteLine("THIS IS NAmE OF CONCEPT =====" + name);
                         c.Id = id;
                         c.conceptName = name;
                         c.url = url;
@@ -343,10 +344,10 @@ namespace QuizServer.Service
                         
                     }
                 }
-                result = session.Run("match (c:Concept)<-[x]-(ul:User{name:\"" + userId + "\"}) where (c)-[:Concept_Of]->(:Domain{name:\"" + domain + "\"}) WITH COLLECT (DISTINCT c) as ccoll Match(co:Content)-[r]->(cprime: Concept)<-[rel]-(u: User{ name:\"" + userId + "\"}) WHERE cprime in ccoll and  rel.Intensity<3 and rel.Taxonomy=r.Taxonomy return co ");
+                result = session.Run("match (c:Concept)<-[x]-(ul:User{name:\"" + userId + "\"}) where (c)-[:Concept_Of]->(:Domain{name:\"" + domain + "\"}) WITH COLLECT (DISTINCT c) as ccoll Match(co:Content)-[r]->(cprime: Concept)<-[rel]-(u: User{ name:\"" + userId + "\"}) WHERE cprime in ccoll and  rel.Intensity<2 and rel.Taxonomy=r.Taxonomy return co ");
                 var res = result.ToList();
                 Console.WriteLine("COUNT " + result.ToList().Count());
-                if (res.Count() != 0)
+                if (result.ToList().Count() != 0)
                 {
                     for (int i = 0; i < res.ToList().Count(); i++)
                     {
@@ -358,10 +359,19 @@ namespace QuizServer.Service
                         Object values = P.GetValue("co");
                         JObject prop = JObject.Parse(JsonConvert.SerializeObject(values));
                         Object property = prop.GetValue("Properties");
+                        string id = prop.GetValue("Id").ToString();
                         JObject qid = JObject.Parse(JsonConvert.SerializeObject(property));
                         string url = qid.GetValue("url").ToString();
                         string title = qid.GetValue("title").ToString();
                         JToken tags = qid.GetValue("tags");
+                        Object Concept = P.GetValue("cprime");
+                        JObject ConceptProp = JObject.Parse(JsonConvert.SerializeObject(Concept));
+                        Object Conceptproperty = prop.GetValue("Properties");
+                        JObject Cname = JObject.Parse(JsonConvert.SerializeObject(Conceptproperty));
+                        string name = Cname.GetValue("name").ToString();
+                        //Console.WriteLine("THIS IS NAmE OF CONCEPT =====" + name);
+                        c.Id = id;
+                        c.conceptName = name;
                         c.url = url;
                         c.title = title;
                         c.tags = tags.ToObject<List<string>>();
