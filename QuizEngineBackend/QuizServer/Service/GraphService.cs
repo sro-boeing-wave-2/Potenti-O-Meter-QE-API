@@ -306,7 +306,7 @@ namespace QuizServer.Service
             Console.WriteLine("INSIDE GET CONTENT");
             using (ISession session = driver.Session())
             {
-                result1 = session.Run("match (c:Concept)-[:Concept_Of]->(:Domain{name:\"" + domain + "\"}) WITH COLLECT (DISTINCT c) as ccoll  Match(co:Content)-[r] -> (cprime: Concept) where cprime in ccoll return co,cprime limit 4");
+                result1 = session.Run("match (c:Concept)-[:Concept_Of]->(:Domain{name:\"" + domain + "\"}) WITH COLLECT (DISTINCT c) as ccoll  Match(co:Content)-[r] -> (cprime: Concept) where cprime in ccoll return co,cprime ");
                 var re = result1.ToList();
                 Console.WriteLine("These are CONTENTS ================" + JsonConvert.SerializeObject(re));
                 if (re.Count() != 0)
