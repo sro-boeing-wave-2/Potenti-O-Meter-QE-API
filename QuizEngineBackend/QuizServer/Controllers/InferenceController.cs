@@ -20,21 +20,21 @@ namespace QuizServer.Controllers
             _graphService = graphService;
         }
 
-        [HttpGet("top/user/{userid}/domain")]
+        [HttpGet("top/user/domain/{userid}")]
         public List<BestDomain> BestDomain([FromRoute]int userid)
         {
            List<BestDomain> li =  _graphService.GetBestDomain(userid);
             return li;
            
         }
-        [HttpGet("top/user/{userid}/domain/{domain}/concepts")]
+        [HttpGet("top/user/{userid}/concepts/{domain}")]
         public List<BestConceptOfDomain> BestConceptOfDomain([FromRoute]int userid, [FromRoute]string domain)
         {
             List<BestConceptOfDomain> li = _graphService.GetBestConceptOfDomain(userid,domain);
             return li;
 
         }
-        [HttpGet("top/user/{userid}/taxonomy)]")]
+        [HttpGet("top/user/taxonomy/{userid})]")]
         public List<BestTaxonomy> BestTaxonomy([FromRoute] int userid)
         {
             List<BestTaxonomy> li = _graphService.GetBestTaxonomy(userid);
