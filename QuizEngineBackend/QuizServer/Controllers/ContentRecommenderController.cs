@@ -26,8 +26,8 @@ namespace QuizServer.Controllers
         {
 
             List<ContentRecommender> li = _graphService.GetContentRecommendations(id, domain);
-           
-             
+            li.GroupBy(x => x.conceptName).Select(y => y.First()).ToList();
+
             return li;
 
         }
