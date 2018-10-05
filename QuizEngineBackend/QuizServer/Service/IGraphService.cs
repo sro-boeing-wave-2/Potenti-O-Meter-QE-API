@@ -23,5 +23,6 @@ namespace QuizServer.Service
         void UpdateUserConceptRelation(UserInfo userInfo, int userId);
         List<ContentRecommender> GetContentRecommendations(int userId, string domain);
         List<BestDomain> GetBestDomain(int userID);
+        List<BestConceptOfDomain> GetBestConceptOfDomain(int userID, string domain);
     }
 }
