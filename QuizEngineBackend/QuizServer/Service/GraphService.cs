@@ -319,21 +319,28 @@ namespace QuizServer.Service
                         JObject ParsedQuestion = JObject.Parse(JsonConvert.SerializeObject(o));
                         Object q = ParsedQuestion.GetValue("Values");
                         JObject P = JObject.Parse(JsonConvert.SerializeObject(q));
-                        Object values = P.GetValue("co");
+                        Object values = P.GetValue("co");                       
                         JObject prop = JObject.Parse(JsonConvert.SerializeObject(values));
                         Object property = prop.GetValue("Properties");
+                        string id = prop.GetValue("Id").ToString(); 
                         JObject qid = JObject.Parse(JsonConvert.SerializeObject(property));
                         string url = qid.GetValue("url").ToString();
                         string title = qid.GetValue("title").ToString();
                         JToken tags = qid.GetValue("tags");
+                        Object Concept = P.GetValue("cprime");
+                        JObject ConceptProp = JObject.Parse(JsonConvert.SerializeObject(Concept));
+                        Object Conceptproperty = prop.GetValue("Properties");
+                        JObject Cname = JObject.Parse(JsonConvert.SerializeObject(Conceptproperty));
+                        string name = Cname.GetValue("name").ToString();
+                        c.Id = id;
+                        c.conceptName = name;
                         c.url = url;
                         c.title = title;
                         c.tags = tags.ToObject<List<string>>();
                         cr.Add(c);
                         var tag = tags.ToList();
-                        Console.WriteLine("THIS IS TAGS " + tag);
-
-                        //listOfQuestionId.Add(questionId);
+                       
+                        
                     }
                 }
                 result = session.Run("match (c:Concept)<-[x]-(ul:User{name:\"" + userId + "\"}) where (c)-[:Concept_Of]->(:Domain{name:\"" + domain + "\"}) WITH COLLECT (DISTINCT c) as ccoll Match(co:Content)-[r]->(cprime: Concept)<-[rel]-(u: User{ name:\"" + userId + "\"}) WHERE cprime in ccoll and  rel.Intensity<3 and rel.Taxonomy=r.Taxonomy return co ");
@@ -360,9 +367,7 @@ namespace QuizServer.Service
                         c.tags = tags.ToObject<List<string>>();
                         cr.Add(c);
                         var tag = tags.ToList();
-                        Console.WriteLine("THIS IS TAGS " + tag);
-                       
-                        //listOfQuestionId.Add(questionId);
+                        
                     }
                 }
                 Console.WriteLine("THIS IS THE CONTENT " + JsonConvert.SerializeObject(cr));
