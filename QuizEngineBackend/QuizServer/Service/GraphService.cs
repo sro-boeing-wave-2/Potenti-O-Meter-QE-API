@@ -367,14 +367,14 @@ namespace QuizServer.Service
                         JToken tags = qid.GetValue("tags");
                         
                        
-                        string id = prop.GetValue("Id").ToString();
+                        //string id = prop.GetValue("Id").ToString();
                         Object Concept = P.GetValue("cprime");
                         JObject ConceptProp = JObject.Parse(JsonConvert.SerializeObject(Concept));
                         Object Conceptproperty = ConceptProp.GetValue("Properties");
                         JObject Cname = JObject.Parse(JsonConvert.SerializeObject(Conceptproperty));
                         string name = Cname.GetValue("name").ToString();
                         //Console.WriteLine("THIS IS NAmE OF CONCEPT =====" + name);
-                        c.Id = id;
+                        //c.Id = id;
                         c.conceptName = name;
                         //c.conceptName = name;
                         c.url = url;
